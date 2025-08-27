@@ -31,7 +31,7 @@ If you do not have Docker or Ollama installed, install them first. Then install 
 
 ### Step 2: Clone this repository
 ```bash
-git clone https://github.com/<your-username>/gogospel.git
+git clone https://github.com/<kenschultz64>/gogospel.git
 cd gogospel
 ```
 ✅ Verify: Ensure you see the project files by running:
