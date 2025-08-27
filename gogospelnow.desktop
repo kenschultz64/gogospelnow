@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Name=GoGospelNow Translator
+Comment=Real-Time Preaching Translator
+Exec=/bin/bash "C:/gogospelnow/start_translator.sh"
+Path=C:/gogospelnow/
+Terminal=true
+Type=Application
+Categories=Utility;

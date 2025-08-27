@@ -1,0 +1,17 @@
+# System Requirements: FFmpeg, PortAudio, and libsndfile must be installed separately
+# Ubuntu/Debian: sudo apt install ffmpeg portaudio19-dev libsndfile1
+# macOS: brew install ffmpeg portaudio libsndfile
+# Windows: Download FFmpeg from https://ffmpeg.org/download.html (PortAudio and libsndfile usually bundled with Python wheels)
+#
+# For exact reproducibility, see requirements.lock (generated via `pip freeze > requirements.lock`).
+
+sounddevice
+soundfile
+numpy
+torch
+requests
+openai
+faster-whisper
+gradio
+librosa
+PyAudio

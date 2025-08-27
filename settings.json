@@ -1,0 +1,4 @@
+{
+    "translation_server": "http://localhost:11434",
+    "tts_server_url": "http://localhost:8880/v1"
+}
