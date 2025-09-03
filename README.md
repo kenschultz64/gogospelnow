@@ -29,7 +29,7 @@ If you do not have Docker or Ollama installed, install them first. Then install 
 
 ---
 
-### Step 2: Clone this repository
+### Step 2: Clone this repository - (If you do not have git on your system go to https://git-scm.com/downloads)
 ```bash
 git clone https://github.com/kenschultz64/gogospelnow.git
 cd gogospelnow
