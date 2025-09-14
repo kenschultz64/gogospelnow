@@ -62,53 +62,8 @@ ls   # or dir on Windows
      ```powershell
      venv\Scripts\activate
      ```
-     #### Linux 🐧
-- **Debian/Ubuntu:**
-  ```bash
-  sudo apt-get update
-  sudo apt-get install ffmpeg portaudio19-dev libsndfile1
-  ```
-- **Fedora/RHEL:**
-  ```bash
-  sudo dnf install ffmpeg portaudio-devel libsndfile
-  ```
-- **Arch Linux:**
-  ```bash
-  sudo pacman -S ffmpeg portaudio libsndfile
-  ```
-- ✅ Verify installation:
-  ```bash
-  ffmpeg -version | head -n1
-  python3 -c "import sounddevice as sd; print('PortAudio:', sd.get_portaudio_version())"
-  ```
+--- 
 
-#### Windows 🪟
-1. Download FFmpeg:
-   - Go to [FFmpeg Builds](https://www.gyan.dev/ffmpeg/builds/)
-   - Download **ffmpeg-release-full.7z**
-   - Extract with [7-Zip](https://www.7-zip.org/)
-   - Rename folder to `ffmpeg` and move to `C:\ffmpeg`
-2. Add FFmpeg to Path:
-   - Open **System Properties → Environment Variables → Path → New**
-   - Add: `C:\ffmpeg\bin`
-   - ✅ Verify:
-     ```powershell
-     ffmpeg -version
-     ```
-3. Install PortAudio:
-   ```powershell
-   pip install pyaudio
-   ```
-4. ✅ Verify:
-   ```powershell
-   python -c "import sounddevice as sd; print('PortAudio:', sd.get_portaudio_version())"
-   ```
-
----
-     ```
-  3. ✅ Verify activation: Your terminal prompt should now show `(venv)`.
-
----
 ### Step 4: Install FFmpeg and PortAudio
 
 The app needs **FFmpeg** for audio processing and **PortAudio** for microphone support.
@@ -205,9 +160,6 @@ The app needs **FFmpeg** for audio processing and **PortAudio** for microphone s
    python -c "import sounddevice as sd; print('PortAudio:', sd.get_portaudio_version())"
    ```
 
----
-   ```
-
 --- 
 ### Step 5: Install Python dependencies in activated directory (example (venv) PS 
 ```bash
@@ -219,10 +171,6 @@ pip list
 ```
 
 ---
-
-
-
-
 
 ### Step 6: Install and Start Kokoro TTS
 
