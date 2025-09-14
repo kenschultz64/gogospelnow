@@ -200,8 +200,14 @@ You should see a list of available voices.
 Choose one or more (smaller models = faster):
 ```bash
 ollama pull llama3.2:3b-instruct-q4_K_M
+```
+```bash
 ollama pull gemma3n:e2b
+```
+```bash
 ollama pull gemma3:4b
+```
+```bash
 ollama pull granite3.3:2b
 ```
 
