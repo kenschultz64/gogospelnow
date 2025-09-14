@@ -219,27 +219,33 @@ You should see your installed models listed.
 
 ---
 
-### Step 8: Run the App
+### Step 8: Run the Gogospel Translator App
 
 1. Activate your virtual environment (if not active).
-2. Start the app:
+2. Start the app server:
    ```bash
    python main.py
    ```
-3. Open browser: http://localhost:7860 (tested with Chrome).
+   -Note keep terminal window open while using the program this keeps the server active.
+   
+4. Open browser: http://localhost:7860 to launch operate the gpgospelnow translator (tested with Chrome).
 
 ✅ Verify: The translator UI should load in your browser.
 
+5. To Launch the program easier after you have verified it is working follow below.
+-In Windows you can also run launch.bat to reload the program.
+-For Linux and Mac you can run start_translator.sh to relaunch. 
 ---
 
 ## Features
 
-- Transcription: Faster-Whisper with configurable models and device/precision
-- Translation: Local LLM via Ollama HTTP API
-- TTS: Kokoro FastAPI server with many voices
+- Transcription: Faster-Whisper with configurable selectable models.
+- Translation: Local LLM via Ollama API so you can use the latest opensource models as they are released.
+- TTS: Kokoro FastAPI server with many voices (Brittish English, American English, Spanish, French, Italian, Brazilian, Japanesse, Chinese, and Hindi) 
 - Real-time pipeline with buffering and VAD controls
 - Presets for CPU, Balanced, and Quality
 - Translation history logging
+- Works completely locally no iternet required.
 
 ---
 
