@@ -21,7 +21,7 @@ If you do not have Docker or Ollama installed, install them first. Then install 
      ```bash
      docker --version
      ```
-   - Confirm Ollama is installed and running:
+   - Confirm Ollama is installed and running: open your terminal and type the command.
      ```bash
      ollama run gemma3n:e2b
      ```
@@ -62,41 +62,7 @@ ls   # or dir on Windows
      ```powershell
      venv\Scripts\activate
      ```
-  3. ✅ Verify activation: Your terminal prompt should now show `(venv)`.
-
----
-
-### Step 4: Install Python dependencies
-```bash
-pip install -r requirements.txt
-```
-✅ Verify: No errors should appear, and you should see installed packages with:
-```bash
-pip list
-```
-
----
-
-### Step 5: Install FFmpeg and PortAudio
-
-The app needs **FFmpeg** for audio processing and **PortAudio** for microphone support.
-
-#### macOS 🍎
-1. Install Homebrew (if not installed):
-   ```bash
-   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-   ```
-2. Install packages:
-   ```bash
-   brew install ffmpeg portaudio libsndfile
-   ```
-3. ✅ Verify installation:
-   ```bash
-   ffmpeg -version | head -n1
-   python -c "import sounddevice as sd; print('PortAudio:', sd.get_portaudio_version())"
-   ```
-
-#### Linux 🐧
+     #### Linux 🐧
 - **Debian/Ubuntu:**
   ```bash
   sudo apt-get update
@@ -139,6 +105,124 @@ The app needs **FFmpeg** for audio processing and **PortAudio** for microphone s
    ```
 
 ---
+     ```
+  3. ✅ Verify activation: Your terminal prompt should now show `(venv)`.
+
+---
+### Step 4: Install FFmpeg and PortAudio
+
+The app needs **FFmpeg** for audio processing and **PortAudio** for microphone support.
+
+#### macOS 🍎
+1. Install Homebrew (if not installed):
+   ```bash
+   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+   ```
+2. Install packages:
+   ```bash
+   brew install ffmpeg portaudio libsndfile
+   ```
+3. ✅ Verify installation:
+   ```bash
+   ffmpeg -version 
+   ```
+  #### Linux 🐧
+- **Debian/Ubuntu:**
+  ```bash
+  sudo apt-get update
+  sudo apt-get install ffmpeg portaudio19-dev libsndfile1
+  ```
+- **Fedora/RHEL:**
+  ```bash
+  sudo dnf install ffmpeg portaudio-devel libsndfile
+  ```
+- **Arch Linux:**
+  ```bash
+  sudo pacman -S ffmpeg portaudio libsndfile
+  ```
+- ✅ Verify installation:
+  ```bash
+  ffmpeg -version
+  ```
+#### Windows 🪟
+1. Download FFmpeg:
+   - Go to [FFmpeg Builds](https://www.gyan.dev/ffmpeg/builds/)
+   - Download **ffmpeg-release-full.7z**
+   - Extract with [7-Zip](https://www.7-zip.org/) or right click on file and use windows extract tool.
+   - Rename folder to `ffmpeg` and move to `C:\ffmpeg`
+2. Add FFmpeg to Path:
+   - Open **System Properties → Environment Variables → Path → New**
+   - Add: `C:\ffmpeg\bin`
+   - ✅ Verify:
+     ```powershell
+     ffmpeg -version
+     ```
+3. Install PortAudio:
+   ```powershell
+   pip install pyaudio
+   ```
+4. ✅ Verify:
+   ```powershell
+   #### Linux 🐧
+- **Debian/Ubuntu:**
+  ```bash
+  sudo apt-get update
+  sudo apt-get install ffmpeg portaudio19-dev libsndfile1
+  ```
+- **Fedora/RHEL:**
+  ```bash
+  sudo dnf install ffmpeg portaudio-devel libsndfile
+  ```
+- **Arch Linux:**
+  ```bash
+  sudo pacman -S ffmpeg portaudio libsndfile
+  ```
+- ✅ Verify installation:
+  ```bash
+  ffmpeg -version | head -n1
+  python3 -c "import sounddevice as sd; print('PortAudio:', sd.get_portaudio_version())"
+  ```
+
+#### Windows 🪟
+1. Download FFmpeg:
+   - Go to [FFmpeg Builds](https://www.gyan.dev/ffmpeg/builds/)
+   - Download **ffmpeg-release-full.7z**
+   - Extract with [7-Zip](https://www.7-zip.org/)
+   - Rename folder to `ffmpeg` and move to `C:\ffmpeg`
+2. Add FFmpeg to Path:
+   - Open **System Properties → Environment Variables → Path → New**
+   - Add: `C:\ffmpeg\bin`
+   - ✅ Verify:
+     ```powershell
+     ffmpeg -version
+     ```
+3. Install PortAudio:
+   ```powershell
+   pip install pyaudio
+   ```
+4. ✅ Verify:
+   ```powershell
+   python -c "import sounddevice as sd; print('PortAudio:', sd.get_portaudio_version())"
+   ```
+
+---
+   ```
+
+--- 
+### Step 5: Install Python dependencies in activated directory (example (venv) PS 
+```bash
+pip install -r requirements.txt
+```
+✅ Verify: No errors should appear, and you should see installed packages with:
+```bash
+pip list
+```
+
+---
+
+
+
+
 
 ### Step 6: Install and Start Kokoro TTS
 
