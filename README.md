@@ -6,7 +6,7 @@
 
 The GoGospelNow Translator program uses three background technologies to work: **Docker**, **Kokoro-Fast-TTS**, and **Ollama**. You will also need to download some AI models through Ollama.com for the translator to work. This gives you flexibility based on the processing power of your device. I would suggest something of 2–4 billion parameters for computers without a large GPU. There is a list of suggested models.  
 
-If you do not have Docker or Ollama installed, install them first. Then install some translation models and clone the repo from GitHub or download from gogospelnow.com and set up the Python environment.
+If you do not have Docker or Ollama installed, install them first. Then install some translation models and clone the repo from GitHub or download from gogospelnow.com and set up the Python environment. Python is installed standard on Linux and Mac os, but on Windows you may have to install it.  Go to https://www.python.org/downloads/ and download the latest version.
 
 ---
 
