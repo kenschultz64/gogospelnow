@@ -1,5 +1,5 @@
 # GoGospelNow Real-Time Preaching Translator
-
+[![Watch the video](https://img.youtube.com/vi/WRzqXt095PQ/0.jpg)](https://www.youtube.com/watch?v=WRzqXt095PQ)
 [![Buy Me A Coffee](https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png)](https://www.buymeacoffee.com/gogospelnow)
 
 ## Quick Start (read this first)
