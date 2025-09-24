@@ -253,7 +253,7 @@ You should see your installed models listed.
 Note translation audio should be isolated from the microphone or the program will loop back trying to interpret again what has been translated. Suggested use would be using an aux send to the computer’s input for the mic signal. Then use another aux send to output audio to a transmitter to send the translated audio to individual receivers with headphones. Also could be used with Bluetooth headphones depending on the distance and devices needed. Have built a version that broadcasts audio to a phone app but it is not yet ready for release.
 
 ![Audio Setup Diagram](docs/audio-setup.png)
-
+[![Watch the video](https://img.youtube.com/vi/ZdBDW6Pw4qE/0.jpg)](https://www.youtube.com/watch?v=ZdBDW6Pw4qE&t=11s)
 ---
 
 [![Buy Me A Coffee](https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png)](https://www.buymeacoffee.com/gogospelnow)
