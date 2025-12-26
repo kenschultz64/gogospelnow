@@ -3,7 +3,7 @@
 ## Phase 1: Testing Foundation
 - [x] Task: Set up testing environment (install pytest, pytest-cov) 5a641a5
 - [x] Task: Create initial test file for translator_core.py 28f7c25
-- [ ] Task: Write unit tests for audio device discovery and selection logic
+- [~] Task: Write unit tests for audio device discovery and selection logic
 - [ ] Task: Write unit tests for translation provider coordination
 - [ ] Task: Conductor - User Manual Verification 'Testing Foundation' (Protocol in workflow.md)
 
