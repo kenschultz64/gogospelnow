@@ -1,7 +1,7 @@
 # Plan: Enhance codebase stability and documentation
 
 ## Phase 1: Testing Foundation
-- [~] Task: Set up testing environment (install pytest, pytest-cov)
+- [x] Task: Set up testing environment (install pytest, pytest-cov) 5a641a5
 - [ ] Task: Create initial test file for \	ranslator_core.py\`n- [ ] Task: Write unit tests for audio device discovery and selection logic
 - [ ] Task: Write unit tests for translation provider coordination
 - [ ] Task: Conductor - User Manual Verification 'Testing Foundation' (Protocol in workflow.md)
