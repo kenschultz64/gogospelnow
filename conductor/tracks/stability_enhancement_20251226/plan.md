@@ -10,5 +10,5 @@
 ## Phase 2: Documentation Refinement
 - [x] Task: Audit README.md against current main.py and translator_core.py functionality f42ad3e
 - [x] Task: Update INSTALL.txt with any missing dependencies or steps identified during audit aa5534b
-- [ ] Task: Verify all links and commands in the documentation are correct
+- [x] Task: Verify all links and commands in the documentation are correct f20aa1f
 - [ ] Task: Conductor - User Manual Verification 'Documentation Refinement' (Protocol in workflow.md)
