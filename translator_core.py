@@ -1,0 +1,1034 @@
+# SPDX-License-Identifier: Apache-2.0
+
+import os
+import numpy as np
+import logging
+import asyncio
+import requests
+import re
+import time
+import datetime
+import json
+import threading
+from openai import OpenAI
+from faster_whisper import WhisperModel
+
+# --- Configuration ---
+LOGS_DIR = "translation_logs"
+SETTINGS_FILE = "settings.json"
+# Default values, will be potentially overwritten by settings file
+DEFAULT_SETTINGS = {
+    "translation_server": "http://localhost:11434",
+    "tts_server_url": "http://localhost:8880/v1",
+    "translation_provider": "Ollama",
+    "openai_api_key": "",
+    "groq_api_key": "",
+    "grok_api_key": "",
+    "mistral_api_key": "",
+    "custom_openai_url": "",
+    "custom_openai_key": ""
+}
+
+# Provider configurations (Base URLs)
+PROVIDER_CONFIGS = {
+    "Ollama": {"requires_key": False},
+    "OpenAI": {"base_url": "https://api.openai.com/v1", "requires_key": True, "env_var": "OPENAI_API_KEY", "setting_key": "openai_api_key"},
+    "Groq": {"base_url": "https://api.groq.com/openai/v1", "requires_key": True, "env_var": "GROQ_API_KEY", "setting_key": "groq_api_key"},
+    "Grok (xAI)": {"base_url": "https://api.x.ai/v1", "requires_key": True, "env_var": "XAI_API_KEY", "setting_key": "grok_api_key"},
+    "Mistral": {"base_url": "https://api.mistral.ai/v1", "requires_key": True, "env_var": "MISTRAL_API_KEY", "setting_key": "mistral_api_key"},
+    "Custom OpenAI": {"base_url": "", "requires_key": True, "setting_key": "custom_openai_key"}
+}
+
+# --- Runtime VAD/Whisper controls (can be updated by UI) ---
+# Make these module-level so the app can adjust them without restarting
+NO_SPEECH_THRESHOLD: float = 0.7  # higher = stricter silence detection
+VAD_FILTER: bool = False          # Whisper's internal VAD (may drop soft speech on Linux)
+
+WHISPER_MODEL_SIZE = "small"
+# Map display names to Whisper language codes (ISO 639-1)
+# None for Auto-Detect
+LANGUAGE_CODES = {
+    # Detection
+    "Auto-Detect": None,
+
+    # Europe
+    "English": "en",
+    "Spanish": "es",
+    "French": "fr",
+    "German": "de",
+    "Italian": "it",
+    "Portuguese": "pt",
+    "Dutch": "nl",
+    "Russian": "ru",
+    "Ukrainian": "uk",
+    "Polish": "pl",
+    "Czech": "cs",
+    "Slovak": "sk",
+    "Hungarian": "hu",
+    "Romanian": "ro",
+    "Bulgarian": "bg",
+    "Serbian": "sr",
+    "Croatian": "hr",
+    "Slovenian": "sl",
+    "Bosnian": "bs",
+    "Albanian": "sq",
+    "Greek": "el",
+    "Turkish": "tr",
+    "Swedish": "sv",
+    "Norwegian": "no",
+    "Danish": "da",
+    "Finnish": "fi",
+    "Icelandic": "is",
+    "Lithuanian": "lt",
+    "Latvian": "lv",
+    "Estonian": "et",
+    "Irish": "ga",
+    "Welsh": "cy",
+    "Catalan": "ca",
+    "Galician": "gl",
+    "Basque": "eu",
+
+    # Middle East / Central Asia
+    "Arabic": "ar",
+    "Hebrew": "he",
+    "Persian (Farsi)": "fa",
+    "Pashto": "ps",
+    "Kurdish": "ku",
+    "Azerbaijani": "az",
+    "Armenian": "hy",
+    "Georgian": "ka",
+    "Kazakh": "kk",
+    "Uzbek": "uz",
+
+    # South Asia
+    "Hindi": "hi",
+    "Urdu": "ur",
+    "Bengali": "bn",
+    "Punjabi": "pa",
+    "Marathi": "mr",
+    "Gujarati": "gu",
+    "Tamil": "ta",
+    "Telugu": "te",
+    "Kannada": "kn",
+    "Malayalam": "ml",
+    "Sinhala": "si",
+    "Nepali": "ne",
+
+    # East / Southeast Asia
+    "Chinese": "zh",
+    "Japanese": "ja",
+    "Korean": "ko",
+    "Vietnamese": "vi",
+    "Thai": "th",
+    "Lao": "lo",
+    "Khmer": "km",
+    "Burmese": "my",
+    "Mongolian": "mn",
+    "Indonesian": "id",
+    "Malay": "ms",
+    "Filipino (Tagalog)": "tl",
+
+    # Africa
+    "Swahili": "sw",
+    "Amharic": "am",
+    "Somali": "so",
+    "Yoruba": "yo",
+    "Hausa": "ha",
+    "Zulu": "zu",
+    "Afrikaans": "af",
+
+    # Americas / Other
+    "Haitian Creole": "ht",
+}
+# Create reverse mapping for convenience (code -> display name)
+CODE_TO_LANGUAGE = {v: k for k, v in LANGUAGE_CODES.items() if v is not None}
+
+SOURCE_LANGUAGES = list(LANGUAGE_CODES.keys())  # Use keys from mapping
+TARGET_LANGUAGES = [
+    "🇿🇦 Afrikaans",
+    "🇸🇦 Arabic (Google only)",
+    "🇮🇳 Bengali (Google only)",
+    "🇧🇷 Brazilian Portuguese",
+    "🇬🇧 British English",
+    "🇨🇳 Mandarin Chinese",
+    "🇨🇿 Czech",
+    "🇩🇰 Danish",
+    "🇳🇱 Dutch",
+    "🇺🇸 English (American)",
+    "🇦🇺 English (Australian) (Google only)",
+    "🇬🇧 English (British)",
+    "🇮🇳 English (Indian) (Google only)",
+    "🇵🇭 Filipino (Google only)",
+    "🇫🇮 Finnish",
+    "🇫🇷 French",
+    "🇨🇦 French (Canadian) (Google only)",
+    "🇩🇪 German",
+    "🇬🇷 Greek",
+    "🇮🇳 Gujarati (Google only)",
+    "🇭🇹 Haitian Creole",
+    "🇮🇱 Hebrew",
+    "🇮🇳 Hindi",
+    "🇭🇺 Hungarian",
+    "🇮🇩 Indonesian (Google only)",
+    "🇮🇹 Italian",
+    "🇯🇵 Japanese",
+    "🇮🇳 Kannada (Google only)",
+    "🇰🇷 Korean",
+    "🇮🇳 Malayalam (Google only)",
+    "🇮🇳 Marathi (Google only)",
+    "🇳🇴 Norwegian",
+    "🇮🇷 Persian (Farsi)",
+    "🇵🇱 Polish",
+    "🇵🇹 Portuguese",
+    "🇷🇺 Russian",
+    "🇸🇰 Slovak (Google only)",
+    "🇪🇸 Spanish",
+    "🇺🇸 Spanish (US) (Google only)",
+    "🇸🇪 Swedish",
+    "🇮🇳 Tamil (Google only)",
+    "🇮🇳 Telugu (Google only)",
+    "🇹🇭 Thai (Google only)",
+    "🇹🇷 Turkish",
+    "🇺🇦 Ukrainian (Google only)",
+    "🇻🇳 Vietnamese (Google only)",
+]
+KOKORO_VOICES = [  # Added Kokoro Voices List
+    "af_heart",
+    "af_alloy",
+    "af_aoede",
+    "af_bella",
+    "af_jessica",
+    "af_kore",
+    "af_nicole",
+    "af_nova",
+    "af_river",
+    "af_sarah",
+    "af_sky",
+    "am_adam",
+    "am_echo",
+    "am_eric",
+    "am_fenrir",
+    "am_liam",
+    "am_michael",
+    "am_onyx",
+    "am_puck",
+    "am_santa",
+    "bf_alice",
+    "bf_emma",
+    "bf_isabella",
+    "bf_lily",
+    "bm_daniel",
+    "bm_fable",
+    "bm_george",
+    "bm_lewis",
+    "jf_alpha",
+    "jf_gongitsune",
+    "jf_nezumi",
+    "jf_tebukuro",
+    "jm_kumo",
+    "zf_xiaobei",
+    "zf_xiaoni",
+    "zf_xiaoxiao",
+    "zf_xiaoyi",
+    "zm_yunjian",
+    "zm_yunxi",
+    "zm_yunxia",
+    "zm_yunyang",
+    "ef_dora",
+    "em_alex",
+    "em_santa",
+    "ff_siwis",
+    "hf_alpha",
+    "hf_beta",
+    "hm_omega",
+    "hm_psi",
+    "if_sara",
+    "im_nicola",
+    "pf_dora",
+    "pm_alex",
+    "pm_santa",
+]
+GOOGLE_TTS_URL = "https://texttospeech.googleapis.com/v1/text:synthesize"
+GOOGLE_VOICES = [
+    # English (US)
+    "en-US-Neural2-A", "en-US-Neural2-C", "en-US-Neural2-D", "en-US-Neural2-E", "en-US-Neural2-F", "en-US-Neural2-G", "en-US-Neural2-H", "en-US-Neural2-I", "en-US-Neural2-J",
+    "en-US-News-K", "en-US-News-L", "en-US-News-M", "en-US-News-N",
+    "en-US-Standard-A", "en-US-Standard-B", "en-US-Standard-C", "en-US-Standard-D", "en-US-Standard-E", "en-US-Standard-F", "en-US-Standard-G", "en-US-Standard-H", "en-US-Standard-I", "en-US-Standard-J",
+    "en-US-Wavenet-A", "en-US-Wavenet-B", "en-US-Wavenet-C", "en-US-Wavenet-D", "en-US-Wavenet-E", "en-US-Wavenet-F", "en-US-Wavenet-G", "en-US-Wavenet-H", "en-US-Wavenet-I", "en-US-Wavenet-J",
+    # English (UK)
+    "en-GB-Neural2-A", "en-GB-Neural2-B", "en-GB-Neural2-C", "en-GB-Neural2-D", "en-GB-Neural2-F",
+    "en-GB-Standard-A", "en-GB-Standard-B", "en-GB-Standard-C", "en-GB-Standard-D", "en-GB-Standard-F",
+    "en-GB-Wavenet-A", "en-GB-Wavenet-B", "en-GB-Wavenet-C", "en-GB-Wavenet-D", "en-GB-Wavenet-F",
+    # English (Australia)
+    "en-AU-Neural2-A", "en-AU-Neural2-B", "en-AU-Neural2-C", "en-AU-Neural2-D",
+    "en-AU-Standard-A", "en-AU-Standard-B", "en-AU-Standard-C", "en-AU-Standard-D",
+    "en-AU-Wavenet-A", "en-AU-Wavenet-B", "en-AU-Wavenet-C", "en-AU-Wavenet-D",
+    # English (India)
+    "en-IN-Neural2-A", "en-IN-Neural2-B", "en-IN-Neural2-C", "en-IN-Neural2-D",
+    "en-IN-Standard-A", "en-IN-Standard-B", "en-IN-Standard-C", "en-IN-Standard-D",
+    "en-IN-Wavenet-A", "en-IN-Wavenet-B", "en-IN-Wavenet-C", "en-IN-Wavenet-D",
+    # Spanish (Spain)
+    "es-ES-Neural2-A", "es-ES-Neural2-B", "es-ES-Neural2-C", "es-ES-Neural2-D", "es-ES-Neural2-E", "es-ES-Neural2-F",
+    "es-ES-Standard-A", "es-ES-Standard-B", "es-ES-Standard-C", "es-ES-Standard-D",
+    "es-ES-Wavenet-B", "es-ES-Wavenet-C", "es-ES-Wavenet-D",
+    # Spanish (US)
+    "es-US-Neural2-A", "es-US-Neural2-B", "es-US-Neural2-C",
+    "es-US-Standard-A", "es-US-Standard-B", "es-US-Standard-C",
+    "es-US-Wavenet-A", "es-US-Wavenet-B", "es-US-Wavenet-C",
+    # French (France)
+    "fr-FR-Neural2-A", "fr-FR-Neural2-B", "fr-FR-Neural2-C", "fr-FR-Neural2-D", "fr-FR-Neural2-E",
+    "fr-FR-Standard-A", "fr-FR-Standard-B", "fr-FR-Standard-C", "fr-FR-Standard-D", "fr-FR-Standard-E",
+    "fr-FR-Wavenet-A", "fr-FR-Wavenet-B", "fr-FR-Wavenet-C", "fr-FR-Wavenet-D", "fr-FR-Wavenet-E",
+    # French (Canada)
+    "fr-CA-Neural2-A", "fr-CA-Neural2-B", "fr-CA-Neural2-C", "fr-CA-Neural2-D",
+    "fr-CA-Standard-A", "fr-CA-Standard-B", "fr-CA-Standard-C", "fr-CA-Standard-D",
+    "fr-CA-Wavenet-A", "fr-CA-Wavenet-B", "fr-CA-Wavenet-C", "fr-CA-Wavenet-D",
+    # German (Germany)
+    "de-DE-Neural2-A", "de-DE-Neural2-B", "de-DE-Neural2-C", "de-DE-Neural2-D", "de-DE-Neural2-F",
+    "de-DE-Standard-A", "de-DE-Standard-B", "de-DE-Standard-C", "de-DE-Standard-D", "de-DE-Standard-E", "de-DE-Standard-F",
+    "de-DE-Wavenet-A", "de-DE-Wavenet-B", "de-DE-Wavenet-C", "de-DE-Wavenet-D", "de-DE-Wavenet-E", "de-DE-Wavenet-F",
+    # Italian (Italy)
+    "it-IT-Neural2-A", "it-IT-Neural2-C",
+    "it-IT-Standard-A", "it-IT-Standard-B", "it-IT-Standard-C", "it-IT-Standard-D",
+    "it-IT-Wavenet-A", "it-IT-Wavenet-B", "it-IT-Wavenet-C", "it-IT-Wavenet-D",
+    # Portuguese (Brazil)
+    "pt-BR-Neural2-A", "pt-BR-Neural2-B", "pt-BR-Neural2-C",
+    "pt-BR-Standard-A", "pt-BR-Standard-B", "pt-BR-Standard-C",
+    "pt-BR-Wavenet-A", "pt-BR-Wavenet-B", "pt-BR-Wavenet-C",
+    # Portuguese (Portugal)
+    "pt-PT-Standard-A", "pt-PT-Standard-B", "pt-PT-Standard-C", "pt-PT-Standard-D",
+    "pt-PT-Wavenet-A", "pt-PT-Wavenet-B", "pt-PT-Wavenet-C", "pt-PT-Wavenet-D",
+    # Japanese
+    "ja-JP-Neural2-B", "ja-JP-Neural2-C", "ja-JP-Neural2-D",
+    "ja-JP-Standard-A", "ja-JP-Standard-B", "ja-JP-Standard-C", "ja-JP-Standard-D",
+    "ja-JP-Wavenet-A", "ja-JP-Wavenet-B", "ja-JP-Wavenet-C", "ja-JP-Wavenet-D",
+    # Korean
+    "ko-KR-Neural2-A", "ko-KR-Neural2-B", "ko-KR-Neural2-C",
+    "ko-KR-Standard-A", "ko-KR-Standard-B", "ko-KR-Standard-C", "ko-KR-Standard-D",
+    "ko-KR-Wavenet-A", "ko-KR-Wavenet-B", "ko-KR-Wavenet-C", "ko-KR-Wavenet-D",
+    # Chinese (Mandarin)
+    "cmn-CN-Standard-A", "cmn-CN-Standard-B", "cmn-CN-Standard-C", "cmn-CN-Standard-D",
+    "cmn-CN-Wavenet-A", "cmn-CN-Wavenet-B", "cmn-CN-Wavenet-C", "cmn-CN-Wavenet-D",
+    # Chinese (Taiwan)
+    "cmn-TW-Standard-A", "cmn-TW-Standard-B", "cmn-TW-Standard-C",
+    "cmn-TW-Wavenet-A", "cmn-TW-Wavenet-B", "cmn-TW-Wavenet-C",
+    # Russian
+    "ru-RU-Standard-A", "ru-RU-Standard-B", "ru-RU-Standard-C", "ru-RU-Standard-D", "ru-RU-Standard-E",
+    "ru-RU-Wavenet-A", "ru-RU-Wavenet-B", "ru-RU-Wavenet-C", "ru-RU-Wavenet-D", "ru-RU-Wavenet-E",
+    # Hindi (India)
+    "hi-IN-Neural2-A", "hi-IN-Neural2-B", "hi-IN-Neural2-C", "hi-IN-Neural2-D",
+    "hi-IN-Standard-A", "hi-IN-Standard-B", "hi-IN-Standard-C", "hi-IN-Standard-D",
+    "hi-IN-Wavenet-A", "hi-IN-Wavenet-B", "hi-IN-Wavenet-C", "hi-IN-Wavenet-D",
+    # Telugu (India)
+    "te-IN-Standard-A", "te-IN-Standard-B",
+    # Tamil (India)
+    "ta-IN-Standard-A", "ta-IN-Standard-B", "ta-IN-Standard-C", "ta-IN-Standard-D",
+    "ta-IN-Wavenet-A", "ta-IN-Wavenet-B", "ta-IN-Wavenet-C", "ta-IN-Wavenet-D",
+    # Bengali (India)
+    "bn-IN-Standard-A", "bn-IN-Standard-B", "bn-IN-Standard-C", "bn-IN-Standard-D",
+    "bn-IN-Wavenet-A", "bn-IN-Wavenet-B", "bn-IN-Wavenet-C", "bn-IN-Wavenet-D",
+    # Gujarati (India)
+    "gu-IN-Standard-A", "gu-IN-Standard-B", "gu-IN-Standard-C", "gu-IN-Standard-D",
+    "gu-IN-Wavenet-A", "gu-IN-Wavenet-B", "gu-IN-Wavenet-C", "gu-IN-Wavenet-D",
+    # Kannada (India)
+    "kn-IN-Standard-A", "kn-IN-Standard-B", "kn-IN-Standard-C", "kn-IN-Standard-D",
+    "kn-IN-Wavenet-A", "kn-IN-Wavenet-B", "kn-IN-Wavenet-C", "kn-IN-Wavenet-D",
+    # Malayalam (India)
+    "ml-IN-Standard-A", "ml-IN-Standard-B",
+    "ml-IN-Wavenet-A", "ml-IN-Wavenet-B",
+    # Marathi (India)
+    "mr-IN-Standard-A", "mr-IN-Standard-B", "mr-IN-Standard-C",
+    "mr-IN-Wavenet-A", "mr-IN-Wavenet-B", "mr-IN-Wavenet-C",
+    # Arabic
+    "ar-XA-Standard-A", "ar-XA-Standard-B", "ar-XA-Standard-C", "ar-XA-Standard-D",
+    "ar-XA-Wavenet-A", "ar-XA-Wavenet-B", "ar-XA-Wavenet-C",
+    # Dutch (Netherlands)
+    "nl-NL-Standard-A", "nl-NL-Standard-B", "nl-NL-Standard-C", "nl-NL-Standard-D", "nl-NL-Standard-E",
+    "nl-NL-Wavenet-A", "nl-NL-Wavenet-B", "nl-NL-Wavenet-C", "nl-NL-Wavenet-D", "nl-NL-Wavenet-E",
+    # Polish
+    "pl-PL-Standard-A", "pl-PL-Standard-B", "pl-PL-Standard-C", "pl-PL-Standard-D", "pl-PL-Standard-E",
+    "pl-PL-Wavenet-A", "pl-PL-Wavenet-B", "pl-PL-Wavenet-C", "pl-PL-Wavenet-D", "pl-PL-Wavenet-E",
+    # Turkish
+    "tr-TR-Standard-A", "tr-TR-Standard-B", "tr-TR-Standard-C", "tr-TR-Standard-D", "tr-TR-Standard-E",
+    "tr-TR-Wavenet-A", "tr-TR-Wavenet-B", "tr-TR-Wavenet-C", "tr-TR-Wavenet-D", "tr-TR-Wavenet-E",
+    # Swedish
+    "sv-SE-Standard-A", "sv-SE-Standard-B", "sv-SE-Standard-C", "sv-SE-Standard-D", "sv-SE-Standard-E",
+    "sv-SE-Wavenet-A", "sv-SE-Wavenet-B", "sv-SE-Wavenet-C", "sv-SE-Wavenet-D", "sv-SE-Wavenet-E",
+    # Norwegian
+    "nb-NO-Standard-A", "nb-NO-Standard-B", "nb-NO-Standard-C", "nb-NO-Standard-D", "nb-NO-Standard-E",
+    "nb-NO-Wavenet-A", "nb-NO-Wavenet-B", "nb-NO-Wavenet-C", "nb-NO-Wavenet-D", "nb-NO-Wavenet-E",
+    # Danish
+    "da-DK-Standard-A", "da-DK-Standard-C", "da-DK-Standard-D", "da-DK-Standard-E",
+    "da-DK-Wavenet-A", "da-DK-Wavenet-C", "da-DK-Wavenet-D", "da-DK-Wavenet-E",
+    # Finnish
+    "fi-FI-Standard-A", "fi-FI-Wavenet-A",
+    # Greek
+    "el-GR-Standard-A", "el-GR-Wavenet-A",
+    # Czech
+    "cs-CZ-Standard-A", "cs-CZ-Wavenet-A",
+    # Slovak
+    "sk-SK-Standard-A", "sk-SK-Wavenet-A",
+    # Ukrainian
+    "uk-UA-Standard-A", "uk-UA-Wavenet-A",
+    # Vietnamese
+    "vi-VN-Standard-A", "vi-VN-Standard-B", "vi-VN-Standard-C", "vi-VN-Standard-D",
+    "vi-VN-Wavenet-A", "vi-VN-Wavenet-B", "vi-VN-Wavenet-C", "vi-VN-Wavenet-D",
+    # Indonesian
+    "id-ID-Standard-A", "id-ID-Standard-B", "id-ID-Standard-C", "id-ID-Standard-D",
+    "id-ID-Wavenet-A", "id-ID-Wavenet-B", "id-ID-Wavenet-C", "id-ID-Wavenet-D",
+    # Thai
+    "th-TH-Standard-A", "th-TH-Neural2-C",
+    # Filipino
+    "fil-PH-Standard-A", "fil-PH-Standard-B", "fil-PH-Standard-C", "fil-PH-Standard-D",
+    "fil-PH-Wavenet-A", "fil-PH-Wavenet-B", "fil-PH-Wavenet-C", "fil-PH-Wavenet-D",
+    # Afrikaans (South Africa)
+    "af-ZA-Standard-A",
+]
+TARGET_RATE = 16000
+BLOCK_DURATION_MS = 100
+
+# --- Logging Setup ---
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+)
+
+if not os.path.exists(LOGS_DIR):
+    os.makedirs(LOGS_DIR)
+
+
+def get_log_filename():
+    now = datetime.datetime.now()
+    return os.path.join(LOGS_DIR, f"translation_log_{now.strftime('%Y-%m-%d')}.txt")
+
+
+# --- Core Functions ---
+def log_message(message, level="INFO"):
+    """Logs messages to console and file."""
+    logger = logging.getLogger()
+    if level == "INFO":
+        logger.info(message)
+    elif level == "WARNING":
+        logger.warning(message)
+    elif level == "ERROR":
+        logger.error(message)
+    elif level == "DEBUG":
+        logger.debug(message)
+    return message
+
+
+def log_translation_file(english_text, translated_text, target_language):
+    """Logs the translation to a file."""
+    timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    log_file = get_log_filename()
+    try:
+        with open(log_file, "a", encoding="utf-8") as f:
+            f.write(f"[{timestamp}]\n")
+            f.write(f"English: {english_text}\n")
+            f.write(f"{target_language}: {translated_text}\n")
+            f.write("-" * 50 + "\n")
+        log_message(f"Translation logged to {os.path.basename(log_file)}")
+    except Exception as e:
+        log_message(f"Error writing to log file: {e}", "ERROR")
+
+
+def load_settings():
+    """Loads settings from SETTINGS_FILE or returns defaults."""
+    try:
+        if os.path.exists(SETTINGS_FILE):
+            with open(SETTINGS_FILE, "r") as f:
+                loaded = json.load(f)
+                # Validate basic structure (can be expanded)
+                if (
+                    isinstance(loaded, dict)
+                    and "translation_server" in loaded
+                    and "tts_server_url" in loaded
+                ):
+                    log_message(f"Loaded settings from {SETTINGS_FILE}")
+                    return loaded
+                else:
+                    log_message(
+                        f"Invalid format in {SETTINGS_FILE}. Using defaults.", "WARNING"
+                    )
+        else:
+            log_message(f"{SETTINGS_FILE} not found. Using defaults.")
+    except (json.JSONDecodeError, IOError) as e:
+        log_message(f"Error loading settings: {e}. Using defaults.", "ERROR")
+
+    return DEFAULT_SETTINGS.copy()  # Ensure defaults are used if loading fails
+
+
+def clean_language_name(language_name):
+    """Remove flag emojis and extra descriptors from language names for translation prompts."""
+    import re
+    # Remove flag emojis (Unicode flag characters)
+    cleaned = re.sub(r'[\U0001F1E6-\U0001F1FF]{2}\s*', '', language_name)
+    # Remove "(Google only)" suffix
+    cleaned = re.sub(r'\s*\(Google only\)\s*', '', cleaned)
+    # Remove parenthetical region descriptors like (American), (British), (Canadian), etc.
+    cleaned = re.sub(r'\s*\([^)]+\)\s*', '', cleaned)
+    # Handle specific cases
+    if "American English" in cleaned or "English" in cleaned:
+        return "English"
+    elif "British English" in cleaned:
+        return "English"
+    elif "Mandarin Chinese" in cleaned or "Chinese" in cleaned:
+        return "Chinese"
+    elif "Brazilian Portuguese" in cleaned or "Portuguese" in cleaned:
+        return "Portuguese"
+    return cleaned.strip()
+
+def get_translation_client(current_settings):
+    """
+    Factory to create an OpenAI-compatible client for the selected provider.
+    Returns (client, model_name_override, error_message)
+    """
+    provider = current_settings.get("translation_provider", "Ollama")
+    config = PROVIDER_CONFIGS.get(provider)
+    
+    if not config:
+        return None, None, f"Unknown provider: {provider}"
+        
+    api_key = "ollama" # Default dummy key
+    
+    if provider == "Ollama":
+        # Load the Ollama server URL from settings, falling back to the default.
+        server_url = current_settings.get("translation_server", DEFAULT_SETTINGS["translation_server"]).strip()
+        # Ensure the URL is correctly formatted for the OpenAI client (e.g., http://host:port/v1)
+        base_url = f"{server_url.rstrip('/')}/v1"
+    else:
+        # For all other providers, use the base_url from the config.
+        base_url = config.get("base_url", "")
+
+    if provider == "Custom OpenAI":
+        base_url = current_settings.get("custom_openai_url", "").strip()
+        if not base_url:
+            return None, None, "Custom OpenAI URL is required"
+    
+    if config["requires_key"]:
+        # Try environment variable first, then settings
+        if "env_var" in config and os.getenv(config["env_var"]):
+            api_key = os.getenv(config["env_var"])
+        else:
+            api_key = current_settings.get(config["setting_key"], "").strip()
+            
+        if not api_key:
+            return None, None, f"API Key required for {provider}"
+
+    try:
+        client = OpenAI(base_url=base_url, api_key=api_key)
+        return client, None, None
+    except Exception as e:
+        return None, None, f"Failed to initialize client: {e}"
+
+def translate(
+    text, source_language, target_language, model_name, current_settings=None
+):
+    """Translates text using the configured provider (Ollama, OpenAI, Groq, etc.)."""
+    if current_settings is None:
+        current_settings = load_settings()
+        
+    # Clean language names for the translation prompt
+    clean_source = clean_language_name(source_language)
+    clean_target = clean_language_name(target_language)
+    
+    provider = current_settings.get("translation_provider", "Ollama")
+    
+    log_message(
+        f"Translating from {source_language} to {target_language} using {provider} ({model_name}): '{text}'"
+    )
+    
+    prompt_source_lang = (
+        clean_source if source_language != "Auto-Detect" else "the detected language"
+    )
+
+    system_prompt = f"You are a professional translator. Translate the following text from {prompt_source_lang} to {clean_target}. Provide ONLY the translation, without any explanations, notes, or extra text."
+    
+    client, _, error = get_translation_client(current_settings)
+    if error:
+        log_message(error, "ERROR")
+        return None
+
+    try:
+        response = client.chat.completions.create(
+            model=model_name,
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": text}
+            ],
+            temperature=0.3,
+            stream=False
+        )
+        
+        translation = response.choices[0].message.content.strip()
+        
+        # Cleanup quotes if present
+        if translation.startswith('"') and translation.endswith('"'):
+            translation = translation[1:-1]
+            
+        if not translation:
+            log_message("Translation result was empty.", "WARNING")
+            return None
+            
+        log_message(f"Translation: {translation}")
+        log_translation_file(text, translation, target_language)
+        return translation
+
+    except Exception as e:
+        log_message(f"Translation error with {provider}: {e}", "ERROR")
+        return None
+
+
+def transcribe_audio(audio, source_language, whisper_model=None):
+    """Transcribes audio using the Faster Whisper model."""
+    # Mark transcribing active
+    try:
+        transcribing_event.set()
+    except NameError:
+        # If events not yet defined, ignore
+        pass
+    if whisper_model is None:
+        log_message(f"Loading Whisper model ({WHISPER_MODEL_SIZE}) with CPU optimizations...")
+        whisper_model = WhisperModel(
+            WHISPER_MODEL_SIZE, 
+            device="cpu", 
+            compute_type="int8",
+            num_workers=1  # CPU optimization
+        )
+        log_message("Whisper model loaded.")
+        
+    try:
+        if audio.dtype != np.float32:
+            log_message(
+                f"Incorrect audio dtype: {audio.dtype}, converting.", "WARNING"
+            )
+            audio = audio.astype(np.float32)
+        max_val = np.max(np.abs(audio))
+        if max_val > 1.0:
+            log_message(
+                f"Audio max abs value {max_val:.3f} > 1.0, normalizing.", "DEBUG"
+            )
+            audio = audio / max_val
+        elif max_val == 0:
+            log_message("Audio segment is pure silence.", "DEBUG")
+            return None, None
+
+        energy = np.abs(audio).mean()
+        if energy < 0.0001:
+            log_message(f"Audio energy ({energy:.4f}) too low, skipping.", "DEBUG")
+            return None, None
+
+        log_message(
+            f"Transcribing audio segment (shape: {audio.shape}, dtype: {audio.dtype}, energy: {energy:.4f})",
+            "DEBUG",
+        )
+        # Determine language code for Whisper using the mapping
+        whisper_lang_code = LANGUAGE_CODES.get(
+            source_language, None
+        )  # Get code from mapping
+
+        segments, info = whisper_model.transcribe(
+            audio,
+            language=whisper_lang_code,  # Use the code (or None for auto-detect)
+            temperature=0.0,
+            no_speech_threshold=NO_SPEECH_THRESHOLD,
+            vad_filter=VAD_FILTER,
+            condition_on_previous_text=False,
+            beam_size=1,              # CPU optimization: reduce beam size
+            best_of=1,                # CPU optimization: reduce candidates
+            word_timestamps=False     # CPU optimization: disable if not needed
+        )
+        # Get the actual language code detected or used
+        detected_lang_code = info.language
+        log_message(
+            f"Detected/Used source language code: {detected_lang_code} (Confidence: {info.language_probability:.2f})"
+        )
+
+        text = " ".join([segment.text for segment in segments]).strip()
+        # Allow single words - removed len(text.split()) < 2 check
+        if not text:
+            log_message(f"Filtered out empty transcription: '{text}'", "DEBUG")
+            return None, None  # Return None for both text and lang_code
+        log_message(f"Transcription: {text}")
+        return text, detected_lang_code  # Return text and detected code
+    except Exception as e:
+        log_message(f"Transcription error: {e}", "ERROR")
+        return None, None  # Return None for both text and lang_code
+    finally:
+        try:
+            transcribing_event.clear()
+        except NameError:
+            pass
+
+
+def is_complete_sentence(text):
+    """Checks if text seems like a complete sentence (basic heuristic)."""
+    if not text:
+        return False
+    if re.search(r"[.!?]$", text.strip()):
+        return True
+    if len(text.split()) >= 5:
+        return True
+    return False
+
+
+def is_speech(audio_chunk, min_threshold=0.0008, max_threshold=0.6):
+    """Checks if audio chunk energy is within speech range."""
+    if audio_chunk is None or len(audio_chunk) == 0:
+        return False
+    energy = np.abs(audio_chunk).mean()
+    # More lenient threshold to catch quieter speech
+    return min_threshold < energy < max_threshold
+
+
+def google_text_to_speech(text, selected_voice, api_key):
+    """Generates speech using Google Cloud TTS API and returns audio content."""
+    if not api_key:
+        log_message("Google TTS API key missing.", "ERROR")
+        return None
+
+    # Extract language code safely (e.g. en-US from en-US-Neural2-A)
+    parts = selected_voice.split("-")
+    if len(parts) >= 2:
+        language_code = "-".join(parts[:2])
+    else:
+        language_code = "en-US" # Fallback
+
+    payload = {
+        "input": {"text": text},
+        "voice": {
+            "languageCode": language_code,
+            "name": selected_voice
+        },
+        "audioConfig": {
+            "audioEncoding": "MP3"
+        }
+    }
+    
+    url = f"{GOOGLE_TTS_URL}?key={api_key}"
+    
+    try:
+        response = requests.post(url, json=payload, timeout=10)
+        response.raise_for_status()
+        response_json = response.json()
+        audio_content = response_json.get("audioContent")
+        
+        if audio_content:
+            import base64
+            return base64.b64decode(audio_content)
+        else:
+            log_message("Google TTS response missing audioContent.", "ERROR")
+            return None
+            
+    except requests.exceptions.RequestException as e:
+        log_message(f"Google TTS API error: {e}", "ERROR")
+        return None
+    except Exception as e:
+        log_message(f"Google TTS unexpected error: {e}", "ERROR")
+        return None
+
+
+def fetch_google_voices(api_key):
+    """Fetches the list of available voices from Google TTS API."""
+    if not api_key:
+        return []
+        
+    url = f"https://texttospeech.googleapis.com/v1/voices?key={api_key}"
+    try:
+        log_message("Fetching dynamic voice list from Google API...")
+        response = requests.get(url, timeout=5)
+        response.raise_for_status()
+        data = response.json()
+        
+        voices = []
+        for voice in data.get("voices", []):
+            # Return all valid voice names
+            name = voice.get("name")
+            if name:
+                voices.append(name)
+        
+        voices.sort()
+        log_message(f"Fetched {len(voices)} voices from Google.")
+        return voices
+    except Exception as e:
+        log_message(f"Error fetching Google voices: {e}", "ERROR")
+        return []
+
+
+async def text_to_speech_async(text, selected_voice, current_settings=None, output_device_idx=None):
+    """Generates speech using configured provider (Kokoro or Google) with direct audio streaming."""
+    if current_settings is None:
+        current_settings = load_settings()
+
+    if not selected_voice or str(selected_voice).lower() == "none":
+        log_message("No voice selected; skipping TTS generation.", "DEBUG")
+        return None
+
+    tts_provider = current_settings.get("tts_provider", "Kokoro")
+    audio_data = None
+
+    if tts_provider == "Google":
+        # Priority: Environment variable first, then settings.json
+        api_key = os.getenv("GOOGLE_API_KEY") or current_settings.get("google_api_key")
+        if not api_key:
+             log_message("Google TTS selected but no API key provided. Set GOOGLE_API_KEY environment variable or add it in Settings.", "ERROR")
+             return None
+        
+        # Log which source was used (without exposing the key)
+        key_source = "environment variable" if os.getenv("GOOGLE_API_KEY") else "settings.json"
+        log_message(f"Using Google API key from {key_source}", "DEBUG")
+        
+        log_message(f"Generating Google TTS speech with voice '{selected_voice}'")
+        audio_data = google_text_to_speech(text, selected_voice, api_key)
+        
+    else:
+        # Default: Kokoro / OpenAI Compatible
+        tts_url = current_settings.get("tts_server_url", DEFAULT_SETTINGS["tts_server_url"])
+        log_message(f"Generating Kokoro speech with voice '{selected_voice}' via {tts_url}")
+        
+        try:
+            speech_client = OpenAI(base_url=tts_url, api_key="not-needed")
+            # Stream audio data directly without creating files
+            with speech_client.audio.speech.with_streaming_response.create(
+                model="kokoro",
+                voice=selected_voice,
+                response_format="mp3",
+                input=text,
+                speed=1.0,
+            ) as response:
+                # Collect audio data in memory
+                audio_data = b""
+                for chunk in response.iter_bytes():
+                    audio_data += chunk
+        except Exception as e:
+            log_message(f"Kokoro TTS error: {e}", "ERROR")
+            return None
+
+    if audio_data:
+        log_message("Speech generated successfully")
+        
+        # If output device is specified, play the audio directly
+        if output_device_idx is not None:
+            try:
+                import pyaudio
+                import io
+                from pydub import AudioSegment
+                
+                # Convert MP3 data to playable format
+                audio_segment = AudioSegment.from_mp3(io.BytesIO(audio_data))
+                
+                # Convert to raw audio data
+                raw_data = audio_segment.raw_data
+                sample_rate = audio_segment.frame_rate
+                channels = audio_segment.channels
+                sample_width = audio_segment.sample_width
+                
+                # Initialize PyAudio
+                p = pyaudio.PyAudio()
+                
+                try:
+                    # Open stream
+                    stream = p.open(
+                        format=p.get_format_from_width(sample_width),
+                        channels=channels,
+                        rate=sample_rate,
+                        output=True,
+                        output_device_index=output_device_idx
+                    )
+                    
+                    # Play audio
+                    stream.write(raw_data)
+                    stream.stop_stream()
+                    stream.close()
+                    
+                    log_message(f"Audio played through device {output_device_idx}")
+                finally:
+                    p.terminate()
+                    
+            except Exception as play_error:
+                log_message(f"Error playing audio through device {output_device_idx}: {play_error}", "ERROR")
+                log_message("Audio playback failed")
+        
+        return None
+    else:
+        log_message("No audio data generated.", "WARNING")
+        return None
+
+
+def fetch_available_models(server_url=None, current_settings=None):
+    """Fetches available models from the configured provider (Ollama, OpenAI, etc.).
+    
+    Args:
+        server_url: Optional server URL for Ollama.
+        current_settings: Optional settings dict. If not provided, loads from file.
+    """
+    if current_settings is None:
+        current_settings = load_settings()
+    provider = current_settings.get("translation_provider", "Ollama")
+    
+    # For Ollama, fetch dynamic list
+    if provider == "Ollama":
+        translation_server_url = server_url or current_settings.get(
+            "translation_server", DEFAULT_SETTINGS["translation_server"]
+        )
+        log_message(f"Fetching Ollama models from: {translation_server_url}")
+        try:
+            response = requests.get(f"{translation_server_url}/api/tags", timeout=5)
+            response.raise_for_status()
+            models_data = response.json()
+            model_names = sorted([model["name"] for model in models_data.get("models", [])])
+            if not model_names:
+                log_message("No Ollama models found via API.", "WARNING")
+                return ["llama3.2:3b-instruct-q4_K_M"]
+            log_message(f"Found Ollama models: {', '.join(model_names)}")
+            return model_names
+        except Exception as e:
+            log_message(f"Error fetching Ollama models: {e}", "ERROR")
+            return ["llama3.2:3b-instruct-q4_K_M"]
+
+    # For OpenAI and compatible APIs, we can also try to fetch models if the API supports it
+    # But usually, it's safer to provide a known-good list or allow custom entry
+    client, _, error = get_translation_client(current_settings)
+    if error:
+        log_message(f"Cannot fetch models from {provider}: {error}", "WARNING")
+    elif client:
+        try:
+            log_message(f"Attempting to fetch models from {provider} API...")
+            models = client.models.list()
+            # Filter somewhat relevant models if possible, or just return all IDs
+            model_names = sorted([m.id for m in models.data])
+            log_message(f"Successfully fetched {len(model_names)} models from {provider}")
+            if model_names:
+                return model_names
+            else:
+                log_message(f"API returned empty model list for {provider}, using defaults", "WARNING")
+        except Exception as e:
+            log_message(f"Could not fetch models from {provider} API (using defaults): {e}", "WARNING")
+
+    # Fallback defaults for cloud providers
+    log_message(f"Using fallback model list for {provider}")
+    if provider == "OpenAI":
+        return ["gpt-4o", "gpt-4o-mini", "gpt-4-turbo", "gpt-3.5-turbo"]
+    elif provider == "Groq":
+        # Updated Groq models (as of late 2024)
+        return ["llama-3.3-70b-versatile", "llama-3.1-8b-instant", "gemma2-9b-it", "mixtral-8x7b-32768", "llama3-70b-8192", "llama3-8b-8192"]
+    elif provider == "Grok (xAI)":
+        return ["grok-beta", "grok-vision-beta"] # Subject to change
+    elif provider == "Mistral":
+        return ["mistral-large-latest", "mistral-medium-latest", "mistral-small-latest", "open-mistral-7b"]
+    
+    # Custom or unknown
+    return ["custom-model-name"]
+
+
+# --- Health / Status Flags ---
+# Events are thread-safe primitives to reflect state without heavy locking
+services_ok_event = threading.Event()
+transcribing_event = threading.Event()
+
+# Cached health state to avoid frequent network calls
+_last_health_check_ts = 0.0
+_last_ollama_ok = False
+_last_tts_ok = False
+_ollama_fail_count = 0
+_tts_fail_count = 0
+_FAIL_THRESHOLD = 2  # require N consecutive fails to mark as down
+
+
+def check_services_health(force=False, current_settings=None):
+    """Lightweight health check for translation and TTS services with debounce.
+
+    Returns a tuple (ollama_ok, tts_ok).
+    """
+    global _last_health_check_ts, _last_ollama_ok, _last_tts_ok, _ollama_fail_count, _tts_fail_count
+    now = time.time()
+
+    # Debounce to every ~2 seconds unless forced
+    if not force and (now - _last_health_check_ts) < 2.0:
+        return _last_ollama_ok, _last_tts_ok
+
+    if current_settings is None:
+        current_settings = load_settings()
+
+    # Start with previous state; only flip to False after thresholded failures
+    ollama_ok = _last_ollama_ok
+    tts_ok = _last_tts_ok
+
+    # Check Ollama
+    try:
+        translation_server_url = current_settings.get(
+            "translation_server", DEFAULT_SETTINGS["translation_server"]
+        )
+        r = requests.get(f"{translation_server_url}/api/tags", timeout=0.8)
+        r.raise_for_status()
+        ollama_ok = True
+        _ollama_fail_count = 0
+    except requests.Timeout:
+        # Inconclusive: keep previous state, do not increment fail count
+        log_message("Health: Ollama check timeout (ignored)", "DEBUG")
+    except Exception as e:
+        _ollama_fail_count += 1
+        log_message(f"Health: Ollama check failed ({_ollama_fail_count}): {e}", "WARNING")
+        if _ollama_fail_count >= _FAIL_THRESHOLD:
+            ollama_ok = False
+
+    # Check TTS (OpenAI-compatible). Try a minimal GET to /models if supported.
+    try:
+        tts_url = current_settings.get("tts_server_url", DEFAULT_SETTINGS["tts_server_url"])
+        # Some servers may not implement /models; still attempt as a quick ping.
+        r2 = requests.get(f"{tts_url}/models", timeout=0.8)
+        if r2.status_code < 500:
+            tts_ok = True
+            _tts_fail_count = 0
+        else:
+            _tts_fail_count += 1
+            if _tts_fail_count >= _FAIL_THRESHOLD:
+                tts_ok = False
+    except requests.Timeout:
+        # Inconclusive: keep previous state, do not increment fail count
+        log_message("Health: TTS check timeout (ignored)", "DEBUG")
+    except Exception as e:
+        _tts_fail_count += 1
+        log_message(f"Health: TTS check failed ({_tts_fail_count}): {e}", "WARNING")
+        if _tts_fail_count >= _FAIL_THRESHOLD:
+            tts_ok = False
+
+    _last_health_check_ts = now
+    _last_ollama_ok = ollama_ok
+    _last_tts_ok = tts_ok
+
+    if ollama_ok and tts_ok:
+        services_ok_event.set()
+    else:
+        services_ok_event.clear()
+
+    return ollama_ok, tts_ok
+
+
+def get_status():
+    """Return a dict summarizing backend service status and activity.
+
+    Keys:
+      - ollama_ok
+      - tts_ok
+      - services_ok
+      - transcribing
+      - detail (human-readable)
+    """
+    ollama_ok, tts_ok = check_services_health(force=False)
+    transcribing = transcribing_event.is_set()
+    services_ok = services_ok_event.is_set()
+
+    issues = []
+    if not ollama_ok:
+        issues.append("Ollama unreachable")
+    if not tts_ok:
+        issues.append("TTS unreachable")
+    detail = "; ".join(issues) if issues else ("Idle" if not transcribing else "Transcribing…")
+
+    return {
+        "ollama_ok": ollama_ok,
+        "tts_ok": tts_ok,
+        "services_ok": services_ok,
+        "transcribing": transcribing,
+        "detail": detail,
+    }

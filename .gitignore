@@ -1,0 +1,49 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+.eggs/
+.dist/
+.build/
+
+# Virtual environments
+venv/
+.env/
+.venv/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs and temp artifacts
+translation_logs/
+translation_log.txt
+*.log
+.temp/
+
+# Audio artifacts
+*.wav
+
+# IDE/project
+.vscode/
+.idea/
+*.code-workspace
+
+# Cache
+.cache/
+.pytest_cache/
+
+# Notebooks
+.ipynb_checkpoints/
+
+# Sensitive configuration files (contains API keys)
+settings.json
+settings.json.*
+user_preferences.json
+*.backup
+*.backup_*
+main.py.backup_*
+translator_core.py.backup_*

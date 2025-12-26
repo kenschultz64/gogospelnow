@@ -1,0 +1,869 @@
+2025-12-17 22:06:13 - --- Display Process Started ---
+2025-12-17 22:06:13 - Initial config: {'display_font_family': 'Helvetica', 'display_font_size': 72, 'display_font_color': '#ffffff', 'display_bg_color': '#000000', 'display_window_x': 0, 'display_window_y': 0, 'display_window_width': 1920, 'display_window_height': 1080, 'display_always_on_top': True, 'display_history_size': 1, 'display_horizontal_align': 'Center', 'display_vertical_align': 'Bottom', 'display_hold_seconds': 4.0, 'display_monitor': 2}
+2025-12-17 22:06:13 - Applying config. Monitor Index: 2
+2025-12-17 22:06:13 - get_monitors not available
+2025-12-17 22:06:13 - Setting geometry to: 1920x1080+0+0
+2025-12-17 22:07:45 - --- Display Process Started ---
+2025-12-17 22:07:45 - Initial config: {'display_font_family': 'Helvetica', 'display_font_size': 72, 'display_font_color': '#ffffff', 'display_bg_color': '#000000', 'display_window_x': 0, 'display_window_y': 0, 'display_window_width': 1920, 'display_window_height': 1080, 'display_always_on_top': True, 'display_history_size': 1, 'display_horizontal_align': 'Center', 'display_vertical_align': 'Bottom', 'display_hold_seconds': 4.0, 'display_monitor': 2}
+2025-12-17 22:07:45 - Applying config. Monitor Index: 2
+2025-12-17 22:07:45 - get_monitors not available
+2025-12-17 22:07:45 - Setting geometry to: 1920x1080+0+0
+2025-12-17 22:11:34 - --- Display Process Started ---
+2025-12-17 22:11:34 - Initial config: {'display_font_family': 'Helvetica', 'display_font_size': 72, 'display_font_color': '#ffffff', 'display_bg_color': '#000000', 'display_window_x': 0, 'display_window_y': 0, 'display_window_width': 1920, 'display_window_height': 1080, 'display_always_on_top': True, 'display_history_size': 1, 'display_horizontal_align': 'Center', 'display_vertical_align': 'Bottom', 'display_hold_seconds': 4.0, 'display_monitor': 2}
+2025-12-17 22:11:34 - Applying config. Monitor Index: 2
+2025-12-17 22:11:34 - get_monitors not available
+2025-12-17 22:11:34 - Tkinter Geometry: 1920x1080+0+0
+2025-12-17 22:11:35 - Forcing position via Windows API (HWND 1907524) to X=0, Y=0
+2025-12-17 22:12:40 - --- Display Process Started ---
+2025-12-17 22:12:40 - Initial config: {'display_font_family': 'Helvetica', 'display_font_size': 72, 'display_font_color': '#ffffff', 'display_bg_color': '#000000', 'display_window_x': 0, 'display_window_y': 0, 'display_window_width': 1920, 'display_window_height': 1080, 'display_always_on_top': True, 'display_history_size': 1, 'display_horizontal_align': 'Center', 'display_vertical_align': 'Bottom', 'display_hold_seconds': 4.0, 'display_monitor': 3}
+2025-12-17 22:12:40 - Applying config. Monitor Index: 3
+2025-12-17 22:12:40 - get_monitors not available
+2025-12-17 22:12:40 - Tkinter Geometry: 1920x1080+0+0
+2025-12-17 22:12:41 - Forcing position via Windows API (HWND 2167060) to X=0, Y=0
+2025-12-18 15:03:45 - --- Display Process Started ---
+2025-12-18 15:03:45 - Initial config: {'display_font_family': 'Helvetica', 'display_font_size': 72, 'display_font_color': '#ffffff', 'display_bg_color': '#000000', 'display_window_x': 0, 'display_window_y': 0, 'display_window_width': 1920, 'display_window_height': 1080, 'display_always_on_top': True, 'display_history_size': 1, 'display_horizontal_align': 'Center', 'display_vertical_align': 'Bottom', 'display_hold_seconds': 4.0, 'display_monitor': 2, 'display_manual_offset_x': 0, 'display_manual_offset_y': 0}
+2025-12-18 15:03:45 - Using manual/default offsets: 0, 0
+2025-12-18 15:03:45 - Tkinter Geometry: 1920x1080+0+0
+2025-12-18 15:03:45 - Forcing position via Windows API (HWND 268002) to X=0, Y=0
+2025-12-18 15:05:02 - --- Display Process Started ---
+2025-12-18 15:05:02 - Initial config: {'display_font_family': 'Helvetica', 'display_font_size': 72, 'display_font_color': '#ffffff', 'display_bg_color': '#000000', 'display_window_x': 0, 'display_window_y': 0, 'display_window_width': 1920, 'display_window_height': 1080, 'display_always_on_top': True, 'display_history_size': 1, 'display_horizontal_align': 'Center', 'display_vertical_align': 'Bottom', 'display_hold_seconds': 4.0, 'display_monitor': 2, 'display_manual_offset_x': 0, 'display_manual_offset_y': 0}
+2025-12-18 15:05:02 - Using manual/default offsets: 0, 0
+2025-12-18 15:05:02 - Tkinter Geometry: 1920x1080+0+0
+2025-12-18 15:05:03 - Forcing position via Windows API (HWND 658634) to X=0, Y=0
+2025-12-18 15:06:25 - --- Display Process Started ---
+2025-12-18 15:06:25 - Initial config: {'display_font_family': 'Helvetica', 'display_font_size': 72, 'display_font_color': '#ffffff', 'display_bg_color': '#000000', 'display_window_x': 0, 'display_window_y': 0, 'display_window_width': 1920, 'display_window_height': 1080, 'display_always_on_top': True, 'display_history_size': 1, 'display_horizontal_align': 'Center', 'display_vertical_align': 'Bottom', 'display_hold_seconds': 4.0, 'display_monitor': 0, 'display_manual_offset_x': 0, 'display_manual_offset_y': 0}
+2025-12-18 15:06:25 - Using manual/default offsets: 0, 0
+2025-12-18 15:06:25 - Tkinter Geometry: 1920x1080+0+0
+2025-12-18 15:06:26 - Forcing position via Windows API (HWND 5115218) to X=0, Y=0
+2025-12-18 17:01:38 - --- Display Process Started ---
+2025-12-18 17:01:38 - Initial config: {'display_font_family': 'Helvetica', 'display_font_size': 72, 'display_font_color': '#ffffff', 'display_bg_color': '#000000', 'display_window_x': 0, 'display_window_y': 0, 'display_window_width': 1920, 'display_window_height': 1080, 'display_always_on_top': True, 'display_history_size': 1, 'display_horizontal_align': 'Center', 'display_vertical_align': 'Bottom', 'display_hold_seconds': 4.0, 'display_monitor': 0, 'display_manual_offset_x': 0, 'display_manual_offset_y': 0}
+2025-12-18 17:01:38 - Manual Offsets: X=0, Y=0
+2025-12-18 17:01:38 - FINAL COORDINATES: X=0, Y=0 (Auto 0 + Manual 0 + Window 0)
+2025-12-18 17:01:38 - Applying Geometry: 1920x1080+0+0
+2025-12-18 17:01:39 - Calling SetWindowPos on HWND 1708046 -> 0, 0
+2025-12-18 17:02:52 - --- Display Process Started ---
+2025-12-18 17:02:52 - Initial config: {'display_font_family': 'Helvetica', 'display_font_size': 72, 'display_font_color': '#ffffff', 'display_bg_color': '#000000', 'display_window_x': 0, 'display_window_y': 0, 'display_window_width': 1920, 'display_window_height': 1080, 'display_always_on_top': True, 'display_history_size': 1, 'display_horizontal_align': 'Center', 'display_vertical_align': 'Bottom', 'display_hold_seconds': 4.0, 'display_monitor': 3, 'display_manual_offset_x': 0, 'display_manual_offset_y': 0}
+2025-12-18 17:02:52 - Manual Offsets: X=0, Y=0
+2025-12-18 17:02:52 - FINAL COORDINATES: X=0, Y=0 (Auto 0 + Manual 0 + Window 0)
+2025-12-18 17:02:52 - Applying Geometry: 1920x1080+0+0
+2025-12-18 17:02:53 - Calling SetWindowPos on HWND 200506 -> 0, 0
+2025-12-18 17:15:53 - --- Display Process Started ---
+2025-12-18 17:15:53 - Initial config: {'display_font_family': 'Helvetica', 'display_font_size': 72, 'display_font_color': '#ffffff', 'display_bg_color': '#000000', 'display_window_x': 0, 'display_window_y': 0, 'display_window_width': 1920, 'display_window_height': 1080, 'display_always_on_top': True, 'display_history_size': 1, 'display_horizontal_align': 'Center', 'display_vertical_align': 'Bottom', 'display_hold_seconds': 4.0, 'display_monitor': 2, 'display_manual_offset_x': 0, 'display_manual_offset_y': 0}
+2025-12-18 17:15:53 - Manual Offsets: X=0, Y=0
+2025-12-18 17:15:53 - FINAL COORDINATES: X=0, Y=0 (Auto 0 + Manual 0 + Window 0)
+2025-12-18 17:15:53 - Applying Geometry: 1920x1080+0+0
+2025-12-18 17:15:54 - Calling SetWindowPos on HWND 133718 -> 0, 0
+2025-12-18 17:18:30 - --- Display Process Started ---
+2025-12-18 17:18:30 - Initial config: {'display_font_family': 'Helvetica', 'display_font_size': 72, 'display_font_color': '#ffffff', 'display_bg_color': '#000000', 'display_window_x': 0, 'display_window_y': 0, 'display_window_width': 1920, 'display_window_height': 1080, 'display_always_on_top': True, 'display_history_size': 1, 'display_horizontal_align': 'Center', 'display_vertical_align': 'Bottom', 'display_hold_seconds': 4.0, 'display_monitor': 2, 'display_manual_offset_x': 0, 'display_manual_offset_y': 0}
+2025-12-18 17:18:30 - Manual Offsets: X=0, Y=0
+2025-12-18 17:18:30 - FINAL COORDINATES: X=0, Y=0 (Auto 0 + Manual 0 + Window 0)
+2025-12-18 17:18:30 - Applying Geometry: 1920x1080+0+0
+2025-12-18 17:18:31 - Calling SetWindowPos on HWND 133834 -> 0, 0
+2025-12-18 17:37:17 - --- Display Process Started ---
+2025-12-18 17:37:17 - Subprocess screeninfo available: False
+2025-12-18 17:37:17 - Initial config: {'display_font_family': 'Helvetica', 'display_font_size': 72, 'display_font_color': '#ffffff', 'display_bg_color': '#000000', 'display_window_x': 0, 'display_window_y': 0, 'display_window_width': 1920, 'display_window_height': 1080, 'display_always_on_top': True, 'display_history_size': 1, 'display_horizontal_align': 'Center', 'display_vertical_align': 'Bottom', 'display_hold_seconds': 4.0, 'display_monitor': 2, 'display_manual_offset_x': 0, 'display_manual_offset_y': 0}
+2025-12-18 17:37:17 - Subprocess fallback: screeninfo not available
+2025-12-18 17:37:17 - Manual Offsets: X=0, Y=0
+2025-12-18 17:37:17 - FINAL COORDINATES: X=0, Y=0 (Auto 0 + Manual 0 + Window 0)
+2025-12-18 17:37:17 - Applying Geometry: 1920x1080+0+0
+2025-12-18 17:37:17 - Calling SetWindowPos on HWND 199906 -> 0, 0
+2025-12-18 17:37:45 - --- Display Process Started ---
+2025-12-18 17:37:45 - Subprocess screeninfo available: False
+2025-12-18 17:37:45 - Initial config: {'display_font_family': 'Helvetica', 'display_font_size': 72, 'display_font_color': '#ffffff', 'display_bg_color': '#000000', 'display_window_x': 0, 'display_window_y': 0, 'display_window_width': 1920, 'display_window_height': 1080, 'display_always_on_top': True, 'display_history_size': 1, 'display_horizontal_align': 'Center', 'display_vertical_align': 'Bottom', 'display_hold_seconds': 4.0, 'display_monitor': 2, 'display_manual_offset_x': 0, 'display_manual_offset_y': 0}
+2025-12-18 17:37:45 - Subprocess fallback: screeninfo not available
+2025-12-18 17:37:45 - Manual Offsets: X=0, Y=0
+2025-12-18 17:37:45 - FINAL COORDINATES: X=0, Y=0 (Auto 0 + Manual 0 + Window 0)
+2025-12-18 17:37:45 - Applying Geometry: 1920x1080+0+0
+2025-12-18 17:37:45 - Calling SetWindowPos on HWND 330910 -> 0, 0
+2025-12-18 17:37:59 - Cannot cycle monitors: screeninfo not available in subprocess
+2025-12-18 17:38:00 - Cannot cycle monitors: screeninfo not available in subprocess
+2025-12-18 17:38:01 - Cannot cycle monitors: screeninfo not available in subprocess
+2025-12-18 17:38:01 - Cannot cycle monitors: screeninfo not available in subprocess
+2025-12-18 17:38:01 - Cannot cycle monitors: screeninfo not available in subprocess
+2025-12-18 17:38:02 - Cannot cycle monitors: screeninfo not available in subprocess
+2025-12-18 17:38:02 - Cannot cycle monitors: screeninfo not available in subprocess
+2025-12-18 17:38:02 - Cannot cycle monitors: screeninfo not available in subprocess
+2025-12-18 17:38:02 - Cannot cycle monitors: screeninfo not available in subprocess
+2025-12-18 17:38:03 - Cannot cycle monitors: screeninfo not available in subprocess
+2025-12-18 17:38:03 - Cannot cycle monitors: screeninfo not available in subprocess
+2025-12-18 17:38:03 - Cannot cycle monitors: screeninfo not available in subprocess
+2025-12-18 17:38:03 - Cannot cycle monitors: screeninfo not available in subprocess
+2025-12-18 17:38:04 - Cannot cycle monitors: screeninfo not available in subprocess
+2025-12-18 17:38:04 - Cannot cycle monitors: screeninfo not available in subprocess
+2025-12-18 17:38:04 - Cannot cycle monitors: screeninfo not available in subprocess
+2025-12-18 17:38:05 - Cannot cycle monitors: screeninfo not available in subprocess
+2025-12-18 17:38:44 - --- Display Process Started ---
+2025-12-18 17:38:44 - Subprocess screeninfo available: False
+2025-12-18 17:38:44 - Initial config: {'display_font_family': 'Helvetica', 'display_font_size': 72, 'display_font_color': '#ffffff', 'display_bg_color': '#000000', 'display_window_x': 1920, 'display_window_y': 0, 'display_window_width': 1920, 'display_window_height': 1080, 'display_always_on_top': True, 'display_history_size': 1, 'display_horizontal_align': 'Center', 'display_vertical_align': 'Bottom', 'display_hold_seconds': 4.0, 'display_monitor': 2, 'display_manual_offset_x': 0, 'display_manual_offset_y': 0}
+2025-12-18 17:38:44 - Subprocess fallback: screeninfo not available
+2025-12-18 17:38:44 - Manual Offsets: X=0, Y=0
+2025-12-18 17:38:44 - FINAL COORDINATES: X=1920, Y=0 (Auto 0 + Manual 0 + Window 1920)
+2025-12-18 17:38:44 - Applying Geometry: 1920x1080+1920+0
+2025-12-18 17:38:44 - Calling SetWindowPos on HWND 658460 -> 1920, 0
+2025-12-18 17:38:57 - Cannot cycle monitors: screeninfo not available in subprocess
+2025-12-18 17:38:58 - Cannot cycle monitors: screeninfo not available in subprocess
+2025-12-18 17:40:01 - --- Display Process Started ---
+2025-12-18 17:40:01 - Subprocess screeninfo available: False
+2025-12-18 17:40:01 - Initial config: {'display_font_family': 'Helvetica', 'display_font_size': 72, 'display_font_color': '#ffffff', 'display_bg_color': '#000000', 'display_window_x': 1920, 'display_window_y': 0, 'display_window_width': 1920, 'display_window_height': 1080, 'display_always_on_top': True, 'display_history_size': 1, 'display_horizontal_align': 'Center', 'display_vertical_align': 'Bottom', 'display_hold_seconds': 4.0, 'display_monitor': 2, 'display_manual_offset_x': 0, 'display_manual_offset_y': 0}
+2025-12-18 17:40:01 - Subprocess fallback: screeninfo not available
+2025-12-18 17:40:01 - Manual Offsets: X=0, Y=0
+2025-12-18 17:40:01 - FINAL COORDINATES: X=1920, Y=0 (Auto 0 + Manual 0 + Window 1920)
+2025-12-18 17:40:01 - Applying Geometry: 1920x1080+1920+0
+2025-12-18 17:40:02 - Calling SetWindowPos on HWND 723910 -> 1920, 0
+2025-12-18 17:40:52 - --- Display Process Started ---
+2025-12-18 17:40:52 - Subprocess screeninfo available: False
+2025-12-18 17:40:52 - Initial config: {'display_font_family': 'Helvetica', 'display_font_size': 72, 'display_font_color': '#ffffff', 'display_bg_color': '#000000', 'display_window_x': 1920, 'display_window_y': 0, 'display_window_width': 1930, 'display_window_height': 1080, 'display_always_on_top': True, 'display_history_size': 1, 'display_horizontal_align': 'Center', 'display_vertical_align': 'Bottom', 'display_hold_seconds': 4.0, 'display_monitor': 2, 'display_manual_offset_x': 0, 'display_manual_offset_y': 0}
+2025-12-18 17:40:52 - Subprocess fallback: screeninfo not available
+2025-12-18 17:40:52 - Manual Offsets: X=0, Y=0
+2025-12-18 17:40:52 - FINAL COORDINATES: X=1920, Y=0 (Auto 0 + Manual 0 + Window 1920)
+2025-12-18 17:40:52 - Applying Geometry: 1930x1080+1920+0
+2025-12-18 17:40:53 - Calling SetWindowPos on HWND 724062 -> 1920, 0
+2025-12-18 17:47:38 - --- Display Process Started ---
+2025-12-18 17:47:38 - Subprocess screeninfo available: False
+2025-12-18 17:47:38 - Initial config: {'display_font_family': 'Helvetica', 'display_font_size': 72, 'display_font_color': '#ffffff', 'display_bg_color': '#000000', 'display_window_x': 1920, 'display_window_y': 0, 'display_window_width': 1930, 'display_window_height': 1080, 'display_always_on_top': True, 'display_history_size': 1, 'display_horizontal_align': 'Center', 'display_vertical_align': 'Bottom', 'display_hold_seconds': 4.0, 'display_monitor': 2, 'display_manual_offset_x': 0, 'display_manual_offset_y': 0}
+2025-12-18 17:47:38 - Subprocess fallback: screeninfo not available
+2025-12-18 17:47:38 - Manual Offsets: X=0, Y=0
+2025-12-18 17:47:38 - Using configured dimensions: 1930x1080
+2025-12-18 17:47:38 - FINAL COORDINATES: X=1920, Y=0, Size=1930x1080
+2025-12-18 17:47:38 - Applying Geometry: 1930x1080+1920+0
+2025-12-18 17:47:38 - Calling SetWindowPos on HWND 920518 -> 1920, 0
+2025-12-18 17:51:42 - --- Display Process Started ---
+2025-12-18 17:51:42 - Subprocess screeninfo available: False
+2025-12-18 17:51:42 - Initial config: {'display_font_family': 'Helvetica', 'display_font_size': 72, 'display_font_color': '#ffffff', 'display_bg_color': '#000000', 'display_window_x': 1920, 'display_window_y': 0, 'display_window_width': 1930, 'display_window_height': 1080, 'display_always_on_top': True, 'display_history_size': 1, 'display_horizontal_align': 'Center', 'display_vertical_align': 'Bottom', 'display_hold_seconds': 4.0, 'display_monitor': 2, 'display_manual_offset_x': 0, 'display_manual_offset_y': 0}
+2025-12-18 17:51:42 - Subprocess fallback: screeninfo not available
+2025-12-18 17:51:42 - Manual Offsets: X=0, Y=0
+2025-12-18 17:51:42 - Using configured dimensions: 1930x1080
+2025-12-18 17:51:42 - FINAL COORDINATES: X=1920, Y=0, Size=1930x1080
+2025-12-18 17:51:42 - Applying Geometry: 1930x1080+1920+0
+2025-12-18 17:51:42 - Calling SetWindowPos on HWND 461760 -> 1920, 0
+2025-12-18 17:51:49 - Cannot cycle monitors: screeninfo not available in subprocess
+2025-12-18 17:51:50 - Cannot cycle monitors: screeninfo not available in subprocess
+2025-12-18 17:51:50 - Cannot cycle monitors: screeninfo not available in subprocess
+2025-12-18 17:51:50 - Cannot cycle monitors: screeninfo not available in subprocess
+2025-12-18 17:51:51 - Cannot cycle monitors: screeninfo not available in subprocess
+2025-12-18 17:51:51 - Cannot cycle monitors: screeninfo not available in subprocess
+2025-12-18 17:51:52 - Cannot cycle monitors: screeninfo not available in subprocess
+2025-12-18 17:59:35 - --- Display Process Started ---
+2025-12-18 17:59:35 - Subprocess screeninfo available: False
+2025-12-18 17:59:35 - Initial config: {'display_font_family': 'Helvetica', 'display_font_size': 72, 'display_font_color': '#ffffff', 'display_bg_color': '#000000', 'display_window_x': 0, 'display_window_y': 0, 'display_window_width': 1930, 'display_window_height': 1080, 'display_always_on_top': True, 'display_history_size': 1, 'display_horizontal_align': 'Center', 'display_vertical_align': 'Bottom', 'display_hold_seconds': 4.0, 'display_monitor': 2, 'display_manual_offset_x': 0, 'display_manual_offset_y': 0}
+2025-12-18 17:59:35 - Subprocess fallback: screeninfo not available
+2025-12-18 17:59:35 - Manual Offsets: X=0, Y=0
+2025-12-18 17:59:35 - Using configured dimensions: 1930x1080
+2025-12-18 17:59:35 - FINAL COORDINATES: X=0, Y=0, Size=1930x1080
+2025-12-18 17:59:35 - Applying Geometry: 1930x1080+0+0
+2025-12-18 17:59:36 - Calling SetWindowPos on HWND 985040 -> 0, 0
+2025-12-18 17:59:44 - Cannot cycle monitors: only 0 monitor(s) available in passed data
+2025-12-18 17:59:45 - Cannot cycle monitors: only 0 monitor(s) available in passed data
+2025-12-18 17:59:48 - Cannot cycle monitors: only 0 monitor(s) available in passed data
+2025-12-18 17:59:49 - Cannot cycle monitors: only 0 monitor(s) available in passed data
+2025-12-18 17:59:49 - Cannot cycle monitors: only 0 monitor(s) available in passed data
+2025-12-18 17:59:50 - Cannot cycle monitors: only 0 monitor(s) available in passed data
+2025-12-18 17:59:51 - Cannot cycle monitors: only 0 monitor(s) available in passed data
+2025-12-18 17:59:52 - Cannot cycle monitors: only 0 monitor(s) available in passed data
+2025-12-18 17:59:52 - Cannot cycle monitors: only 0 monitor(s) available in passed data
+2025-12-18 17:59:54 - Cannot cycle monitors: only 0 monitor(s) available in passed data
+2025-12-18 17:59:55 - Cannot cycle monitors: only 0 monitor(s) available in passed data
+2025-12-18 17:59:59 - Cannot cycle monitors: only 0 monitor(s) available in passed data
+2025-12-18 17:59:59 - Cannot cycle monitors: only 0 monitor(s) available in passed data
+2025-12-18 18:00:01 - Cannot cycle monitors: only 0 monitor(s) available in passed data
+2025-12-18 18:00:02 - Cannot cycle monitors: only 0 monitor(s) available in passed data
+2025-12-18 18:01:39 - --- Display Process Started ---
+2025-12-18 18:01:39 - Subprocess screeninfo available: False
+2025-12-18 18:01:39 - Initial config: {'display_font_family': 'Helvetica', 'display_font_size': 72, 'display_font_color': '#ffffff', 'display_bg_color': '#000000', 'display_window_x': 0, 'display_window_y': 0, 'display_window_width': 1920, 'display_window_height': 1080, 'display_always_on_top': True, 'display_history_size': 1, 'display_horizontal_align': 'Center', 'display_vertical_align': 'Bottom', 'display_hold_seconds': 4.0, 'display_monitor': 3, 'display_manual_offset_x': 0, 'display_manual_offset_y': 0}
+2025-12-18 18:01:39 - Subprocess fallback: screeninfo not available
+2025-12-18 18:01:39 - Manual Offsets: X=0, Y=0
+2025-12-18 18:01:39 - Using configured dimensions: 1920x1080
+2025-12-18 18:01:39 - FINAL COORDINATES: X=0, Y=0, Size=1920x1080
+2025-12-18 18:01:39 - Applying Geometry: 1920x1080+0+0
+2025-12-18 18:01:40 - Calling SetWindowPos on HWND 920340 -> 0, 0
+2025-12-18 18:05:41 - --- Display Process Started ---
+2025-12-18 18:05:41 - Subprocess screeninfo available: False
+2025-12-18 18:05:41 - Initial config: {'display_font_family': 'Helvetica', 'display_font_size': 72, 'display_font_color': '#ffffff', 'display_bg_color': '#000000', 'display_window_x': 0, 'display_window_y': 0, 'display_window_width': 1920, 'display_window_height': 1080, 'display_always_on_top': True, 'display_history_size': 1, 'display_horizontal_align': 'Center', 'display_vertical_align': 'Bottom', 'display_hold_seconds': 4.0, 'display_monitor': 2, 'display_manual_offset_x': 0, 'display_manual_offset_y': 0}
+2025-12-18 18:05:41 - Subprocess fallback: screeninfo not available
+2025-12-18 18:05:41 - Manual Offsets: X=0, Y=0
+2025-12-18 18:05:41 - Using configured dimensions: 1920x1080
+2025-12-18 18:05:41 - FINAL COORDINATES: X=0, Y=0, Size=1920x1080
+2025-12-18 18:05:41 - Applying Geometry: 1920x1080+0+0
+2025-12-18 18:05:42 - Calling SetWindowPos on HWND 920680 -> 0, 0
+2025-12-18 18:07:34 - Cannot cycle monitors: only 0 monitor(s) available in passed data
+2025-12-18 18:07:34 - Cannot cycle monitors: only 0 monitor(s) available in passed data
+2025-12-18 18:07:34 - Cannot cycle monitors: only 0 monitor(s) available in passed data
+2025-12-18 18:07:35 - Cannot cycle monitors: only 0 monitor(s) available in passed data
+2025-12-18 18:12:36 - [MAIN] Launch called. display_monitor=2, get_monitors available=False
+2025-12-18 18:12:36 - [MAIN] screeninfo.get_monitors NOT available in main process!
+2025-12-18 18:12:36 - [MAIN] Final config keys: ['display_font_family', 'display_font_size', 'display_font_color', 'display_bg_color', 'display_window_x', 'display_window_y', 'display_window_width', 'display_window_height', 'display_always_on_top', 'display_history_size', 'display_horizontal_align', 'display_vertical_align', 'display_hold_seconds', 'display_monitor', 'display_manual_offset_x', 'display_manual_offset_y']
+2025-12-18 18:12:43 - --- Display Process Started ---
+2025-12-18 18:12:43 - Subprocess screeninfo available: False
+2025-12-18 18:12:44 - Initial config: {'display_font_family': 'Helvetica', 'display_font_size': 72, 'display_font_color': '#ffffff', 'display_bg_color': '#000000', 'display_window_x': 0, 'display_window_y': 0, 'display_window_width': 1920, 'display_window_height': 1080, 'display_always_on_top': True, 'display_history_size': 1, 'display_horizontal_align': 'Center', 'display_vertical_align': 'Bottom', 'display_hold_seconds': 4.0, 'display_monitor': 2, 'display_manual_offset_x': 0, 'display_manual_offset_y': 0}
+2025-12-18 18:12:44 - Subprocess fallback: screeninfo not available
+2025-12-18 18:12:44 - Manual Offsets: X=0, Y=0
+2025-12-18 18:12:44 - Using configured dimensions: 1920x1080
+2025-12-18 18:12:44 - FINAL COORDINATES: X=0, Y=0, Size=1920x1080
+2025-12-18 18:12:44 - Applying Geometry: 1920x1080+0+0
+2025-12-18 18:12:44 - Calling SetWindowPos on HWND 1182850 -> 0, 0
+2025-12-18 18:12:59 - Cannot cycle monitors: only 0 monitor(s) available in passed data
+2025-12-18 18:13:00 - Cannot cycle monitors: only 0 monitor(s) available in passed data
+2025-12-18 18:13:00 - Cannot cycle monitors: only 0 monitor(s) available in passed data
+2025-12-18 18:13:04 - Cannot cycle monitors: only 0 monitor(s) available in passed data
+2025-12-18 18:13:04 - Cannot cycle monitors: only 0 monitor(s) available in passed data
+2025-12-18 18:13:04 - Cannot cycle monitors: only 0 monitor(s) available in passed data
+2025-12-18 18:13:04 - Cannot cycle monitors: only 0 monitor(s) available in passed data
+2025-12-18 18:13:05 - Cannot cycle monitors: only 0 monitor(s) available in passed data
+2025-12-18 18:13:05 - Cannot cycle monitors: only 0 monitor(s) available in passed data
+2025-12-18 18:13:05 - Cannot cycle monitors: only 0 monitor(s) available in passed data
+2025-12-18 18:13:05 - Cannot cycle monitors: only 0 monitor(s) available in passed data
+2025-12-18 18:17:57 - [MAIN] Launch called. display_monitor=2, get_monitors available=True
+2025-12-18 18:17:57 - [MAIN] screeninfo returned 3 monitors
+2025-12-18 18:17:57 - [MAIN]   Monitor 0: X=3840, Y=7, 1920x1080, primary=False
+2025-12-18 18:17:57 - [MAIN]   Monitor 1: X=1920, Y=15, 1920x1080, primary=False
+2025-12-18 18:17:57 - [MAIN]   Monitor 2: X=0, Y=0, 1920x1080, primary=True
+2025-12-18 18:17:57 - [MAIN] Selected index: 2
+2025-12-18 18:17:57 - [MAIN] Set config: monitor_x=0, monitor_y=0, monitor_width=1920, monitor_height=1080
+2025-12-18 18:17:57 - [MAIN] Final config keys: ['display_font_family', 'display_font_size', 'display_font_color', 'display_bg_color', 'display_window_x', 'display_window_y', 'display_window_width', 'display_window_height', 'display_always_on_top', 'display_history_size', 'display_horizontal_align', 'display_vertical_align', 'display_hold_seconds', 'display_monitor', 'display_manual_offset_x', 'display_manual_offset_y', 'all_monitors', 'monitor_x', 'monitor_y', 'monitor_width', 'monitor_height']
+2025-12-18 18:18:04 - --- Display Process Started ---
+2025-12-18 18:18:04 - Subprocess screeninfo available: True
+2025-12-18 18:18:04 - Initial config: {'display_font_family': 'Helvetica', 'display_font_size': 72, 'display_font_color': '#ffffff', 'display_bg_color': '#000000', 'display_window_x': 0, 'display_window_y': 0, 'display_window_width': 1920, 'display_window_height': 1080, 'display_always_on_top': True, 'display_history_size': 1, 'display_horizontal_align': 'Center', 'display_vertical_align': 'Bottom', 'display_hold_seconds': 4.0, 'display_monitor': 2, 'display_manual_offset_x': 0, 'display_manual_offset_y': 0, 'all_monitors': [{'x': 3840, 'y': 7, 'width': 1920, 'height': 1080, 'is_primary': False}, {'x': 1920, 'y': 15, 'width': 1920, 'height': 1080, 'is_primary': False}, {'x': 0, 'y': 0, 'width': 1920, 'height': 1080, 'is_primary': True}], 'monitor_x': 0, 'monitor_y': 0, 'monitor_width': 1920, 'monitor_height': 1080}
+2025-12-18 18:18:04 - Auto-detect (Main Process): X=0, Y=0
+2025-12-18 18:18:04 - Manual Offsets: X=0, Y=0
+2025-12-18 18:18:04 - Using actual monitor dimensions: 1920x1080
+2025-12-18 18:18:04 - FINAL COORDINATES: X=0, Y=0, Size=1920x1080
+2025-12-18 18:18:04 - Applying Geometry: 1920x1080+0+0
+2025-12-18 18:18:05 - Calling SetWindowPos on HWND 2100318 -> 0, 0
+2025-12-18 18:18:09 - Manual cycle to monitor 0: X=3840, Y=7, Size=1920x1080
+2025-12-18 18:18:09 - Auto-detect (Main Process): X=3840, Y=7
+2025-12-18 18:18:09 - Manual Offsets: X=0, Y=0
+2025-12-18 18:18:09 - Using actual monitor dimensions: 1920x1080
+2025-12-18 18:18:09 - FINAL COORDINATES: X=3840, Y=7, Size=1920x1080
+2025-12-18 18:18:09 - Applying Geometry: 1920x1080+3840+7
+2025-12-18 18:18:09 - Calling SetWindowPos on HWND 2165854 -> 3840, 7
+2025-12-18 18:18:11 - Manual cycle to monitor 1: X=1920, Y=15, Size=1920x1080
+2025-12-18 18:18:11 - Auto-detect (Main Process): X=1920, Y=15
+2025-12-18 18:18:11 - Manual Offsets: X=0, Y=0
+2025-12-18 18:18:11 - Using actual monitor dimensions: 1920x1080
+2025-12-18 18:18:11 - FINAL COORDINATES: X=1920, Y=15, Size=1920x1080
+2025-12-18 18:18:11 - Applying Geometry: 1920x1080+1920+15
+2025-12-18 18:18:11 - Calling SetWindowPos on HWND 2231390 -> 1920, 15
+2025-12-18 18:18:12 - Manual cycle to monitor 2: X=0, Y=0, Size=1920x1080
+2025-12-18 18:18:12 - Auto-detect (Main Process): X=0, Y=0
+2025-12-18 18:18:12 - Manual Offsets: X=0, Y=0
+2025-12-18 18:18:12 - Using actual monitor dimensions: 1920x1080
+2025-12-18 18:18:12 - FINAL COORDINATES: X=0, Y=0, Size=1920x1080
+2025-12-18 18:18:12 - Applying Geometry: 1920x1080+0+0
+2025-12-18 18:18:13 - Calling SetWindowPos on HWND 2296926 -> 0, 0
+2025-12-18 18:18:14 - Manual cycle to monitor 0: X=3840, Y=7, Size=1920x1080
+2025-12-18 18:18:14 - Auto-detect (Main Process): X=3840, Y=7
+2025-12-18 18:18:14 - Manual Offsets: X=0, Y=0
+2025-12-18 18:18:14 - Using actual monitor dimensions: 1920x1080
+2025-12-18 18:18:14 - FINAL COORDINATES: X=3840, Y=7, Size=1920x1080
+2025-12-18 18:18:14 - Applying Geometry: 1920x1080+3840+7
+2025-12-18 18:18:14 - Calling SetWindowPos on HWND 2362462 -> 3840, 7
+2025-12-18 18:18:14 - Manual cycle to monitor 1: X=1920, Y=15, Size=1920x1080
+2025-12-18 18:18:14 - Auto-detect (Main Process): X=1920, Y=15
+2025-12-18 18:18:14 - Manual Offsets: X=0, Y=0
+2025-12-18 18:18:14 - Using actual monitor dimensions: 1920x1080
+2025-12-18 18:18:14 - FINAL COORDINATES: X=1920, Y=15, Size=1920x1080
+2025-12-18 18:18:14 - Applying Geometry: 1920x1080+1920+15
+2025-12-18 18:18:14 - Calling SetWindowPos on HWND 2427998 -> 1920, 15
+2025-12-18 18:19:41 - [MAIN] Launch called. display_monitor=1, get_monitors available=True
+2025-12-18 18:19:41 - [MAIN] screeninfo returned 3 monitors
+2025-12-18 18:19:41 - [MAIN]   Monitor 0: X=3840, Y=7, 1920x1080, primary=False
+2025-12-18 18:19:41 - [MAIN]   Monitor 1: X=1920, Y=15, 1920x1080, primary=False
+2025-12-18 18:19:41 - [MAIN]   Monitor 2: X=0, Y=0, 1920x1080, primary=True
+2025-12-18 18:19:41 - [MAIN] Selected index: 1
+2025-12-18 18:19:41 - [MAIN] Set config: monitor_x=1920, monitor_y=15, monitor_width=1920, monitor_height=1080
+2025-12-18 18:19:41 - [MAIN] Final config keys: ['display_font_family', 'display_font_size', 'display_font_color', 'display_bg_color', 'display_window_x', 'display_window_y', 'display_window_width', 'display_window_height', 'display_always_on_top', 'display_history_size', 'display_horizontal_align', 'display_vertical_align', 'display_hold_seconds', 'display_monitor', 'display_manual_offset_x', 'display_manual_offset_y', 'all_monitors', 'monitor_x', 'monitor_y', 'monitor_width', 'monitor_height']
+2025-12-18 18:19:48 - --- Display Process Started ---
+2025-12-18 18:19:48 - Subprocess screeninfo available: True
+2025-12-18 18:19:48 - Initial config: {'display_font_family': 'Helvetica', 'display_font_size': 72, 'display_font_color': '#ffffff', 'display_bg_color': '#000000', 'display_window_x': 0, 'display_window_y': 0, 'display_window_width': 1920, 'display_window_height': 1080, 'display_always_on_top': True, 'display_history_size': 1, 'display_horizontal_align': 'Center', 'display_vertical_align': 'Bottom', 'display_hold_seconds': 4.0, 'display_monitor': 1, 'display_manual_offset_x': 0, 'display_manual_offset_y': 0, 'all_monitors': [{'x': 3840, 'y': 7, 'width': 1920, 'height': 1080, 'is_primary': False}, {'x': 1920, 'y': 15, 'width': 1920, 'height': 1080, 'is_primary': False}, {'x': 0, 'y': 0, 'width': 1920, 'height': 1080, 'is_primary': True}], 'monitor_x': 1920, 'monitor_y': 15, 'monitor_width': 1920, 'monitor_height': 1080}
+2025-12-18 18:19:48 - Auto-detect (Main Process): X=1920, Y=15
+2025-12-18 18:19:48 - Manual Offsets: X=0, Y=0
+2025-12-18 18:19:48 - Using actual monitor dimensions: 1920x1080
+2025-12-18 18:19:48 - FINAL COORDINATES: X=1920, Y=15, Size=1920x1080
+2025-12-18 18:19:48 - Applying Geometry: 1920x1080+1920+15
+2025-12-18 18:19:49 - Calling SetWindowPos on HWND 3411032 -> 1920, 15
+2025-12-18 18:19:53 - Manual cycle to monitor 2: X=0, Y=0, Size=1920x1080
+2025-12-18 18:19:53 - Auto-detect (Main Process): X=0, Y=0
+2025-12-18 18:19:53 - Manual Offsets: X=0, Y=0
+2025-12-18 18:19:53 - Using actual monitor dimensions: 1920x1080
+2025-12-18 18:19:53 - FINAL COORDINATES: X=0, Y=0, Size=1920x1080
+2025-12-18 18:19:53 - Applying Geometry: 1920x1080+0+0
+2025-12-18 18:19:53 - Calling SetWindowPos on HWND 3476568 -> 0, 0
+2025-12-18 18:19:54 - Manual cycle to monitor 0: X=3840, Y=7, Size=1920x1080
+2025-12-18 18:19:54 - Auto-detect (Main Process): X=3840, Y=7
+2025-12-18 18:19:54 - Manual Offsets: X=0, Y=0
+2025-12-18 18:19:54 - Using actual monitor dimensions: 1920x1080
+2025-12-18 18:19:54 - FINAL COORDINATES: X=3840, Y=7, Size=1920x1080
+2025-12-18 18:19:54 - Applying Geometry: 1920x1080+3840+7
+2025-12-18 18:19:54 - Calling SetWindowPos on HWND 3542104 -> 3840, 7
+2025-12-18 18:19:55 - Manual cycle to monitor 1: X=1920, Y=15, Size=1920x1080
+2025-12-18 18:19:55 - Auto-detect (Main Process): X=1920, Y=15
+2025-12-18 18:19:55 - Manual Offsets: X=0, Y=0
+2025-12-18 18:19:55 - Using actual monitor dimensions: 1920x1080
+2025-12-18 18:19:55 - FINAL COORDINATES: X=1920, Y=15, Size=1920x1080
+2025-12-18 18:19:55 - Applying Geometry: 1920x1080+1920+15
+2025-12-18 18:19:55 - Calling SetWindowPos on HWND 3607640 -> 1920, 15
+2025-12-18 18:19:56 - Manual cycle to monitor 2: X=0, Y=0, Size=1920x1080
+2025-12-18 18:19:56 - Auto-detect (Main Process): X=0, Y=0
+2025-12-18 18:19:56 - Manual Offsets: X=0, Y=0
+2025-12-18 18:19:56 - Using actual monitor dimensions: 1920x1080
+2025-12-18 18:19:56 - FINAL COORDINATES: X=0, Y=0, Size=1920x1080
+2025-12-18 18:19:56 - Applying Geometry: 1920x1080+0+0
+2025-12-18 18:19:56 - Calling SetWindowPos on HWND 3673176 -> 0, 0
+2025-12-18 18:20:01 - Manual cycle to monitor 0: X=3840, Y=7, Size=1920x1080
+2025-12-18 18:20:01 - Auto-detect (Main Process): X=3840, Y=7
+2025-12-18 18:20:01 - Manual Offsets: X=0, Y=0
+2025-12-18 18:20:01 - Using actual monitor dimensions: 1920x1080
+2025-12-18 18:20:01 - FINAL COORDINATES: X=3840, Y=7, Size=1920x1080
+2025-12-18 18:20:01 - Applying Geometry: 1920x1080+3840+7
+2025-12-18 18:20:02 - Calling SetWindowPos on HWND 3738712 -> 3840, 7
+2025-12-18 18:20:02 - Manual cycle to monitor 1: X=1920, Y=15, Size=1920x1080
+2025-12-18 18:20:02 - Auto-detect (Main Process): X=1920, Y=15
+2025-12-18 18:20:02 - Manual Offsets: X=0, Y=0
+2025-12-18 18:20:02 - Using actual monitor dimensions: 1920x1080
+2025-12-18 18:20:02 - FINAL COORDINATES: X=1920, Y=15, Size=1920x1080
+2025-12-18 18:20:02 - Applying Geometry: 1920x1080+1920+15
+2025-12-18 18:20:03 - Calling SetWindowPos on HWND 3804248 -> 1920, 15
+2025-12-18 18:54:12 - [MAIN] Launch called. display_monitor=1, get_monitors available=True
+2025-12-18 18:54:12 - [MAIN] screeninfo returned 3 monitors
+2025-12-18 18:54:12 - [MAIN]   Monitor 0: X=3840, Y=7, 1920x1080, primary=False
+2025-12-18 18:54:12 - [MAIN]   Monitor 1: X=1920, Y=15, 1920x1080, primary=False
+2025-12-18 18:54:12 - [MAIN]   Monitor 2: X=0, Y=0, 1920x1080, primary=True
+2025-12-18 18:54:12 - [MAIN] Selected index: 1
+2025-12-18 18:54:12 - [MAIN] Set config: monitor_x=1920, monitor_y=15, monitor_width=1920, monitor_height=1080
+2025-12-18 18:54:12 - [MAIN] Final config keys: ['display_font_family', 'display_font_size', 'display_font_color', 'display_bg_color', 'display_window_x', 'display_window_y', 'display_window_width', 'display_window_height', 'display_always_on_top', 'display_history_size', 'display_horizontal_align', 'display_vertical_align', 'display_hold_seconds', 'display_monitor', 'display_manual_offset_x', 'display_manual_offset_y', 'all_monitors', 'monitor_x', 'monitor_y', 'monitor_width', 'monitor_height']
+2025-12-18 18:54:19 - --- Display Process Started ---
+2025-12-18 18:54:19 - Subprocess screeninfo available: True
+2025-12-18 18:54:19 - Initial config: {'display_font_family': 'Helvetica', 'display_font_size': 72, 'display_font_color': '#ffffff', 'display_bg_color': '#000000', 'display_window_x': 0, 'display_window_y': 0, 'display_window_width': 1920, 'display_window_height': 1080, 'display_always_on_top': True, 'display_history_size': 1, 'display_horizontal_align': 'Center', 'display_vertical_align': 'Bottom', 'display_hold_seconds': 4.0, 'display_monitor': 1, 'display_manual_offset_x': 0, 'display_manual_offset_y': 0, 'all_monitors': [{'x': 3840, 'y': 7, 'width': 1920, 'height': 1080, 'is_primary': False}, {'x': 1920, 'y': 15, 'width': 1920, 'height': 1080, 'is_primary': False}, {'x': 0, 'y': 0, 'width': 1920, 'height': 1080, 'is_primary': True}], 'monitor_x': 1920, 'monitor_y': 15, 'monitor_width': 1920, 'monitor_height': 1080}
+2025-12-18 18:54:19 - Auto-detect (Main Process): X=1920, Y=15
+2025-12-18 18:54:19 - Manual Offsets: X=0, Y=0
+2025-12-18 18:54:19 - Using actual monitor dimensions: 1920x1080
+2025-12-18 18:54:19 - FINAL COORDINATES: X=1920, Y=15, Size=1920x1080
+2025-12-18 18:54:19 - Applying Geometry: 1920x1080+1920+15
+2025-12-18 18:54:19 - Calling SetWindowPos on HWND 1443836 -> 1920, 15
+2025-12-18 18:55:32 - Manual cycle to monitor 2: X=0, Y=0, Size=1920x1080
+2025-12-18 18:55:32 - Auto-detect (Main Process): X=0, Y=0
+2025-12-18 18:55:32 - Manual Offsets: X=0, Y=0
+2025-12-18 18:55:32 - Using actual monitor dimensions: 1920x1080
+2025-12-18 18:55:32 - FINAL COORDINATES: X=0, Y=0, Size=1920x1080
+2025-12-18 18:55:32 - Applying Geometry: 1920x1080+0+0
+2025-12-18 18:55:32 - Calling SetWindowPos on HWND 1509372 -> 0, 0
+2025-12-18 18:56:19 - [MAIN] Launch called. display_monitor=0, get_monitors available=True
+2025-12-18 18:56:19 - [MAIN] screeninfo returned 3 monitors
+2025-12-18 18:56:19 - [MAIN]   Monitor 0: X=3840, Y=7, 1920x1080, primary=False
+2025-12-18 18:56:19 - [MAIN]   Monitor 1: X=1920, Y=15, 1920x1080, primary=False
+2025-12-18 18:56:19 - [MAIN]   Monitor 2: X=0, Y=0, 1920x1080, primary=True
+2025-12-18 18:56:19 - [MAIN] Selected index: 0
+2025-12-18 18:56:19 - [MAIN] Set config: monitor_x=3840, monitor_y=7, monitor_width=1920, monitor_height=1080
+2025-12-18 18:56:19 - [MAIN] Final config keys: ['display_font_family', 'display_font_size', 'display_font_color', 'display_bg_color', 'display_window_x', 'display_window_y', 'display_window_width', 'display_window_height', 'display_always_on_top', 'display_history_size', 'display_horizontal_align', 'display_vertical_align', 'display_hold_seconds', 'display_monitor', 'display_manual_offset_x', 'display_manual_offset_y', 'all_monitors', 'monitor_x', 'monitor_y', 'monitor_width', 'monitor_height']
+2025-12-18 18:56:27 - --- Display Process Started ---
+2025-12-18 18:56:27 - Subprocess screeninfo available: True
+2025-12-18 18:56:27 - Initial config: {'display_font_family': 'Helvetica', 'display_font_size': 72, 'display_font_color': '#ffffff', 'display_bg_color': '#000000', 'display_window_x': 0, 'display_window_y': 0, 'display_window_width': 1920, 'display_window_height': 1080, 'display_always_on_top': True, 'display_history_size': 1, 'display_horizontal_align': 'Center', 'display_vertical_align': 'Bottom', 'display_hold_seconds': 4.0, 'display_monitor': 0, 'display_manual_offset_x': 0, 'display_manual_offset_y': 0, 'all_monitors': [{'x': 3840, 'y': 7, 'width': 1920, 'height': 1080, 'is_primary': False}, {'x': 1920, 'y': 15, 'width': 1920, 'height': 1080, 'is_primary': False}, {'x': 0, 'y': 0, 'width': 1920, 'height': 1080, 'is_primary': True}], 'monitor_x': 3840, 'monitor_y': 7, 'monitor_width': 1920, 'monitor_height': 1080}
+2025-12-18 18:56:27 - Auto-detect (Main Process): X=3840, Y=7
+2025-12-18 18:56:27 - Manual Offsets: X=0, Y=0
+2025-12-18 18:56:27 - Using actual monitor dimensions: 1920x1080
+2025-12-18 18:56:27 - FINAL COORDINATES: X=3840, Y=7, Size=1920x1080
+2025-12-18 18:56:27 - Applying Geometry: 1920x1080+3840+7
+2025-12-18 18:56:27 - Calling SetWindowPos on HWND 1706840 -> 3840, 7
+2025-12-18 18:57:10 - [MAIN] Launch called. display_monitor=2, get_monitors available=True
+2025-12-18 18:57:10 - [MAIN] screeninfo returned 3 monitors
+2025-12-18 18:57:10 - [MAIN]   Monitor 0: X=3840, Y=7, 1920x1080, primary=False
+2025-12-18 18:57:10 - [MAIN]   Monitor 1: X=1920, Y=15, 1920x1080, primary=False
+2025-12-18 18:57:10 - [MAIN]   Monitor 2: X=0, Y=0, 1920x1080, primary=True
+2025-12-18 18:57:10 - [MAIN] Selected index: 2
+2025-12-18 18:57:10 - [MAIN] Set config: monitor_x=0, monitor_y=0, monitor_width=1920, monitor_height=1080
+2025-12-18 18:57:10 - [MAIN] Final config keys: ['display_font_family', 'display_font_size', 'display_font_color', 'display_bg_color', 'display_window_x', 'display_window_y', 'display_window_width', 'display_window_height', 'display_always_on_top', 'display_history_size', 'display_horizontal_align', 'display_vertical_align', 'display_hold_seconds', 'display_monitor', 'display_manual_offset_x', 'display_manual_offset_y', 'all_monitors', 'monitor_x', 'monitor_y', 'monitor_width', 'monitor_height']
+2025-12-18 18:57:17 - --- Display Process Started ---
+2025-12-18 18:57:17 - Subprocess screeninfo available: True
+2025-12-18 18:57:17 - Initial config: {'display_font_family': 'Helvetica', 'display_font_size': 72, 'display_font_color': '#ffffff', 'display_bg_color': '#000000', 'display_window_x': 0, 'display_window_y': 0, 'display_window_width': 1920, 'display_window_height': 1080, 'display_always_on_top': True, 'display_history_size': 1, 'display_horizontal_align': 'Center', 'display_vertical_align': 'Bottom', 'display_hold_seconds': 4.0, 'display_monitor': 2, 'display_manual_offset_x': 0, 'display_manual_offset_y': 0, 'all_monitors': [{'x': 3840, 'y': 7, 'width': 1920, 'height': 1080, 'is_primary': False}, {'x': 1920, 'y': 15, 'width': 1920, 'height': 1080, 'is_primary': False}, {'x': 0, 'y': 0, 'width': 1920, 'height': 1080, 'is_primary': True}], 'monitor_x': 0, 'monitor_y': 0, 'monitor_width': 1920, 'monitor_height': 1080}
+2025-12-18 18:57:17 - Auto-detect (Main Process): X=0, Y=0
+2025-12-18 18:57:17 - Manual Offsets: X=0, Y=0
+2025-12-18 18:57:17 - Using actual monitor dimensions: 1920x1080
+2025-12-18 18:57:17 - FINAL COORDINATES: X=0, Y=0, Size=1920x1080
+2025-12-18 18:57:17 - Applying Geometry: 1920x1080+0+0
+2025-12-18 18:57:18 - Calling SetWindowPos on HWND 1180394 -> 0, 0
+2025-12-18 19:01:50 - [MAIN] Launch called. display_monitor=2, get_monitors available=True
+2025-12-18 19:01:50 - [MAIN] screeninfo returned 3 monitors
+2025-12-18 19:01:50 - [MAIN]   Monitor 0: X=3840, Y=7, 1920x1080, primary=False
+2025-12-18 19:01:50 - [MAIN]   Monitor 1: X=1920, Y=15, 1920x1080, primary=False
+2025-12-18 19:01:50 - [MAIN]   Monitor 2: X=0, Y=0, 1920x1080, primary=True
+2025-12-18 19:01:50 - [MAIN] Selected index: 2
+2025-12-18 19:01:50 - [MAIN] Set config: monitor_x=0, monitor_y=0, monitor_width=1920, monitor_height=1080
+2025-12-18 19:01:50 - [MAIN] Final config keys: ['display_font_family', 'display_font_size', 'display_font_color', 'display_bg_color', 'display_window_x', 'display_window_y', 'display_window_width', 'display_window_height', 'display_always_on_top', 'display_history_size', 'display_horizontal_align', 'display_vertical_align', 'display_hold_seconds', 'display_monitor', 'display_manual_offset_x', 'display_manual_offset_y', 'all_monitors', 'monitor_x', 'monitor_y', 'monitor_width', 'monitor_height']
+2025-12-18 19:01:57 - --- Display Process Started ---
+2025-12-18 19:01:57 - Subprocess screeninfo available: True
+2025-12-18 19:01:57 - Initial config: {'display_font_family': 'Helvetica', 'display_font_size': 72, 'display_font_color': '#ffffff', 'display_bg_color': '#000000', 'display_window_x': 0, 'display_window_y': 0, 'display_window_width': 1920, 'display_window_height': 1080, 'display_always_on_top': True, 'display_history_size': 1, 'display_horizontal_align': 'Center', 'display_vertical_align': 'Bottom', 'display_hold_seconds': 4.0, 'display_monitor': 2, 'display_manual_offset_x': 0, 'display_manual_offset_y': 0, 'all_monitors': [{'x': 3840, 'y': 7, 'width': 1920, 'height': 1080, 'is_primary': False}, {'x': 1920, 'y': 15, 'width': 1920, 'height': 1080, 'is_primary': False}, {'x': 0, 'y': 0, 'width': 1920, 'height': 1080, 'is_primary': True}], 'monitor_x': 0, 'monitor_y': 0, 'monitor_width': 1920, 'monitor_height': 1080}
+2025-12-18 19:01:57 - Auto-detect (Main Process): X=0, Y=0
+2025-12-18 19:01:57 - Manual Offsets: X=0, Y=0
+2025-12-18 19:01:57 - Using actual monitor dimensions: 1920x1080
+2025-12-18 19:01:57 - FINAL COORDINATES: X=0, Y=0, Size=1920x1080
+2025-12-18 19:01:57 - Applying Geometry: 1920x1080+0+0
+2025-12-18 19:01:57 - Calling SetWindowPos on HWND 330172 -> 0, 0
+2025-12-18 19:02:10 - Manual cycle to monitor 0: X=3840, Y=7, Size=1920x1080
+2025-12-18 19:02:10 - Auto-detect (Main Process): X=3840, Y=7
+2025-12-18 19:02:10 - Manual Offsets: X=0, Y=0
+2025-12-18 19:02:10 - Using actual monitor dimensions: 1920x1080
+2025-12-18 19:02:10 - FINAL COORDINATES: X=3840, Y=7, Size=1920x1080
+2025-12-18 19:02:10 - Applying Geometry: 1920x1080+3840+7
+2025-12-18 19:02:10 - Calling SetWindowPos on HWND 199102 -> 3840, 7
+2025-12-18 19:02:11 - Manual cycle to monitor 1: X=1920, Y=15, Size=1920x1080
+2025-12-18 19:02:11 - Auto-detect (Main Process): X=1920, Y=15
+2025-12-18 19:02:11 - Manual Offsets: X=0, Y=0
+2025-12-18 19:02:11 - Using actual monitor dimensions: 1920x1080
+2025-12-18 19:02:11 - FINAL COORDINATES: X=1920, Y=15, Size=1920x1080
+2025-12-18 19:02:11 - Applying Geometry: 1920x1080+1920+15
+2025-12-18 19:02:11 - Calling SetWindowPos on HWND 264638 -> 1920, 15
+2025-12-18 19:02:12 - Manual cycle to monitor 2: X=0, Y=0, Size=1920x1080
+2025-12-18 19:02:12 - Auto-detect (Main Process): X=0, Y=0
+2025-12-18 19:02:12 - Manual Offsets: X=0, Y=0
+2025-12-18 19:02:12 - Using actual monitor dimensions: 1920x1080
+2025-12-18 19:02:12 - FINAL COORDINATES: X=0, Y=0, Size=1920x1080
+2025-12-18 19:02:12 - Applying Geometry: 1920x1080+0+0
+2025-12-18 19:02:12 - Calling SetWindowPos on HWND 330174 -> 0, 0
+2025-12-18 19:02:49 - [MAIN] Launch called. display_monitor=1, get_monitors available=True
+2025-12-18 19:02:49 - [MAIN] screeninfo returned 3 monitors
+2025-12-18 19:02:49 - [MAIN]   Monitor 0: X=3840, Y=7, 1920x1080, primary=False
+2025-12-18 19:02:49 - [MAIN]   Monitor 1: X=1920, Y=15, 1920x1080, primary=False
+2025-12-18 19:02:49 - [MAIN]   Monitor 2: X=0, Y=0, 1920x1080, primary=True
+2025-12-18 19:02:49 - [MAIN] Selected index: 1
+2025-12-18 19:02:49 - [MAIN] Set config: monitor_x=1920, monitor_y=15, monitor_width=1920, monitor_height=1080
+2025-12-18 19:02:49 - [MAIN] Final config keys: ['display_font_family', 'display_font_size', 'display_font_color', 'display_bg_color', 'display_window_x', 'display_window_y', 'display_window_width', 'display_window_height', 'display_always_on_top', 'display_history_size', 'display_horizontal_align', 'display_vertical_align', 'display_hold_seconds', 'display_monitor', 'display_manual_offset_x', 'display_manual_offset_y', 'all_monitors', 'monitor_x', 'monitor_y', 'monitor_width', 'monitor_height']
+2025-12-18 19:02:56 - --- Display Process Started ---
+2025-12-18 19:02:56 - Subprocess screeninfo available: True
+2025-12-18 19:02:56 - Initial config: {'display_font_family': 'Helvetica', 'display_font_size': 72, 'display_font_color': '#ffffff', 'display_bg_color': '#000000', 'display_window_x': 0, 'display_window_y': 0, 'display_window_width': 1920, 'display_window_height': 1080, 'display_always_on_top': True, 'display_history_size': 1, 'display_horizontal_align': 'Center', 'display_vertical_align': 'Bottom', 'display_hold_seconds': 4.0, 'display_monitor': 1, 'display_manual_offset_x': 0, 'display_manual_offset_y': 0, 'all_monitors': [{'x': 3840, 'y': 7, 'width': 1920, 'height': 1080, 'is_primary': False}, {'x': 1920, 'y': 15, 'width': 1920, 'height': 1080, 'is_primary': False}, {'x': 0, 'y': 0, 'width': 1920, 'height': 1080, 'is_primary': True}], 'monitor_x': 1920, 'monitor_y': 15, 'monitor_width': 1920, 'monitor_height': 1080}
+2025-12-18 19:02:56 - Auto-detect (Main Process): X=1920, Y=15
+2025-12-18 19:02:56 - Manual Offsets: X=0, Y=0
+2025-12-18 19:02:56 - Using actual monitor dimensions: 1920x1080
+2025-12-18 19:02:56 - FINAL COORDINATES: X=1920, Y=15, Size=1920x1080
+2025-12-18 19:02:56 - Applying Geometry: 1920x1080+1920+15
+2025-12-18 19:02:56 - Calling SetWindowPos on HWND 395710 -> 1920, 15
+2025-12-18 19:03:45 - [MAIN] Launch called. display_monitor=0, get_monitors available=True
+2025-12-18 19:03:45 - [MAIN] screeninfo returned 3 monitors
+2025-12-18 19:03:45 - [MAIN]   Monitor 0: X=3840, Y=7, 1920x1080, primary=False
+2025-12-18 19:03:45 - [MAIN]   Monitor 1: X=1920, Y=15, 1920x1080, primary=False
+2025-12-18 19:03:45 - [MAIN]   Monitor 2: X=0, Y=0, 1920x1080, primary=True
+2025-12-18 19:03:45 - [MAIN] Selected index: 0
+2025-12-18 19:03:45 - [MAIN] Set config: monitor_x=3840, monitor_y=7, monitor_width=1920, monitor_height=1080
+2025-12-18 19:03:45 - [MAIN] Final config keys: ['display_font_family', 'display_font_size', 'display_font_color', 'display_bg_color', 'display_window_x', 'display_window_y', 'display_window_width', 'display_window_height', 'display_always_on_top', 'display_history_size', 'display_horizontal_align', 'display_vertical_align', 'display_hold_seconds', 'display_monitor', 'display_manual_offset_x', 'display_manual_offset_y', 'all_monitors', 'monitor_x', 'monitor_y', 'monitor_width', 'monitor_height']
+2025-12-18 19:03:52 - --- Display Process Started ---
+2025-12-18 19:03:52 - Subprocess screeninfo available: True
+2025-12-18 19:03:52 - Initial config: {'display_font_family': 'Helvetica', 'display_font_size': 72, 'display_font_color': '#ffffff', 'display_bg_color': '#000000', 'display_window_x': 0, 'display_window_y': 0, 'display_window_width': 1920, 'display_window_height': 1080, 'display_always_on_top': True, 'display_history_size': 1, 'display_horizontal_align': 'Center', 'display_vertical_align': 'Bottom', 'display_hold_seconds': 4.0, 'display_monitor': 0, 'display_manual_offset_x': 0, 'display_manual_offset_y': 0, 'all_monitors': [{'x': 3840, 'y': 7, 'width': 1920, 'height': 1080, 'is_primary': False}, {'x': 1920, 'y': 15, 'width': 1920, 'height': 1080, 'is_primary': False}, {'x': 0, 'y': 0, 'width': 1920, 'height': 1080, 'is_primary': True}], 'monitor_x': 3840, 'monitor_y': 7, 'monitor_width': 1920, 'monitor_height': 1080}
+2025-12-18 19:03:52 - Auto-detect (Main Process): X=3840, Y=7
+2025-12-18 19:03:52 - Manual Offsets: X=0, Y=0
+2025-12-18 19:03:52 - Using actual monitor dimensions: 1920x1080
+2025-12-18 19:03:52 - FINAL COORDINATES: X=3840, Y=7, Size=1920x1080
+2025-12-18 19:03:52 - Applying Geometry: 1920x1080+3840+7
+2025-12-18 19:03:53 - Calling SetWindowPos on HWND 4263150 -> 3840, 7
+2025-12-18 19:09:16 - [MAIN] Launch called. display_monitor=0, get_monitors available=True
+2025-12-18 19:09:16 - [MAIN] screeninfo returned 3 monitors
+2025-12-18 19:09:16 - [MAIN]   Monitor 0: X=3840, Y=7, 1920x1080, primary=False
+2025-12-18 19:09:16 - [MAIN]   Monitor 1: X=1920, Y=15, 1920x1080, primary=False
+2025-12-18 19:09:16 - [MAIN]   Monitor 2: X=0, Y=0, 1920x1080, primary=True
+2025-12-18 19:09:16 - [MAIN] Selected index: 0
+2025-12-18 19:09:16 - [MAIN] Set config: monitor_x=3840, monitor_y=7, monitor_width=1920, monitor_height=1080
+2025-12-18 19:09:16 - [MAIN] Final config keys: ['display_font_family', 'display_font_size', 'display_font_color', 'display_bg_color', 'display_window_x', 'display_window_y', 'display_window_width', 'display_window_height', 'display_always_on_top', 'display_history_size', 'display_horizontal_align', 'display_vertical_align', 'display_hold_seconds', 'display_monitor', 'display_manual_offset_x', 'display_manual_offset_y', 'all_monitors', 'monitor_x', 'monitor_y', 'monitor_width', 'monitor_height']
+2025-12-18 19:09:23 - --- Display Process Started ---
+2025-12-18 19:09:23 - Subprocess screeninfo available: True
+2025-12-18 19:09:23 - Initial config: {'display_font_family': 'Helvetica', 'display_font_size': 72, 'display_font_color': '#ffffff', 'display_bg_color': '#000000', 'display_window_x': 0, 'display_window_y': 0, 'display_window_width': 1920, 'display_window_height': 1080, 'display_always_on_top': True, 'display_history_size': 1, 'display_horizontal_align': 'Center', 'display_vertical_align': 'Bottom', 'display_hold_seconds': 4.0, 'display_monitor': 0, 'display_manual_offset_x': 0, 'display_manual_offset_y': 0, 'all_monitors': [{'x': 3840, 'y': 7, 'width': 1920, 'height': 1080, 'is_primary': False}, {'x': 1920, 'y': 15, 'width': 1920, 'height': 1080, 'is_primary': False}, {'x': 0, 'y': 0, 'width': 1920, 'height': 1080, 'is_primary': True}], 'monitor_x': 3840, 'monitor_y': 7, 'monitor_width': 1920, 'monitor_height': 1080}
+2025-12-18 19:09:23 - Auto-detect (Main Process): X=3840, Y=7
+2025-12-18 19:09:23 - Manual Offsets: X=0, Y=0
+2025-12-18 19:09:23 - Using actual monitor dimensions: 1920x1080
+2025-12-18 19:09:23 - FINAL COORDINATES: X=3840, Y=7, Size=1920x1080
+2025-12-18 19:09:23 - Applying Geometry: 1920x1080+3840+7
+2025-12-18 19:09:23 - Calling SetWindowPos on HWND 1248504 -> 3840, 7
+2025-12-18 19:09:52 - [MAIN] Launch called. display_monitor=1, get_monitors available=True
+2025-12-18 19:09:52 - [MAIN] screeninfo returned 3 monitors
+2025-12-18 19:09:52 - [MAIN]   Monitor 0: X=3840, Y=7, 1920x1080, primary=False
+2025-12-18 19:09:52 - [MAIN]   Monitor 1: X=1920, Y=15, 1920x1080, primary=False
+2025-12-18 19:09:52 - [MAIN]   Monitor 2: X=0, Y=0, 1920x1080, primary=True
+2025-12-18 19:09:52 - [MAIN] Selected index: 1
+2025-12-18 19:09:52 - [MAIN] Set config: monitor_x=1920, monitor_y=15, monitor_width=1920, monitor_height=1080
+2025-12-18 19:09:52 - [MAIN] Final config keys: ['display_font_family', 'display_font_size', 'display_font_color', 'display_bg_color', 'display_window_x', 'display_window_y', 'display_window_width', 'display_window_height', 'display_always_on_top', 'display_history_size', 'display_horizontal_align', 'display_vertical_align', 'display_hold_seconds', 'display_monitor', 'display_manual_offset_x', 'display_manual_offset_y', 'all_monitors', 'monitor_x', 'monitor_y', 'monitor_width', 'monitor_height']
+2025-12-18 19:09:59 - --- Display Process Started ---
+2025-12-18 19:09:59 - Subprocess screeninfo available: True
+2025-12-18 19:09:59 - Initial config: {'display_font_family': 'Helvetica', 'display_font_size': 72, 'display_font_color': '#ffffff', 'display_bg_color': '#000000', 'display_window_x': 0, 'display_window_y': 0, 'display_window_width': 1920, 'display_window_height': 1080, 'display_always_on_top': True, 'display_history_size': 1, 'display_horizontal_align': 'Center', 'display_vertical_align': 'Bottom', 'display_hold_seconds': 4.0, 'display_monitor': 1, 'display_manual_offset_x': 0, 'display_manual_offset_y': 0, 'all_monitors': [{'x': 3840, 'y': 7, 'width': 1920, 'height': 1080, 'is_primary': False}, {'x': 1920, 'y': 15, 'width': 1920, 'height': 1080, 'is_primary': False}, {'x': 0, 'y': 0, 'width': 1920, 'height': 1080, 'is_primary': True}], 'monitor_x': 1920, 'monitor_y': 15, 'monitor_width': 1920, 'monitor_height': 1080}
+2025-12-18 19:09:59 - Auto-detect (Main Process): X=1920, Y=15
+2025-12-18 19:09:59 - Manual Offsets: X=0, Y=0
+2025-12-18 19:09:59 - Using actual monitor dimensions: 1920x1080
+2025-12-18 19:09:59 - FINAL COORDINATES: X=1920, Y=15, Size=1920x1080
+2025-12-18 19:09:59 - Applying Geometry: 1920x1080+1920+15
+2025-12-18 19:09:59 - Calling SetWindowPos on HWND 2033598 -> 1920, 15
+2025-12-18 19:11:33 - [MAIN] Launch called. display_monitor=0, get_monitors available=True
+2025-12-18 19:11:33 - [MAIN] screeninfo returned 3 monitors
+2025-12-18 19:11:33 - [MAIN]   Monitor 0: X=3840, Y=7, 1920x1080, primary=False
+2025-12-18 19:11:33 - [MAIN]   Monitor 1: X=1920, Y=15, 1920x1080, primary=False
+2025-12-18 19:11:33 - [MAIN]   Monitor 2: X=0, Y=0, 1920x1080, primary=True
+2025-12-18 19:11:33 - [MAIN] Selected index: 0
+2025-12-18 19:11:33 - [MAIN] Set config: monitor_x=3840, monitor_y=7, monitor_width=1920, monitor_height=1080
+2025-12-18 19:11:33 - [MAIN] Final config keys: ['display_font_family', 'display_font_size', 'display_font_color', 'display_bg_color', 'display_window_x', 'display_window_y', 'display_window_width', 'display_window_height', 'display_always_on_top', 'display_history_size', 'display_horizontal_align', 'display_vertical_align', 'display_hold_seconds', 'display_monitor', 'display_manual_offset_x', 'display_manual_offset_y', 'all_monitors', 'monitor_x', 'monitor_y', 'monitor_width', 'monitor_height']
+2025-12-18 19:11:40 - --- Display Process Started ---
+2025-12-18 19:11:40 - Subprocess screeninfo available: True
+2025-12-18 19:11:40 - Initial config: {'display_font_family': 'Helvetica', 'display_font_size': 72, 'display_font_color': '#ffffff', 'display_bg_color': '#000000', 'display_window_x': 0, 'display_window_y': 0, 'display_window_width': 1920, 'display_window_height': 1080, 'display_always_on_top': True, 'display_history_size': 1, 'display_horizontal_align': 'Center', 'display_vertical_align': 'Bottom', 'display_hold_seconds': 4.0, 'display_monitor': 0, 'display_manual_offset_x': 0, 'display_manual_offset_y': 0, 'all_monitors': [{'x': 3840, 'y': 7, 'width': 1920, 'height': 1080, 'is_primary': False}, {'x': 1920, 'y': 15, 'width': 1920, 'height': 1080, 'is_primary': False}, {'x': 0, 'y': 0, 'width': 1920, 'height': 1080, 'is_primary': True}], 'monitor_x': 3840, 'monitor_y': 7, 'monitor_width': 1920, 'monitor_height': 1080}
+2025-12-18 19:11:40 - Auto-detect (Main Process): X=3840, Y=7
+2025-12-18 19:11:40 - Manual Offsets: X=0, Y=0
+2025-12-18 19:11:40 - Using actual monitor dimensions: 1920x1080
+2025-12-18 19:11:40 - FINAL COORDINATES: X=3840, Y=7, Size=1920x1080
+2025-12-18 19:11:40 - Applying Geometry: 1920x1080+3840+7
+2025-12-18 19:11:41 - Calling SetWindowPos on HWND 396476 -> 3840, 7
+2025-12-18 19:11:46 - Manual cycle to monitor 1: X=1920, Y=15, Size=1920x1080
+2025-12-18 19:11:46 - Auto-detect (Main Process): X=1920, Y=15
+2025-12-18 19:11:46 - Manual Offsets: X=0, Y=0
+2025-12-18 19:11:46 - Using actual monitor dimensions: 1920x1080
+2025-12-18 19:11:46 - FINAL COORDINATES: X=1920, Y=15, Size=1920x1080
+2025-12-18 19:11:46 - Applying Geometry: 1920x1080+1920+15
+2025-12-18 19:11:47 - Calling SetWindowPos on HWND 462012 -> 1920, 15
+2025-12-18 19:11:47 - Manual cycle to monitor 2: X=0, Y=0, Size=1920x1080
+2025-12-18 19:11:47 - Auto-detect (Main Process): X=0, Y=0
+2025-12-18 19:11:47 - Manual Offsets: X=0, Y=0
+2025-12-18 19:11:47 - Using actual monitor dimensions: 1920x1080
+2025-12-18 19:11:47 - FINAL COORDINATES: X=0, Y=0, Size=1920x1080
+2025-12-18 19:11:47 - Applying Geometry: 1920x1080+0+0
+2025-12-18 19:11:48 - Calling SetWindowPos on HWND 527548 -> 0, 0
+2025-12-18 19:11:58 - [MAIN] Launch called. display_monitor=0, get_monitors available=True
+2025-12-18 19:11:58 - [MAIN] screeninfo returned 3 monitors
+2025-12-18 19:11:58 - [MAIN]   Monitor 0: X=3840, Y=7, 1920x1080, primary=False
+2025-12-18 19:11:58 - [MAIN]   Monitor 1: X=1920, Y=15, 1920x1080, primary=False
+2025-12-18 19:11:58 - [MAIN]   Monitor 2: X=0, Y=0, 1920x1080, primary=True
+2025-12-18 19:11:58 - [MAIN] Selected index: 0
+2025-12-18 19:11:58 - [MAIN] Set config: monitor_x=3840, monitor_y=7, monitor_width=1920, monitor_height=1080
+2025-12-18 19:11:58 - [MAIN] Final config keys: ['display_font_family', 'display_font_size', 'display_font_color', 'display_bg_color', 'display_window_x', 'display_window_y', 'display_window_width', 'display_window_height', 'display_always_on_top', 'display_history_size', 'display_horizontal_align', 'display_vertical_align', 'display_hold_seconds', 'display_monitor', 'display_manual_offset_x', 'display_manual_offset_y', 'all_monitors', 'monitor_x', 'monitor_y', 'monitor_width', 'monitor_height']
+2025-12-18 19:12:05 - --- Display Process Started ---
+2025-12-18 19:12:05 - Subprocess screeninfo available: True
+2025-12-18 19:12:05 - Initial config: {'display_font_family': 'Helvetica', 'display_font_size': 72, 'display_font_color': '#ffffff', 'display_bg_color': '#000000', 'display_window_x': 0, 'display_window_y': 0, 'display_window_width': 1920, 'display_window_height': 1080, 'display_always_on_top': True, 'display_history_size': 1, 'display_horizontal_align': 'Center', 'display_vertical_align': 'Bottom', 'display_hold_seconds': 4.0, 'display_monitor': 0, 'display_manual_offset_x': 0, 'display_manual_offset_y': 0, 'all_monitors': [{'x': 3840, 'y': 7, 'width': 1920, 'height': 1080, 'is_primary': False}, {'x': 1920, 'y': 15, 'width': 1920, 'height': 1080, 'is_primary': False}, {'x': 0, 'y': 0, 'width': 1920, 'height': 1080, 'is_primary': True}], 'monitor_x': 3840, 'monitor_y': 7, 'monitor_width': 1920, 'monitor_height': 1080}
+2025-12-18 19:12:05 - Auto-detect (Main Process): X=3840, Y=7
+2025-12-18 19:12:05 - Manual Offsets: X=0, Y=0
+2025-12-18 19:12:05 - Using actual monitor dimensions: 1920x1080
+2025-12-18 19:12:05 - FINAL COORDINATES: X=3840, Y=7, Size=1920x1080
+2025-12-18 19:12:05 - Applying Geometry: 1920x1080+3840+7
+2025-12-18 19:12:05 - Calling SetWindowPos on HWND 1575458 -> 3840, 7
+2025-12-18 19:16:03 - [MAIN] Launch called. display_monitor=0, get_monitors available=True
+2025-12-18 19:16:03 - [MAIN] screeninfo returned 3 monitors
+2025-12-18 19:16:03 - [MAIN]   Monitor 0: X=3840, Y=7, 1920x1080, primary=False
+2025-12-18 19:16:03 - [MAIN]   Monitor 1: X=1920, Y=15, 1920x1080, primary=False
+2025-12-18 19:16:03 - [MAIN]   Monitor 2: X=0, Y=0, 1920x1080, primary=True
+2025-12-18 19:16:03 - [MAIN] Selected index: 0
+2025-12-18 19:16:03 - [MAIN] Set config: monitor_x=3840, monitor_y=7, monitor_width=1920, monitor_height=1080
+2025-12-18 19:16:03 - [MAIN] Final config keys: ['display_font_family', 'display_font_size', 'display_font_color', 'display_bg_color', 'display_window_x', 'display_window_y', 'display_window_width', 'display_window_height', 'display_always_on_top', 'display_history_size', 'display_horizontal_align', 'display_vertical_align', 'display_hold_seconds', 'display_monitor', 'display_manual_offset_x', 'display_manual_offset_y', 'all_monitors', 'monitor_x', 'monitor_y', 'monitor_width', 'monitor_height']
+2025-12-18 19:16:10 - --- Display Process Started ---
+2025-12-18 19:16:10 - Subprocess screeninfo available: True
+2025-12-18 19:16:10 - Initial config: {'display_font_family': 'Helvetica', 'display_font_size': 72, 'display_font_color': '#ffffff', 'display_bg_color': '#000000', 'display_window_x': 0, 'display_window_y': 0, 'display_window_width': 1920, 'display_window_height': 1080, 'display_always_on_top': True, 'display_history_size': 1, 'display_horizontal_align': 'Center', 'display_vertical_align': 'Bottom', 'display_hold_seconds': 4.0, 'display_monitor': 0, 'display_manual_offset_x': 0, 'display_manual_offset_y': 0, 'all_monitors': [{'x': 3840, 'y': 7, 'width': 1920, 'height': 1080, 'is_primary': False}, {'x': 1920, 'y': 15, 'width': 1920, 'height': 1080, 'is_primary': False}, {'x': 0, 'y': 0, 'width': 1920, 'height': 1080, 'is_primary': True}], 'monitor_x': 3840, 'monitor_y': 7, 'monitor_width': 1920, 'monitor_height': 1080}
+2025-12-18 19:16:10 - Auto-detect (Main Process): X=3840, Y=7
+2025-12-18 19:16:10 - Manual Offsets: X=0, Y=0
+2025-12-18 19:16:10 - Using actual monitor dimensions: 1920x1080
+2025-12-18 19:16:10 - FINAL COORDINATES: X=3840, Y=7, Size=1920x1080
+2025-12-18 19:16:10 - Applying Geometry: 1920x1080+3840+7
+2025-12-18 19:16:10 - Calling SetWindowPos on HWND 3083500 -> 3840, 7
+2025-12-18 19:16:39 - [MAIN] Launch called. display_monitor=1, get_monitors available=True
+2025-12-18 19:16:39 - [MAIN] screeninfo returned 3 monitors
+2025-12-18 19:16:39 - [MAIN]   Monitor 0: X=3840, Y=7, 1920x1080, primary=False
+2025-12-18 19:16:39 - [MAIN]   Monitor 1: X=1920, Y=15, 1920x1080, primary=False
+2025-12-18 19:16:39 - [MAIN]   Monitor 2: X=0, Y=0, 1920x1080, primary=True
+2025-12-18 19:16:39 - [MAIN] Selected index: 1
+2025-12-18 19:16:39 - [MAIN] Set config: monitor_x=1920, monitor_y=15, monitor_width=1920, monitor_height=1080
+2025-12-18 19:16:39 - [MAIN] Final config keys: ['display_font_family', 'display_font_size', 'display_font_color', 'display_bg_color', 'display_window_x', 'display_window_y', 'display_window_width', 'display_window_height', 'display_always_on_top', 'display_history_size', 'display_horizontal_align', 'display_vertical_align', 'display_hold_seconds', 'display_monitor', 'display_manual_offset_x', 'display_manual_offset_y', 'all_monitors', 'monitor_x', 'monitor_y', 'monitor_width', 'monitor_height']
+2025-12-18 19:16:46 - --- Display Process Started ---
+2025-12-18 19:16:46 - Subprocess screeninfo available: True
+2025-12-18 19:16:46 - Initial config: {'display_font_family': 'Helvetica', 'display_font_size': 72, 'display_font_color': '#ffffff', 'display_bg_color': '#000000', 'display_window_x': 0, 'display_window_y': 0, 'display_window_width': 1920, 'display_window_height': 1080, 'display_always_on_top': True, 'display_history_size': 1, 'display_horizontal_align': 'Center', 'display_vertical_align': 'Bottom', 'display_hold_seconds': 4.0, 'display_monitor': 1, 'display_manual_offset_x': 0, 'display_manual_offset_y': 0, 'all_monitors': [{'x': 3840, 'y': 7, 'width': 1920, 'height': 1080, 'is_primary': False}, {'x': 1920, 'y': 15, 'width': 1920, 'height': 1080, 'is_primary': False}, {'x': 0, 'y': 0, 'width': 1920, 'height': 1080, 'is_primary': True}], 'monitor_x': 1920, 'monitor_y': 15, 'monitor_width': 1920, 'monitor_height': 1080}
+2025-12-18 19:16:46 - Auto-detect (Main Process): X=1920, Y=15
+2025-12-18 19:16:46 - Manual Offsets: X=0, Y=0
+2025-12-18 19:16:46 - Using actual monitor dimensions: 1920x1080
+2025-12-18 19:16:46 - FINAL COORDINATES: X=1920, Y=15, Size=1920x1080
+2025-12-18 19:16:46 - Applying Geometry: 1920x1080+1920+15
+2025-12-18 19:16:47 - Calling SetWindowPos on HWND 1379320 -> 1920, 15
+2025-12-18 19:17:45 - [MAIN] Launch called. display_monitor=2, get_monitors available=True
+2025-12-18 19:17:45 - [MAIN] screeninfo returned 3 monitors
+2025-12-18 19:17:45 - [MAIN]   Monitor 0: X=3840, Y=7, 1920x1080, primary=False
+2025-12-18 19:17:45 - [MAIN]   Monitor 1: X=1920, Y=15, 1920x1080, primary=False
+2025-12-18 19:17:45 - [MAIN]   Monitor 2: X=0, Y=0, 1920x1080, primary=True
+2025-12-18 19:17:45 - [MAIN] Selected index: 2
+2025-12-18 19:17:45 - [MAIN] Set config: monitor_x=0, monitor_y=0, monitor_width=1920, monitor_height=1080
+2025-12-18 19:17:45 - [MAIN] Final config keys: ['display_font_family', 'display_font_size', 'display_font_color', 'display_bg_color', 'display_window_x', 'display_window_y', 'display_window_width', 'display_window_height', 'display_always_on_top', 'display_history_size', 'display_horizontal_align', 'display_vertical_align', 'display_hold_seconds', 'display_monitor', 'display_manual_offset_x', 'display_manual_offset_y', 'all_monitors', 'monitor_x', 'monitor_y', 'monitor_width', 'monitor_height']
+2025-12-18 19:17:52 - --- Display Process Started ---
+2025-12-18 19:17:52 - Subprocess screeninfo available: True
+2025-12-18 19:17:52 - Initial config: {'display_font_family': 'Helvetica', 'display_font_size': 72, 'display_font_color': '#ffffff', 'display_bg_color': '#000000', 'display_window_x': 0, 'display_window_y': 0, 'display_window_width': 1920, 'display_window_height': 1080, 'display_always_on_top': True, 'display_history_size': 1, 'display_horizontal_align': 'Center', 'display_vertical_align': 'Bottom', 'display_hold_seconds': 4.0, 'display_monitor': 2, 'display_manual_offset_x': 0, 'display_manual_offset_y': 0, 'all_monitors': [{'x': 3840, 'y': 7, 'width': 1920, 'height': 1080, 'is_primary': False}, {'x': 1920, 'y': 15, 'width': 1920, 'height': 1080, 'is_primary': False}, {'x': 0, 'y': 0, 'width': 1920, 'height': 1080, 'is_primary': True}], 'monitor_x': 0, 'monitor_y': 0, 'monitor_width': 1920, 'monitor_height': 1080}
+2025-12-18 19:17:52 - Auto-detect (Main Process): X=0, Y=0
+2025-12-18 19:17:52 - Manual Offsets: X=0, Y=0
+2025-12-18 19:17:52 - Using actual monitor dimensions: 1920x1080
+2025-12-18 19:17:52 - FINAL COORDINATES: X=0, Y=0, Size=1920x1080
+2025-12-18 19:17:52 - Applying Geometry: 1920x1080+0+0
+2025-12-18 19:17:53 - Calling SetWindowPos on HWND 5049582 -> 0, 0
+2025-12-18 19:20:20 - [MAIN] Launch called. display_monitor=2, get_monitors available=True
+2025-12-18 19:20:20 - [MAIN] screeninfo returned 3 monitors
+2025-12-18 19:20:20 - [MAIN]   Monitor 0: X=3840, Y=7, 1920x1080, primary=False
+2025-12-18 19:20:20 - [MAIN]   Monitor 1: X=1920, Y=15, 1920x1080, primary=False
+2025-12-18 19:20:20 - [MAIN]   Monitor 2: X=0, Y=0, 1920x1080, primary=True
+2025-12-18 19:20:20 - [MAIN] Selected index: 2
+2025-12-18 19:20:20 - [MAIN] Set config: monitor_x=0, monitor_y=0, monitor_width=1920, monitor_height=1080
+2025-12-18 19:20:20 - [MAIN] Final config keys: ['display_font_family', 'display_font_size', 'display_font_color', 'display_bg_color', 'display_window_x', 'display_window_y', 'display_window_width', 'display_window_height', 'display_always_on_top', 'display_history_size', 'display_horizontal_align', 'display_vertical_align', 'display_hold_seconds', 'display_monitor', 'display_manual_offset_x', 'display_manual_offset_y', 'all_monitors', 'monitor_x', 'monitor_y', 'monitor_width', 'monitor_height']
+2025-12-18 19:20:27 - --- Display Process Started ---
+2025-12-18 19:20:27 - Subprocess screeninfo available: True
+2025-12-18 19:20:27 - Initial config: {'display_font_family': 'Helvetica', 'display_font_size': 72, 'display_font_color': '#ffffff', 'display_bg_color': '#000000', 'display_window_x': 0, 'display_window_y': 0, 'display_window_width': 1920, 'display_window_height': 1080, 'display_always_on_top': True, 'display_history_size': 1, 'display_horizontal_align': 'Center', 'display_vertical_align': 'Bottom', 'display_hold_seconds': 4.0, 'display_monitor': 2, 'display_manual_offset_x': 0, 'display_manual_offset_y': 0, 'all_monitors': [{'x': 3840, 'y': 7, 'width': 1920, 'height': 1080, 'is_primary': False}, {'x': 1920, 'y': 15, 'width': 1920, 'height': 1080, 'is_primary': False}, {'x': 0, 'y': 0, 'width': 1920, 'height': 1080, 'is_primary': True}], 'monitor_x': 0, 'monitor_y': 0, 'monitor_width': 1920, 'monitor_height': 1080}
+2025-12-18 19:20:27 - Auto-detect (Main Process): X=0, Y=0
+2025-12-18 19:20:27 - Manual Offsets: X=0, Y=0
+2025-12-18 19:20:27 - Using actual monitor dimensions: 1920x1080
+2025-12-18 19:20:27 - FINAL COORDINATES: X=0, Y=0, Size=1920x1080
+2025-12-18 19:20:27 - Applying Geometry: 1920x1080+0+0
+2025-12-18 19:20:27 - Calling SetWindowPos on HWND 1903818 -> 0, 0
+2025-12-18 19:20:51 - [MAIN] Launch called. display_monitor=1, get_monitors available=True
+2025-12-18 19:20:51 - [MAIN] screeninfo returned 3 monitors
+2025-12-18 19:20:51 - [MAIN]   Monitor 0: X=3840, Y=7, 1920x1080, primary=False
+2025-12-18 19:20:51 - [MAIN]   Monitor 1: X=1920, Y=15, 1920x1080, primary=False
+2025-12-18 19:20:51 - [MAIN]   Monitor 2: X=0, Y=0, 1920x1080, primary=True
+2025-12-18 19:20:51 - [MAIN] Selected index: 1
+2025-12-18 19:20:51 - [MAIN] Set config: monitor_x=1920, monitor_y=15, monitor_width=1920, monitor_height=1080
+2025-12-18 19:20:51 - [MAIN] Final config keys: ['display_font_family', 'display_font_size', 'display_font_color', 'display_bg_color', 'display_window_x', 'display_window_y', 'display_window_width', 'display_window_height', 'display_always_on_top', 'display_history_size', 'display_horizontal_align', 'display_vertical_align', 'display_hold_seconds', 'display_monitor', 'display_manual_offset_x', 'display_manual_offset_y', 'all_monitors', 'monitor_x', 'monitor_y', 'monitor_width', 'monitor_height']
+2025-12-18 19:20:58 - --- Display Process Started ---
+2025-12-18 19:20:58 - Subprocess screeninfo available: True
+2025-12-18 19:20:58 - Initial config: {'display_font_family': 'Helvetica', 'display_font_size': 72, 'display_font_color': '#ffffff', 'display_bg_color': '#000000', 'display_window_x': 0, 'display_window_y': 0, 'display_window_width': 1920, 'display_window_height': 1080, 'display_always_on_top': True, 'display_history_size': 1, 'display_horizontal_align': 'Center', 'display_vertical_align': 'Bottom', 'display_hold_seconds': 4.0, 'display_monitor': 1, 'display_manual_offset_x': 0, 'display_manual_offset_y': 0, 'all_monitors': [{'x': 3840, 'y': 7, 'width': 1920, 'height': 1080, 'is_primary': False}, {'x': 1920, 'y': 15, 'width': 1920, 'height': 1080, 'is_primary': False}, {'x': 0, 'y': 0, 'width': 1920, 'height': 1080, 'is_primary': True}], 'monitor_x': 1920, 'monitor_y': 15, 'monitor_width': 1920, 'monitor_height': 1080}
+2025-12-18 19:20:58 - Auto-detect (Main Process): X=1920, Y=15
+2025-12-18 19:20:58 - Manual Offsets: X=0, Y=0
+2025-12-18 19:20:58 - Using actual monitor dimensions: 1920x1080
+2025-12-18 19:20:58 - FINAL COORDINATES: X=1920, Y=15, Size=1920x1080
+2025-12-18 19:20:58 - Applying Geometry: 1920x1080+1920+15
+2025-12-18 19:20:59 - Calling SetWindowPos on HWND 2428040 -> 1920, 15
+2025-12-18 19:21:55 - [MAIN] Launch called. display_monitor=0, get_monitors available=True
+2025-12-18 19:21:55 - [MAIN] screeninfo returned 3 monitors
+2025-12-18 19:21:55 - [MAIN]   Monitor 0: X=3840, Y=7, 1920x1080, primary=False
+2025-12-18 19:21:55 - [MAIN]   Monitor 1: X=1920, Y=15, 1920x1080, primary=False
+2025-12-18 19:21:55 - [MAIN]   Monitor 2: X=0, Y=0, 1920x1080, primary=True
+2025-12-18 19:21:55 - [MAIN] Selected index: 0
+2025-12-18 19:21:55 - [MAIN] Set config: monitor_x=3840, monitor_y=7, monitor_width=1920, monitor_height=1080
+2025-12-18 19:21:55 - [MAIN] Final config keys: ['display_font_family', 'display_font_size', 'display_font_color', 'display_bg_color', 'display_window_x', 'display_window_y', 'display_window_width', 'display_window_height', 'display_always_on_top', 'display_history_size', 'display_horizontal_align', 'display_vertical_align', 'display_hold_seconds', 'display_monitor', 'display_manual_offset_x', 'display_manual_offset_y', 'all_monitors', 'monitor_x', 'monitor_y', 'monitor_width', 'monitor_height']
+2025-12-18 19:22:03 - --- Display Process Started ---
+2025-12-18 19:22:03 - Subprocess screeninfo available: True
+2025-12-18 19:22:03 - Initial config: {'display_font_family': 'Helvetica', 'display_font_size': 72, 'display_font_color': '#ffffff', 'display_bg_color': '#000000', 'display_window_x': 0, 'display_window_y': 0, 'display_window_width': 1920, 'display_window_height': 1080, 'display_always_on_top': True, 'display_history_size': 1, 'display_horizontal_align': 'Center', 'display_vertical_align': 'Bottom', 'display_hold_seconds': 4.0, 'display_monitor': 0, 'display_manual_offset_x': 0, 'display_manual_offset_y': 0, 'all_monitors': [{'x': 3840, 'y': 7, 'width': 1920, 'height': 1080, 'is_primary': False}, {'x': 1920, 'y': 15, 'width': 1920, 'height': 1080, 'is_primary': False}, {'x': 0, 'y': 0, 'width': 1920, 'height': 1080, 'is_primary': True}], 'monitor_x': 3840, 'monitor_y': 7, 'monitor_width': 1920, 'monitor_height': 1080}
+2025-12-18 19:22:03 - Auto-detect (Main Process): X=3840, Y=7
+2025-12-18 19:22:03 - Manual Offsets: X=0, Y=0
+2025-12-18 19:22:03 - Using actual monitor dimensions: 1920x1080
+2025-12-18 19:22:03 - FINAL COORDINATES: X=3840, Y=7, Size=1920x1080
+2025-12-18 19:22:03 - Applying Geometry: 1920x1080+3840+7
+2025-12-18 19:22:03 - Calling SetWindowPos on HWND 1707000 -> 3840, 7
+2025-12-18 20:56:31 - [MAIN] Launch called. display_monitor=0, get_monitors available=True
+2025-12-18 20:56:31 - [MAIN] screeninfo returned 3 monitors
+2025-12-18 20:56:31 - [MAIN]   Monitor 0: X=3840, Y=7, 1920x1080, primary=False
+2025-12-18 20:56:31 - [MAIN]   Monitor 1: X=1920, Y=15, 1920x1080, primary=False
+2025-12-18 20:56:31 - [MAIN]   Monitor 2: X=0, Y=0, 1920x1080, primary=True
+2025-12-18 20:56:31 - [MAIN] Selected index: 0
+2025-12-18 20:56:31 - [MAIN] Set config: monitor_x=3840, monitor_y=7, monitor_width=1920, monitor_height=1080
+2025-12-18 20:56:31 - [MAIN] Final config keys: ['display_font_family', 'display_font_size', 'display_font_color', 'display_bg_color', 'display_window_x', 'display_window_y', 'display_window_width', 'display_window_height', 'display_always_on_top', 'display_history_size', 'display_horizontal_align', 'display_vertical_align', 'display_hold_seconds', 'display_monitor', 'display_manual_offset_x', 'display_manual_offset_y', 'all_monitors', 'monitor_x', 'monitor_y', 'monitor_width', 'monitor_height']
+2025-12-18 20:56:38 - --- Display Process Started ---
+2025-12-18 20:56:38 - Subprocess screeninfo available: True
+2025-12-18 20:56:38 - Initial config: {'display_font_family': 'Helvetica', 'display_font_size': 72, 'display_font_color': '#ffffff', 'display_bg_color': '#000000', 'display_window_x': 0, 'display_window_y': 0, 'display_window_width': 1920, 'display_window_height': 1080, 'display_always_on_top': True, 'display_history_size': 1, 'display_horizontal_align': 'Center', 'display_vertical_align': 'Bottom', 'display_hold_seconds': 4.0, 'display_monitor': 0, 'display_manual_offset_x': 0, 'display_manual_offset_y': 0, 'all_monitors': [{'x': 3840, 'y': 7, 'width': 1920, 'height': 1080, 'is_primary': False}, {'x': 1920, 'y': 15, 'width': 1920, 'height': 1080, 'is_primary': False}, {'x': 0, 'y': 0, 'width': 1920, 'height': 1080, 'is_primary': True}], 'monitor_x': 3840, 'monitor_y': 7, 'monitor_width': 1920, 'monitor_height': 1080}
+2025-12-18 20:57:20 - [MAIN] Launch called. display_monitor=0, get_monitors available=True
+2025-12-18 20:57:20 - [MAIN] screeninfo returned 3 monitors
+2025-12-18 20:57:20 - [MAIN]   Monitor 0: X=3840, Y=7, 1920x1080, primary=False
+2025-12-18 20:57:20 - [MAIN]   Monitor 1: X=1920, Y=15, 1920x1080, primary=False
+2025-12-18 20:57:20 - [MAIN]   Monitor 2: X=0, Y=0, 1920x1080, primary=True
+2025-12-18 20:57:20 - [MAIN] Selected index: 0
+2025-12-18 20:57:20 - [MAIN] Set config: monitor_x=3840, monitor_y=7, monitor_width=1920, monitor_height=1080
+2025-12-18 20:57:20 - [MAIN] Final config keys: ['display_font_family', 'display_font_size', 'display_font_color', 'display_bg_color', 'display_window_x', 'display_window_y', 'display_window_width', 'display_window_height', 'display_always_on_top', 'display_history_size', 'display_horizontal_align', 'display_vertical_align', 'display_hold_seconds', 'display_monitor', 'display_manual_offset_x', 'display_manual_offset_y', 'all_monitors', 'monitor_x', 'monitor_y', 'monitor_width', 'monitor_height']
+2025-12-18 20:57:27 - --- Display Process Started ---
+2025-12-18 20:57:27 - Subprocess screeninfo available: True
+2025-12-18 20:57:27 - Initial config: {'display_font_family': 'Helvetica', 'display_font_size': 72, 'display_font_color': '#ffffff', 'display_bg_color': '#000000', 'display_window_x': 0, 'display_window_y': 0, 'display_window_width': 1920, 'display_window_height': 1080, 'display_always_on_top': True, 'display_history_size': 1, 'display_horizontal_align': 'Center', 'display_vertical_align': 'Bottom', 'display_hold_seconds': 4.0, 'display_monitor': 0, 'display_manual_offset_x': 0, 'display_manual_offset_y': 0, 'all_monitors': [{'x': 3840, 'y': 7, 'width': 1920, 'height': 1080, 'is_primary': False}, {'x': 1920, 'y': 15, 'width': 1920, 'height': 1080, 'is_primary': False}, {'x': 0, 'y': 0, 'width': 1920, 'height': 1080, 'is_primary': True}], 'monitor_x': 3840, 'monitor_y': 7, 'monitor_width': 1920, 'monitor_height': 1080}
+2025-12-18 21:00:13 - [MAIN] Launch called. display_monitor=0, get_monitors available=True
+2025-12-18 21:00:13 - [MAIN] screeninfo returned 3 monitors
+2025-12-18 21:00:13 - [MAIN]   Monitor 0: X=3840, Y=7, 1920x1080, primary=False
+2025-12-18 21:00:13 - [MAIN]   Monitor 1: X=1920, Y=15, 1920x1080, primary=False
+2025-12-18 21:00:13 - [MAIN]   Monitor 2: X=0, Y=0, 1920x1080, primary=True
+2025-12-18 21:00:13 - [MAIN] Selected index: 0
+2025-12-18 21:00:13 - [MAIN] Set config: monitor_x=3840, monitor_y=7, monitor_width=1920, monitor_height=1080
+2025-12-18 21:00:13 - [MAIN] Final config keys: ['display_font_family', 'display_font_size', 'display_font_color', 'display_bg_color', 'display_window_x', 'display_window_y', 'display_window_width', 'display_window_height', 'display_always_on_top', 'display_history_size', 'display_horizontal_align', 'display_vertical_align', 'display_hold_seconds', 'display_monitor', 'display_manual_offset_x', 'display_manual_offset_y', 'all_monitors', 'monitor_x', 'monitor_y', 'monitor_width', 'monitor_height']
+2025-12-18 21:00:20 - --- Display Process Started ---
+2025-12-18 21:00:20 - Subprocess screeninfo available: True
+2025-12-18 21:00:20 - Initial config: {'display_font_family': 'Helvetica', 'display_font_size': 72, 'display_font_color': '#ffffff', 'display_bg_color': '#000000', 'display_window_x': 0, 'display_window_y': 0, 'display_window_width': 1920, 'display_window_height': 1080, 'display_always_on_top': True, 'display_history_size': 1, 'display_horizontal_align': 'Center', 'display_vertical_align': 'Bottom', 'display_hold_seconds': 4.0, 'display_monitor': 0, 'display_manual_offset_x': 0, 'display_manual_offset_y': 0, 'all_monitors': [{'x': 3840, 'y': 7, 'width': 1920, 'height': 1080, 'is_primary': False}, {'x': 1920, 'y': 15, 'width': 1920, 'height': 1080, 'is_primary': False}, {'x': 0, 'y': 0, 'width': 1920, 'height': 1080, 'is_primary': True}], 'monitor_x': 3840, 'monitor_y': 7, 'monitor_width': 1920, 'monitor_height': 1080}
+2025-12-18 21:00:20 - Auto-detect (Main Process): X=3840, Y=7
+2025-12-18 21:00:20 - Manual Offsets: X=0, Y=0
+2025-12-18 21:00:20 - Using actual monitor dimensions: 1920x1080
+2025-12-18 21:00:20 - FINAL COORDINATES: X=3840, Y=7, Size=1920x1080
+2025-12-18 21:00:20 - Applying Geometry: 1920x1080+3840+7
+2025-12-18 21:00:20 - Calling SetWindowPos on HWND 854978 -> 3840, 7
+2025-12-18 21:00:56 - [MAIN] Launch called. display_monitor=1, get_monitors available=True
+2025-12-18 21:00:56 - [MAIN] screeninfo returned 3 monitors
+2025-12-18 21:00:56 - [MAIN]   Monitor 0: X=3840, Y=7, 1920x1080, primary=False
+2025-12-18 21:00:56 - [MAIN]   Monitor 1: X=1920, Y=15, 1920x1080, primary=False
+2025-12-18 21:00:56 - [MAIN]   Monitor 2: X=0, Y=0, 1920x1080, primary=True
+2025-12-18 21:00:56 - [MAIN] Selected index: 1
+2025-12-18 21:00:56 - [MAIN] Set config: monitor_x=1920, monitor_y=15, monitor_width=1920, monitor_height=1080
+2025-12-18 21:00:56 - [MAIN] Final config keys: ['display_font_family', 'display_font_size', 'display_font_color', 'display_bg_color', 'display_window_x', 'display_window_y', 'display_window_width', 'display_window_height', 'display_always_on_top', 'display_history_size', 'display_horizontal_align', 'display_vertical_align', 'display_hold_seconds', 'display_monitor', 'display_manual_offset_x', 'display_manual_offset_y', 'all_monitors', 'monitor_x', 'monitor_y', 'monitor_width', 'monitor_height']
+2025-12-18 21:01:03 - --- Display Process Started ---
+2025-12-18 21:01:03 - Subprocess screeninfo available: True
+2025-12-18 21:01:03 - Initial config: {'display_font_family': 'Helvetica', 'display_font_size': 72, 'display_font_color': '#ffffff', 'display_bg_color': '#000000', 'display_window_x': 0, 'display_window_y': 0, 'display_window_width': 1920, 'display_window_height': 1080, 'display_always_on_top': True, 'display_history_size': 1, 'display_horizontal_align': 'Center', 'display_vertical_align': 'Bottom', 'display_hold_seconds': 4.0, 'display_monitor': 1, 'display_manual_offset_x': 0, 'display_manual_offset_y': 0, 'all_monitors': [{'x': 3840, 'y': 7, 'width': 1920, 'height': 1080, 'is_primary': False}, {'x': 1920, 'y': 15, 'width': 1920, 'height': 1080, 'is_primary': False}, {'x': 0, 'y': 0, 'width': 1920, 'height': 1080, 'is_primary': True}], 'monitor_x': 1920, 'monitor_y': 15, 'monitor_width': 1920, 'monitor_height': 1080}
+2025-12-18 21:01:03 - Auto-detect (Main Process): X=1920, Y=15
+2025-12-18 21:01:03 - Manual Offsets: X=0, Y=0
+2025-12-18 21:01:03 - Using actual monitor dimensions: 1920x1080
+2025-12-18 21:01:03 - FINAL COORDINATES: X=1920, Y=15, Size=1920x1080
+2025-12-18 21:01:03 - Applying Geometry: 1920x1080+1920+15
+2025-12-18 21:01:03 - Calling SetWindowPos on HWND 330642 -> 1920, 15
+2025-12-19 11:14:59 - [MAIN] Launch called. display_monitor=1, get_monitors available=True
+2025-12-19 11:14:59 - [MAIN] screeninfo returned 3 monitors
+2025-12-19 11:14:59 - [MAIN]   Monitor 0: X=3840, Y=7, 1920x1080, primary=False
+2025-12-19 11:14:59 - [MAIN]   Monitor 1: X=1920, Y=15, 1920x1080, primary=False
+2025-12-19 11:14:59 - [MAIN]   Monitor 2: X=0, Y=0, 1920x1080, primary=True
+2025-12-19 11:14:59 - [MAIN] Selected index: 1
+2025-12-19 11:14:59 - [MAIN] Set config: monitor_x=1920, monitor_y=15, monitor_width=1920, monitor_height=1080
+2025-12-19 11:14:59 - [MAIN] Final config keys: ['display_font_family', 'display_font_size', 'display_font_color', 'display_bg_color', 'display_window_x', 'display_window_y', 'display_window_width', 'display_window_height', 'display_always_on_top', 'display_history_size', 'display_horizontal_align', 'display_vertical_align', 'display_hold_seconds', 'display_monitor', 'display_manual_offset_x', 'display_manual_offset_y', 'all_monitors', 'monitor_x', 'monitor_y', 'monitor_width', 'monitor_height']
+2025-12-19 11:15:06 - --- Display Process Started ---
+2025-12-19 11:15:06 - Subprocess screeninfo available: True
+2025-12-19 11:15:07 - Initial config: {'display_font_family': 'Helvetica', 'display_font_size': 72, 'display_font_color': '#ffffff', 'display_bg_color': '#000000', 'display_window_x': 0, 'display_window_y': 0, 'display_window_width': 1920, 'display_window_height': 1080, 'display_always_on_top': True, 'display_history_size': 1, 'display_horizontal_align': 'Center', 'display_vertical_align': 'Bottom', 'display_hold_seconds': 4.0, 'display_monitor': 1, 'display_manual_offset_x': 0, 'display_manual_offset_y': 0, 'all_monitors': [{'x': 3840, 'y': 7, 'width': 1920, 'height': 1080, 'is_primary': False}, {'x': 1920, 'y': 15, 'width': 1920, 'height': 1080, 'is_primary': False}, {'x': 0, 'y': 0, 'width': 1920, 'height': 1080, 'is_primary': True}], 'monitor_x': 1920, 'monitor_y': 15, 'monitor_width': 1920, 'monitor_height': 1080}
+2025-12-19 11:15:07 - Auto-detect (Main Process): X=1920, Y=15
+2025-12-19 11:15:07 - Manual Offsets: X=0, Y=0
+2025-12-19 11:15:07 - Using actual monitor dimensions: 1920x1080
+2025-12-19 11:15:07 - FINAL COORDINATES: X=1920, Y=15, Size=1920x1080
+2025-12-19 11:15:07 - Applying Geometry: 1920x1080+1920+15
+2025-12-19 11:15:07 - Calling SetWindowPos on HWND 1641802 -> 1920, 15
+2025-12-19 11:30:02 - [MAIN] Launch called. display_monitor=1, get_monitors available=True
+2025-12-19 11:30:02 - [MAIN] screeninfo returned 3 monitors
+2025-12-19 11:30:02 - [MAIN]   Monitor 0: X=3840, Y=7, 1920x1080, primary=False
+2025-12-19 11:30:02 - [MAIN]   Monitor 1: X=1920, Y=15, 1920x1080, primary=False
+2025-12-19 11:30:02 - [MAIN]   Monitor 2: X=0, Y=0, 1920x1080, primary=True
+2025-12-19 11:30:02 - [MAIN] Selected index: 1
+2025-12-19 11:30:02 - [MAIN] Set config: monitor_x=1920, monitor_y=15, monitor_width=1920, monitor_height=1080
+2025-12-19 11:30:02 - [MAIN] Final config keys: ['display_font_family', 'display_font_size', 'display_font_color', 'display_bg_color', 'display_window_x', 'display_window_y', 'display_window_width', 'display_window_height', 'display_always_on_top', 'display_history_size', 'display_horizontal_align', 'display_vertical_align', 'display_hold_seconds', 'display_monitor', 'display_manual_offset_x', 'display_manual_offset_y', 'all_monitors', 'monitor_x', 'monitor_y', 'monitor_width', 'monitor_height']
+2025-12-19 11:30:10 - --- Display Process Started ---
+2025-12-19 11:30:10 - Subprocess screeninfo available: True
+2025-12-19 11:30:11 - Initial config: {'display_font_family': 'Helvetica', 'display_font_size': 72, 'display_font_color': '#ffffff', 'display_bg_color': '#000000', 'display_window_x': 0, 'display_window_y': 0, 'display_window_width': 1280, 'display_window_height': 720, 'display_always_on_top': True, 'display_history_size': 1, 'display_horizontal_align': 'Center', 'display_vertical_align': 'Bottom', 'display_hold_seconds': 4.0, 'display_monitor': 1, 'display_manual_offset_x': 0, 'display_manual_offset_y': 0, 'all_monitors': [{'x': 3840, 'y': 7, 'width': 1920, 'height': 1080, 'is_primary': False}, {'x': 1920, 'y': 15, 'width': 1920, 'height': 1080, 'is_primary': False}, {'x': 0, 'y': 0, 'width': 1920, 'height': 1080, 'is_primary': True}], 'monitor_x': 1920, 'monitor_y': 15, 'monitor_width': 1920, 'monitor_height': 1080}
+2025-12-19 11:30:11 - Auto-detect (Main Process): X=1920, Y=15
+2025-12-19 11:30:11 - Manual Offsets: X=0, Y=0
+2025-12-19 11:30:11 - Using actual monitor dimensions: 1920x1080
+2025-12-19 11:30:11 - FINAL COORDINATES: X=1920, Y=15, Size=1920x1080
+2025-12-19 11:30:11 - Applying Geometry: 1920x1080+1920+15
+2025-12-19 11:30:11 - Calling SetWindowPos on HWND 198314 -> 1920, 15
+2025-12-19 11:32:26 - [MAIN] Launch called. display_monitor=1, get_monitors available=True
+2025-12-19 11:32:26 - [MAIN] screeninfo returned 3 monitors
+2025-12-19 11:32:26 - [MAIN]   Monitor 0: X=3840, Y=7, 1920x1080, primary=False
+2025-12-19 11:32:26 - [MAIN]   Monitor 1: X=1920, Y=15, 1920x1080, primary=False
+2025-12-19 11:32:26 - [MAIN]   Monitor 2: X=0, Y=0, 1920x1080, primary=True
+2025-12-19 11:32:26 - [MAIN] Selected index: 1
+2025-12-19 11:32:26 - [MAIN] Set config: monitor_x=1920, monitor_y=15, monitor_width=1920, monitor_height=1080
+2025-12-19 11:32:26 - [MAIN] Final config keys: ['display_font_family', 'display_font_size', 'display_font_color', 'display_bg_color', 'display_window_x', 'display_window_y', 'display_window_width', 'display_window_height', 'display_always_on_top', 'display_history_size', 'display_horizontal_align', 'display_vertical_align', 'display_hold_seconds', 'display_monitor', 'display_manual_offset_x', 'display_manual_offset_y', 'all_monitors', 'monitor_x', 'monitor_y', 'monitor_width', 'monitor_height']
+2025-12-19 11:32:34 - --- Display Process Started ---
+2025-12-19 11:32:34 - Subprocess screeninfo available: True
+2025-12-19 11:32:34 - Initial config: {'display_font_family': 'Helvetica', 'display_font_size': 72, 'display_font_color': '#ffffff', 'display_bg_color': '#000000', 'display_window_x': 0, 'display_window_y': 0, 'display_window_width': 1280, 'display_window_height': 720, 'display_always_on_top': True, 'display_history_size': 1, 'display_horizontal_align': 'Center', 'display_vertical_align': 'Bottom', 'display_hold_seconds': 4.0, 'display_monitor': 1, 'display_manual_offset_x': 0, 'display_manual_offset_y': 0, 'all_monitors': [{'x': 3840, 'y': 7, 'width': 1920, 'height': 1080, 'is_primary': False}, {'x': 1920, 'y': 15, 'width': 1920, 'height': 1080, 'is_primary': False}, {'x': 0, 'y': 0, 'width': 1920, 'height': 1080, 'is_primary': True}], 'monitor_x': 1920, 'monitor_y': 15, 'monitor_width': 1920, 'monitor_height': 1080}
+2025-12-19 11:32:34 - Auto-detect (Main Process): X=1920, Y=15
+2025-12-19 11:32:34 - Manual Offsets: X=0, Y=0
+2025-12-19 11:32:34 - Using actual monitor dimensions: 1920x1080
+2025-12-19 11:32:34 - FINAL COORDINATES: X=1920, Y=15, Size=1920x1080
+2025-12-19 11:32:34 - Applying Geometry: 1920x1080+1920+15
+2025-12-19 11:32:35 - Calling SetWindowPos on HWND 1838410 -> 1920, 15
+2025-12-19 11:40:50 - [MAIN] Launch called. display_monitor=1, get_monitors available=True
+2025-12-19 11:40:50 - [MAIN] screeninfo returned 3 monitors
+2025-12-19 11:40:50 - [MAIN]   Monitor 0: X=3840, Y=7, 1920x1080, primary=False
+2025-12-19 11:40:50 - [MAIN]   Monitor 1: X=1920, Y=15, 1920x1080, primary=False
+2025-12-19 11:40:50 - [MAIN]   Monitor 2: X=0, Y=0, 1920x1080, primary=True
+2025-12-19 11:40:50 - [MAIN] Selected index: 1
+2025-12-19 11:40:50 - [MAIN] Set config: monitor_x=1920, monitor_y=15, monitor_width=1920, monitor_height=1080
+2025-12-19 11:40:50 - [MAIN] Final config keys: ['display_font_family', 'display_font_size', 'display_font_color', 'display_bg_color', 'display_window_x', 'display_window_y', 'display_window_width', 'display_window_height', 'display_always_on_top', 'display_history_size', 'display_horizontal_align', 'display_vertical_align', 'display_hold_seconds', 'display_monitor', 'display_manual_offset_x', 'display_manual_offset_y', 'all_monitors', 'monitor_x', 'monitor_y', 'monitor_width', 'monitor_height']
+2025-12-19 11:40:57 - --- Display Process Started ---
+2025-12-19 11:40:57 - Subprocess screeninfo available: True
+2025-12-19 11:40:57 - Initial config: {'display_font_family': 'Helvetica', 'display_font_size': 72, 'display_font_color': '#ffffff', 'display_bg_color': '#000000', 'display_window_x': 0, 'display_window_y': 0, 'display_window_width': 1280, 'display_window_height': 720, 'display_always_on_top': True, 'display_history_size': 1, 'display_horizontal_align': 'Center', 'display_vertical_align': 'Bottom', 'display_hold_seconds': 4.0, 'display_monitor': 1, 'display_manual_offset_x': 0, 'display_manual_offset_y': 0, 'all_monitors': [{'x': 3840, 'y': 7, 'width': 1920, 'height': 1080, 'is_primary': False}, {'x': 1920, 'y': 15, 'width': 1920, 'height': 1080, 'is_primary': False}, {'x': 0, 'y': 0, 'width': 1920, 'height': 1080, 'is_primary': True}], 'monitor_x': 1920, 'monitor_y': 15, 'monitor_width': 1920, 'monitor_height': 1080}
+2025-12-19 11:40:57 - Auto-detect (Main Process): X=1920, Y=15
+2025-12-19 11:40:57 - Manual Offsets: X=0, Y=0
+2025-12-19 11:40:57 - Using configured dimensions: 1280x720
+2025-12-19 11:40:57 - FINAL COORDINATES: X=1920, Y=15, Size=1280x720
+2025-12-19 11:40:57 - Applying Geometry: 1280x720+1920+15
+2025-12-19 11:40:58 - Calling SetWindowPos on HWND 5769158 -> 1920, 15
+2025-12-19 11:41:16 - Manual cycle to monitor 2: X=0, Y=0, Size=1920x1080
+2025-12-19 11:41:16 - Auto-detect (Main Process): X=0, Y=0
+2025-12-19 11:41:16 - Manual Offsets: X=0, Y=0
+2025-12-19 11:41:16 - Using configured dimensions: 1280x720
+2025-12-19 11:41:16 - FINAL COORDINATES: X=0, Y=0, Size=1280x720
+2025-12-19 11:41:16 - Applying Geometry: 1280x720+0+0
+2025-12-19 11:41:16 - Calling SetWindowPos on HWND 5834694 -> 0, 0
+2025-12-19 11:41:17 - Manual cycle to monitor 0: X=3840, Y=7, Size=1920x1080
+2025-12-19 11:41:17 - Auto-detect (Main Process): X=3840, Y=7
+2025-12-19 11:41:17 - Manual Offsets: X=0, Y=0
+2025-12-19 11:41:17 - Using configured dimensions: 1280x720
+2025-12-19 11:41:17 - FINAL COORDINATES: X=3840, Y=7, Size=1280x720
+2025-12-19 11:41:17 - Applying Geometry: 1280x720+3840+7
+2025-12-19 11:41:17 - Calling SetWindowPos on HWND 5900230 -> 3840, 7
+2025-12-19 11:41:18 - Manual cycle to monitor 1: X=1920, Y=15, Size=1920x1080
+2025-12-19 11:41:18 - Auto-detect (Main Process): X=1920, Y=15
+2025-12-19 11:41:18 - Manual Offsets: X=0, Y=0
+2025-12-19 11:41:18 - Using configured dimensions: 1280x720
+2025-12-19 11:41:18 - FINAL COORDINATES: X=1920, Y=15, Size=1280x720
+2025-12-19 11:41:18 - Applying Geometry: 1280x720+1920+15
+2025-12-19 11:41:18 - Calling SetWindowPos on HWND 5965766 -> 1920, 15
+2025-12-19 13:43:09 - [MAIN] Launch called. display_monitor=1, get_monitors available=True
+2025-12-19 13:43:09 - [MAIN] screeninfo returned 3 monitors
+2025-12-19 13:43:09 - [MAIN]   Monitor 0: X=3840, Y=7, 1920x1080, primary=False
+2025-12-19 13:43:09 - [MAIN]   Monitor 1: X=1920, Y=15, 1920x1080, primary=False
+2025-12-19 13:43:09 - [MAIN]   Monitor 2: X=0, Y=0, 1920x1080, primary=True
+2025-12-19 13:43:09 - [MAIN] Selected index: 1
+2025-12-19 13:43:09 - [MAIN] Set config: monitor_x=1920, monitor_y=15, monitor_width=1920, monitor_height=1080
+2025-12-19 13:43:09 - [MAIN] Final config keys: ['display_font_family', 'display_font_size', 'display_font_color', 'display_bg_color', 'display_window_x', 'display_window_y', 'display_window_width', 'display_window_height', 'display_always_on_top', 'display_history_size', 'display_horizontal_align', 'display_vertical_align', 'display_hold_seconds', 'display_monitor', 'display_manual_offset_x', 'display_manual_offset_y', 'all_monitors', 'monitor_x', 'monitor_y', 'monitor_width', 'monitor_height']
+2025-12-19 13:43:16 - --- Display Process Started ---
+2025-12-19 13:43:16 - Subprocess screeninfo available: True
+2025-12-19 13:43:16 - Initial config: {'display_font_family': 'Helvetica', 'display_font_size': 72, 'display_font_color': '#ffffff', 'display_bg_color': '#000000', 'display_window_x': 0, 'display_window_y': 0, 'display_window_width': 1920, 'display_window_height': 1080, 'display_always_on_top': True, 'display_history_size': 1, 'display_horizontal_align': 'Center', 'display_vertical_align': 'Bottom', 'display_hold_seconds': 4.0, 'display_monitor': 1, 'display_manual_offset_x': 0, 'display_manual_offset_y': 0, 'all_monitors': [{'x': 3840, 'y': 7, 'width': 1920, 'height': 1080, 'is_primary': False}, {'x': 1920, 'y': 15, 'width': 1920, 'height': 1080, 'is_primary': False}, {'x': 0, 'y': 0, 'width': 1920, 'height': 1080, 'is_primary': True}], 'monitor_x': 1920, 'monitor_y': 15, 'monitor_width': 1920, 'monitor_height': 1080}
+2025-12-19 13:43:16 - Auto-detect (Main Process): X=1920, Y=15
+2025-12-19 13:43:16 - Manual Offsets: X=0, Y=0
+2025-12-19 13:43:16 - Using configured dimensions: 1920x1080
+2025-12-19 13:43:16 - FINAL COORDINATES: X=1920, Y=15, Size=1920x1080
+2025-12-19 13:43:16 - Applying Geometry: 1920x1080+1920+15
+2025-12-19 13:43:17 - Calling SetWindowPos on HWND 136128 -> 1920, 15
+2025-12-20 00:08:42 - [MAIN] Launch called. display_monitor=1, get_monitors available=True
+2025-12-20 00:08:42 - [MAIN] screeninfo returned 3 monitors
+2025-12-20 00:08:42 - [MAIN]   Monitor 0: X=1920, Y=15, 1920x1080, primary=False
+2025-12-20 00:08:42 - [MAIN]   Monitor 1: X=0, Y=0, 1920x1080, primary=True
+2025-12-20 00:08:42 - [MAIN]   Monitor 2: X=3840, Y=7, 1920x1080, primary=False
+2025-12-20 00:08:42 - [MAIN] Selected index: 1
+2025-12-20 00:08:42 - [MAIN] Set config: monitor_x=0, monitor_y=0, monitor_width=1920, monitor_height=1080
+2025-12-20 00:08:42 - [MAIN] Final config keys: ['display_font_family', 'display_font_size', 'display_font_color', 'display_bg_color', 'display_window_x', 'display_window_y', 'display_window_width', 'display_window_height', 'display_always_on_top', 'display_history_size', 'display_horizontal_align', 'display_vertical_align', 'display_hold_seconds', 'display_monitor', 'display_manual_offset_x', 'display_manual_offset_y', 'all_monitors', 'monitor_x', 'monitor_y', 'monitor_width', 'monitor_height']
+2025-12-20 00:08:50 - --- Display Process Started ---
+2025-12-20 00:08:50 - Subprocess screeninfo available: True
+2025-12-20 00:08:50 - Initial config: {'display_font_family': 'Helvetica', 'display_font_size': 72, 'display_font_color': '#ffffff', 'display_bg_color': '#000000', 'display_window_x': 0, 'display_window_y': 0, 'display_window_width': 1920, 'display_window_height': 1080, 'display_always_on_top': True, 'display_history_size': 1, 'display_horizontal_align': 'Center', 'display_vertical_align': 'Bottom', 'display_hold_seconds': 4.0, 'display_monitor': 1, 'display_manual_offset_x': 0, 'display_manual_offset_y': 0, 'all_monitors': [{'x': 1920, 'y': 15, 'width': 1920, 'height': 1080, 'is_primary': False}, {'x': 0, 'y': 0, 'width': 1920, 'height': 1080, 'is_primary': True}, {'x': 3840, 'y': 7, 'width': 1920, 'height': 1080, 'is_primary': False}], 'monitor_x': 0, 'monitor_y': 0, 'monitor_width': 1920, 'monitor_height': 1080}
+2025-12-20 00:08:50 - Auto-detect (Main Process): X=0, Y=0
+2025-12-20 00:08:50 - Manual Offsets: X=0, Y=0
+2025-12-20 00:08:50 - Using configured dimensions: 1920x1080
+2025-12-20 00:08:50 - FINAL COORDINATES: X=0, Y=0, Size=1920x1080
+2025-12-20 00:08:50 - Applying Geometry: 1920x1080+0+0
+2025-12-20 00:08:51 - Calling SetWindowPos on HWND 398116 -> 0, 0
+2025-12-20 00:13:14 - [MAIN] Launch called. display_monitor=1, get_monitors available=True
+2025-12-20 00:13:14 - [MAIN] screeninfo returned 3 monitors
+2025-12-20 00:13:14 - [MAIN]   Monitor 0: X=1920, Y=15, 1920x1080, primary=False
+2025-12-20 00:13:14 - [MAIN]   Monitor 1: X=0, Y=0, 1920x1080, primary=True
+2025-12-20 00:13:14 - [MAIN]   Monitor 2: X=3840, Y=7, 1920x1080, primary=False
+2025-12-20 00:13:14 - [MAIN] Selected index: 1
+2025-12-20 00:13:14 - [MAIN] Set config: monitor_x=0, monitor_y=0, monitor_width=1920, monitor_height=1080
+2025-12-20 00:13:14 - [MAIN] Final config keys: ['display_font_family', 'display_font_size', 'display_font_color', 'display_bg_color', 'display_window_x', 'display_window_y', 'display_window_width', 'display_window_height', 'display_always_on_top', 'display_history_size', 'display_horizontal_align', 'display_vertical_align', 'display_hold_seconds', 'display_monitor', 'display_manual_offset_x', 'display_manual_offset_y', 'all_monitors', 'monitor_x', 'monitor_y', 'monitor_width', 'monitor_height']
+2025-12-20 00:13:21 - --- Display Process Started ---
+2025-12-20 00:13:21 - Subprocess screeninfo available: True
+2025-12-20 00:13:21 - Initial config: {'display_font_family': 'Helvetica', 'display_font_size': 72, 'display_font_color': '#ffffff', 'display_bg_color': '#000000', 'display_window_x': 0, 'display_window_y': 0, 'display_window_width': 1920, 'display_window_height': 1080, 'display_always_on_top': True, 'display_history_size': 1, 'display_horizontal_align': 'Center', 'display_vertical_align': 'Bottom', 'display_hold_seconds': 4.0, 'display_monitor': 1, 'display_manual_offset_x': 0, 'display_manual_offset_y': 0, 'all_monitors': [{'x': 1920, 'y': 15, 'width': 1920, 'height': 1080, 'is_primary': False}, {'x': 0, 'y': 0, 'width': 1920, 'height': 1080, 'is_primary': True}, {'x': 3840, 'y': 7, 'width': 1920, 'height': 1080, 'is_primary': False}], 'monitor_x': 0, 'monitor_y': 0, 'monitor_width': 1920, 'monitor_height': 1080}
+2025-12-20 00:13:21 - Auto-detect (Main Process): X=0, Y=0
+2025-12-20 00:13:21 - Manual Offsets: X=0, Y=0
+2025-12-20 00:13:21 - Using configured dimensions: 1920x1080
+2025-12-20 00:13:21 - FINAL COORDINATES: X=0, Y=0, Size=1920x1080
+2025-12-20 00:13:21 - Applying Geometry: 1920x1080+0+0
+2025-12-20 00:13:22 - Calling SetWindowPos on HWND 201574 -> 0, 0
+2025-12-26 14:30:29 - [MAIN] Launch called. display_monitor=1, get_monitors available=True
+2025-12-26 14:30:29 - [MAIN] screeninfo returned 3 monitors
+2025-12-26 14:30:29 - [MAIN]   Monitor 0: X=1920, Y=15, 1920x1080, primary=False
+2025-12-26 14:30:29 - [MAIN]   Monitor 1: X=0, Y=0, 1920x1080, primary=True
+2025-12-26 14:30:29 - [MAIN]   Monitor 2: X=3840, Y=7, 1920x1080, primary=False
+2025-12-26 14:30:29 - [MAIN] Selected index: 1
+2025-12-26 14:30:29 - [MAIN] Set config: monitor_x=0, monitor_y=0, monitor_width=1920, monitor_height=1080
+2025-12-26 14:30:29 - [MAIN] Final config keys: ['display_font_family', 'display_font_size', 'display_font_color', 'display_bg_color', 'display_window_x', 'display_window_y', 'display_window_width', 'display_window_height', 'display_always_on_top', 'display_history_size', 'display_horizontal_align', 'display_vertical_align', 'display_hold_seconds', 'display_monitor', 'display_manual_offset_x', 'display_manual_offset_y', 'all_monitors', 'monitor_x', 'monitor_y', 'monitor_width', 'monitor_height']
+2025-12-26 14:30:37 - --- Display Process Started ---
+2025-12-26 14:30:37 - Subprocess screeninfo available: True
+2025-12-26 14:30:37 - Initial config: {'display_font_family': 'Helvetica', 'display_font_size': 72, 'display_font_color': '#ffffff', 'display_bg_color': '#000000', 'display_window_x': 0, 'display_window_y': 0, 'display_window_width': 1920, 'display_window_height': 1080, 'display_always_on_top': True, 'display_history_size': 1, 'display_horizontal_align': 'Center', 'display_vertical_align': 'Bottom', 'display_hold_seconds': 4.0, 'display_monitor': 1, 'display_manual_offset_x': 0, 'display_manual_offset_y': 0, 'all_monitors': [{'x': 1920, 'y': 15, 'width': 1920, 'height': 1080, 'is_primary': False}, {'x': 0, 'y': 0, 'width': 1920, 'height': 1080, 'is_primary': True}, {'x': 3840, 'y': 7, 'width': 1920, 'height': 1080, 'is_primary': False}], 'monitor_x': 0, 'monitor_y': 0, 'monitor_width': 1920, 'monitor_height': 1080}
+2025-12-26 14:30:37 - Auto-detect (Main Process): X=0, Y=0
+2025-12-26 14:30:37 - Manual Offsets: X=0, Y=0
+2025-12-26 14:30:37 - Using configured dimensions: 1920x1080
+2025-12-26 14:30:37 - FINAL COORDINATES: X=0, Y=0, Size=1920x1080
+2025-12-26 14:30:37 - Applying Geometry: 1920x1080+0+0
+2025-12-26 14:30:38 - Calling SetWindowPos on HWND 14288752 -> 0, 0
+2025-12-26 14:34:21 - [MAIN] Launch called. display_monitor=1, get_monitors available=True
+2025-12-26 14:34:21 - [MAIN] screeninfo returned 3 monitors
+2025-12-26 14:34:21 - [MAIN]   Monitor 0: X=1920, Y=15, 1920x1080, primary=False
+2025-12-26 14:34:21 - [MAIN]   Monitor 1: X=0, Y=0, 1920x1080, primary=True
+2025-12-26 14:34:21 - [MAIN]   Monitor 2: X=3840, Y=7, 1920x1080, primary=False
+2025-12-26 14:34:21 - [MAIN] Selected index: 1
+2025-12-26 14:34:21 - [MAIN] Set config: monitor_x=0, monitor_y=0, monitor_width=1920, monitor_height=1080
+2025-12-26 14:34:21 - [MAIN] Final config keys: ['display_font_family', 'display_font_size', 'display_font_color', 'display_bg_color', 'display_window_x', 'display_window_y', 'display_window_width', 'display_window_height', 'display_always_on_top', 'display_history_size', 'display_horizontal_align', 'display_vertical_align', 'display_hold_seconds', 'display_monitor', 'display_manual_offset_x', 'display_manual_offset_y', 'all_monitors', 'monitor_x', 'monitor_y', 'monitor_width', 'monitor_height']
+2025-12-26 14:34:29 - --- Display Process Started ---
+2025-12-26 14:34:29 - Subprocess screeninfo available: True
+2025-12-26 14:34:29 - Initial config: {'display_font_family': 'Helvetica', 'display_font_size': 72, 'display_font_color': '#ffffff', 'display_bg_color': '#000000', 'display_window_x': 0, 'display_window_y': 0, 'display_window_width': 1920, 'display_window_height': 1080, 'display_always_on_top': True, 'display_history_size': 1, 'display_horizontal_align': 'Center', 'display_vertical_align': 'Bottom', 'display_hold_seconds': 4.0, 'display_monitor': 1, 'display_manual_offset_x': 0, 'display_manual_offset_y': 0, 'all_monitors': [{'x': 1920, 'y': 15, 'width': 1920, 'height': 1080, 'is_primary': False}, {'x': 0, 'y': 0, 'width': 1920, 'height': 1080, 'is_primary': True}, {'x': 3840, 'y': 7, 'width': 1920, 'height': 1080, 'is_primary': False}], 'monitor_x': 0, 'monitor_y': 0, 'monitor_width': 1920, 'monitor_height': 1080}
+2025-12-26 14:34:29 - Auto-detect (Main Process): X=0, Y=0
+2025-12-26 14:34:29 - Manual Offsets: X=0, Y=0
+2025-12-26 14:34:29 - Using configured dimensions: 1920x1080
+2025-12-26 14:34:29 - FINAL COORDINATES: X=0, Y=0, Size=1920x1080
+2025-12-26 14:34:29 - Applying Geometry: 1920x1080+0+0
+2025-12-26 14:34:29 - Calling SetWindowPos on HWND 2560256 -> 0, 0

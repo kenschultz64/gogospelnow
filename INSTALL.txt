@@ -1,0 +1,26 @@
+GoGospelNow Real-Time Preaching Translator
+Installation Package
+
+QUICK START:
+1. See README.md for complete installation instructions
+2. Choose your operating system section in the README
+3. Follow ALL steps in order - do not skip any steps
+
+WHAT'S INCLUDED:
+- main.py & translator_core.py - Main application files
+- requirements.txt - Python dependencies
+- README.md - Complete installation guide
+- All documentation files (.md files)
+- Launch scripts for Windows, macOS, and Linux
+- Installation helper scripts in the scripts/ folder
+
+WHAT YOU NEED TO INSTALL SEPARATELY:
+- Python 3.11 or higher
+- Docker Desktop
+- Ollama
+- Git (for cloning repositories)
+- FFmpeg and other system dependencies
+
+See README.md for detailed instructions for your operating system.
+
+For support: https://github.com/kenschultz64/gogospelnow

@@ -1,0 +1,11 @@
+sounddevice
+soundfile
+numpy
+torch
+requests
+openai
+faster-whisper
+gradio
+librosa
+PyAudio
+screeninfo
