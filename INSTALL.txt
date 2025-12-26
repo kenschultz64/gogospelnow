@@ -24,3 +24,7 @@ WHAT YOU NEED TO INSTALL SEPARATELY:
 See README.md for detailed instructions for your operating system.
 
 For support: https://github.com/kenschultz64/gogospelnow
+
+DEVELOPMENT:
+- To run tests: pip install pytest pytest-cov
+- Run: python -m pytest tests/
