@@ -24,7 +24,7 @@ Real time transcription, translation and tts for live preaching situations on mi
 - **Real-Time Pipeline:** Integrated transcription (Faster-Whisper), translation (Ollama/LLMs), and Text-to-Speech (Kokoro/Google Cloud) optimized for low latency.
 - **Hybrid Operation:**
     - **Offline Mode:** Uses local Docker containers for TTS and local LLMs for translation.
-    - **Online Mode:** Optional integration with cloud APIs (OpenAI, Google) for enhanced performance or broader language support.
+    - **Online Mode:** Optional integration with cloud APIs (OpenAI, Google, Groq, Mistral, Custom Endpoints) for enhanced performance or broader language support.
 - **Hardware Optimization:** Tuned to run on non-gaming laptops while maintaining acceptable performance.
 - **Cross-Platform Support:** Easy installation and operation on Windows, macOS, and Linux.
 

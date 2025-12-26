@@ -7,7 +7,7 @@
 ## Artificial Intelligence & Machine Learning
 - **Transcription:** \aster-whisper\ (utilizing CTranslate2) for high-performance, local speech-to-text.
 - **Translation (Local):** \Ollama\ for running local Large Language Models (LLMs) like Gemma, Llama, and Granite.
-- **Translation (Cloud):** Optional integration with \OpenAI\, \Groq\, \xAI (Grok)\, and \Mistral\ APIs.
+- **Translation (Cloud):** Optional integration with \`OpenAI\`, \`Groq\`, \`xAI (Grok)\`, \`Mistral\`, and \`Custom OpenAI\` compatible endpoints.
 - **Inference Engine:** \PyTorch\ (torch) for underlying ML computations.
 
 ## Audio & Signal Processing
