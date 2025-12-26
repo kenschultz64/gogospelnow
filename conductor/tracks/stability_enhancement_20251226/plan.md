@@ -7,7 +7,7 @@
 - [x] Task: Write unit tests for translation provider coordination 38b3f45
 - [ ] Task: Conductor - User Manual Verification 'Testing Foundation' (Protocol in workflow.md)
 
-## Phase 2: Documentation Refinement
+## Phase 2: Documentation Refinement [checkpoint: 7729a79]
 - [x] Task: Audit README.md against current main.py and translator_core.py functionality f42ad3e
 - [x] Task: Update INSTALL.txt with any missing dependencies or steps identified during audit aa5534b
 - [x] Task: Verify all links and commands in the documentation are correct f20aa1f
