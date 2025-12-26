@@ -1,6 +1,6 @@
 # Plan: Enhance codebase stability and documentation
 
-## Phase 1: Testing Foundation
+## Phase 1: Testing Foundation [checkpoint: 1d207a0]
 - [x] Task: Set up testing environment (install pytest, pytest-cov) 5a641a5
 - [x] Task: Create initial test file for translator_core.py 28f7c25
 - [x] Task: Write unit tests for audio device discovery and selection logic 65f4ffd
