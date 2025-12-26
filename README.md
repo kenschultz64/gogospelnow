@@ -845,7 +845,7 @@ After you've completed the installation for your operating system:
   - **Hotkey Support:** Press 'M' to cycle through monitors, Escape to close.
   - **Cross-Platform:** Works on Windows, macOS, and Linux.
 - **Performance Tuning:** Manual control over all timing and VAD parameters via sliders.
-- **Expanded API Support:** Integrate with major cloud AI providers including OpenAI, Groq, xAI (Grok), and Mistral, in addition to local Ollama models.
+- **Expanded API Support:** Integrate with major cloud AI providers including OpenAI, Groq, xAI (Grok), Mistral, and Custom OpenAI (compatible endpoints), in addition to local Ollama models.
 - **History:** Translation history logging.
 - **Offline Capable:** Works completely locally (Internet required only for setup and Google Cloud TTS).
 
@@ -861,6 +861,7 @@ You can configure the translator to use cloud-based LLMs for potentially higher 
     *   **Groq:** `https://console.groq.com/keys`
     *   **Grok (xAI):** `https://console.x.ai/`
     *   **Mistral:** `https://console.mistral.ai/api-keys`
+    *   **Custom OpenAI:** Enter your custom Base URL and API Key.
 3.  **Click "Save Server Settings".**
 4.  **Select the Provider** in the main "Speech Translator" tab using the "Translation Provider" dropdown.
 
