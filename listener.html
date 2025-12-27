@@ -193,6 +193,13 @@
             
             requestWakeLock();
             pollInterval = setInterval(pollStatus, 1000);
+            
+            // Re-request wake lock periodically to ensure it stays active
+            setInterval(async () => {
+                if (isListening && !wakeLock && document.visibilityState === 'visible') {
+                    await requestWakeLock();
+                }
+            }, 10000);
         });
     </script>
 </body>
