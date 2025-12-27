@@ -68,6 +68,7 @@ def get_pref_value(key, default, *, min_value=None, max_value=None, cast_type=No
 
 # --- Cleanup old temp files ---
 def cleanup_temp_files():
+    # Clean up root temp files
     temp_files = glob.glob("temp_tts_output_*.mp3")
     for f in temp_files:
         try:
@@ -75,8 +76,29 @@ def cleanup_temp_files():
             core.log_message(f"Removed old temp file: {f}", "INFO")
         except OSError as e:
             core.log_message(f"Error removing file {f}: {e}", "ERROR")
+    
+    # Clean up temp_audio directory (keep files younger than 5 minutes)
+    if os.path.exists("temp_audio"):
+        now = time.time()
+        for f in glob.glob(os.path.join("temp_audio", "tts_*.mp3")):
+            try:
+                if os.stat(f).st_mtime < now - 300: # 5 minutes
+                    os.remove(f)
+                    # core.log_message(f"Removed old audio file: {f}", "DEBUG")
+            except OSError as e:
+                core.log_message(f"Error removing file {f}: {e}", "ERROR")
 
+# Run cleanup at startup
 cleanup_temp_files()
+
+# Schedule periodic cleanup
+def periodic_cleanup():
+    while True:
+        time.sleep(60)
+        cleanup_temp_files()
+
+cleanup_thread = threading.Thread(target=periodic_cleanup, daemon=True)
+cleanup_thread.start()
 
 # --- Translation Display Defaults ---
 DISPLAY_FONT_CHOICES = [
