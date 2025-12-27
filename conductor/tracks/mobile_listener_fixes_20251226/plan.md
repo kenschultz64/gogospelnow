@@ -11,7 +11,7 @@
 - [x] Task: Ensure video element is properly configured (playsinline, hidden but active) 2683996
 - [ ] Task: Conductor - User Manual Verification 'Screen Awake' (Protocol in workflow.md)
 
-## Phase 3: Audio Controls
+## Phase 3: Audio Controls [checkpoint: d636053]
 - [x] Task: Implement visible video loop for robust wake lock 5d2e2fa
 - [x] Task: Implement a custom sticky footer audio player (Play/Pause, Status) 5d2e2fa
 - [x] Task: Ensure controls connect to the existing audio queue logic 5d2e2fa
