@@ -8,7 +8,7 @@
 - [ ] Task: Conductor - User Manual Verification 'Backend Integration' (Protocol in workflow.md)
 
 ## Phase 2: Frontend Refinement
-- [~] Task: Refactor listener.html to remove auto-pause on visibility change
+- [x] Task: Refactor listener.html to remove auto-pause on visibility change 3f97a4a
 - [ ] Task: Implement robust audio playback logic (e.g., audio queueing, NoSleep.js or Wake Lock)
 - [ ] Task: Style listener.html to match the desired look (already provided)
 - [ ] Task: Conductor - User Manual Verification 'Frontend Refinement' (Protocol in workflow.md)
