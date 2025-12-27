@@ -5,7 +5,7 @@ import time
 
 @pytest.fixture
 def client():
-    app = main.create_app()
+    app = main.create_listener_app()
     return TestClient(app)
 
 def test_get_listener_html(client):
