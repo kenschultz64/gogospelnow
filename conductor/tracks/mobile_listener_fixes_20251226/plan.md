@@ -7,8 +7,8 @@
 - [ ] Task: Conductor - User Manual Verification 'Security & Separation' (Protocol in workflow.md)
 
 ## Phase 2: Screen Awake Fixes
-- [~] Task: Integrate NoSleep.js library (or equivalent robust implementation)
-- [ ] Task: Ensure video element is properly configured (playsinline, hidden but active)
+- [x] Task: Integrate NoSleep.js library (or equivalent robust implementation) 2683996
+- [x] Task: Ensure video element is properly configured (playsinline, hidden but active) 2683996
 - [ ] Task: Conductor - User Manual Verification 'Screen Awake' (Protocol in workflow.md)
 
 ## Phase 3: Audio Controls
