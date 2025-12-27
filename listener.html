@@ -9,317 +9,190 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             margin: 0;
             padding: 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+            color: #f3f4f6;
             min-height: 100vh;
         }
         .container {
             max-width: 600px;
             margin: 0 auto;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(31, 41, 55, 0.5);
             backdrop-filter: blur(10px);
             border-radius: 20px;
             padding: 30px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         h1 {
             text-align: center;
             margin-bottom: 30px;
-            font-size: 2.5em;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            font-size: 2em;
+            color: #60a5fa;
         }
         .status {
             text-align: center;
-            padding: 15px;
-            border-radius: 10px;
+            padding: 10px;
+            border-radius: 8px;
             margin-bottom: 20px;
-            font-weight: bold;
-        }
-        .status.disconnected {
-            background: rgba(255, 0, 0, 0.3);
-        }
-        .status.connected {
-            background: rgba(0, 255, 0, 0.3);
+            font-size: 0.9em;
+            background: rgba(0, 0, 0, 0.2);
         }
         .start-btn {
             display: block;
             width: 100%;
-            padding: 20px;
-            font-size: 1.5em;
+            padding: 15px;
+            font-size: 1.2em;
             font-weight: bold;
             color: white;
-            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
             border: none;
-            border-radius: 15px;
+            border-radius: 12px;
             cursor: pointer;
             margin-bottom: 30px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s;
         }
-        .start-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-        }
-        .start-btn:disabled {
-            background: rgba(128, 128, 128, 0.5);
-            cursor: not-allowed;
-            transform: none;
+        .start-btn:active {
+            transform: scale(0.98);
         }
         .text-box {
-            background: rgba(255, 255, 255, 0.15);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
             padding: 20px;
             margin-bottom: 20px;
-            min-height: 80px;
-            font-size: 1.1em;
-            line-height: 1.5;
-            word-wrap: break-word;
+            min-height: 60px;
         }
         .text-box h3 {
             margin-top: 0;
-            margin-bottom: 10px;
-            color: #ffd700;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-        }
-        .audio-controls {
-            text-align: center;
-            margin-top: 20px;
-        }
-        audio {
-            width: 100%;
-            max-width: 400px;
-            border-radius: 10px;
-        }
-        .timestamp {
-            text-align: center;
             font-size: 0.9em;
-            opacity: 0.7;
-            margin-top: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #9ca3af;
         }
-        @media (max-width: 480px) {
-            .container {
-                padding: 20px;
-                margin: 10px;
-            }
-            h1 {
-                font-size: 2em;
-            }
-            .start-btn {
-                padding: 15px;
-                font-size: 1.3em;
-            }
-        }
+        #transcription { color: #d1d5db; font-style: italic; }
+        #translation { color: #ffffff; font-size: 1.2em; font-weight: 500; }
+        
+        .hidden-audio { opacity: 0.5; margin-top: 20px; text-align: center; }
+        audio { width: 100%; }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>🎧 GoGospel Listener</h1>
         
-        <div id="status" class="status disconnected">
-            Disconnected - Tap Start Listening
-        </div>
+        <div id="status" class="status">Tap Start to Connect</div>
         
-        <button id="startBtn" class="start-btn">
-            🎵 Start Listening
-        </button>
+        <button id="startBtn" class="start-btn">Start Listening</button>
         
         <div class="text-box">
-            <h3>📝 Original Text</h3>
-            <div id="transcription">Waiting for audio...</div>
+            <h3>Translation</h3>
+            <div id="translation">...</div>
         </div>
-        
+
         <div class="text-box">
-            <h3>🌍 Translation</h3>
-            <div id="translation">Waiting for translation...</div>
+            <h3>Original</h3>
+            <div id="transcription">...</div>
         </div>
         
-        <div class="audio-controls">
-            <audio id="audioPlayer" controls preload="none">
+        <div class="hidden-audio">
+            <audio id="audioPlayer" controls playsinline>
                 Your browser does not support audio playback.
             </audio>
         </div>
-        
-        <div class="timestamp" id="timestamp"></div>
     </div>
 
     <script>
-        let ws = null;
-        let isListening = false;
-        let audioInitialized = false;
-        let wakeLock = null;
-        
-        const statusEl = document.getElementById('status');
         const startBtn = document.getElementById('startBtn');
-        const transcriptionEl = document.getElementById('transcription');
-        const translationEl = document.getElementById('translation');
+        const statusEl = document.getElementById('status');
+        const transEl = document.getElementById('transcription');
+        const translEl = document.getElementById('translation');
         const audioPlayer = document.getElementById('audioPlayer');
-        const timestampEl = document.getElementById('timestamp');
         
-        function updateStatus(message, isConnected) {
-            statusEl.textContent = message;
-            statusEl.className = `status ${isConnected ? 'connected' : 'disconnected'}`;
-        }
-        
-        function formatTimestamp(timestamp) {
-            if (!timestamp) return '';
-            const date = new Date(timestamp * 1000);
-            return `Last update: ${date.toLocaleTimeString()}`;
-        }
-        
-        function updateContent(data) {
-            console.log('Received update:', data);
-            if (data.transcription) {
-                transcriptionEl.textContent = data.transcription;
-            }
-            if (data.translation) {
-                translationEl.textContent = data.translation;
-            }
-            if (data.audio_url && audioInitialized) {
-                console.log('Updating audio URL:', data.audio_url);
-                // Update audio source and try to play
-                if (data.audio_url.startsWith('http')) {
-                    audioPlayer.src = data.audio_url;
-                } else {
-                    const serverUrl = window.location.origin;
-                    audioPlayer.src = serverUrl + data.audio_url;
-                }
-                audioPlayer.load(); // Force reload
-                audioPlayer.play().catch(e => {
-                    console.log('Auto-play failed:', e);
-                });
-            }
-            if (data.timestamp) {
-                timestampEl.textContent = formatTimestamp(data.timestamp);
-            }
-        }
-        
-        function connectWebSocket() {
-            const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-            const wsUrl = `${protocol}//${window.location.host}/ws`;
-            
-            ws = new WebSocket(wsUrl);
-            
-            ws.onopen = function() {
-                updateStatus('Connected - Listening for updates', true);
-                startBtn.textContent = '🔊 Listening...';
-                startBtn.disabled = true;
-            };
-            
-            ws.onmessage = function(event) {
-                try {
-                    const data = JSON.parse(event.data);
-                    updateContent(data);
-                } catch (e) {
-                    console.error('Error parsing WebSocket message:', e);
-                }
-            };
-            
-            ws.onclose = function() {
-                updateStatus('Disconnected - Tap to reconnect', false);
-                startBtn.textContent = '🔄 Reconnect';
-                startBtn.disabled = false;
-                isListening = false;
-                
-                // Auto-reconnect after 3 seconds
-                setTimeout(() => {
-                    if (!isListening) {
-                        connectWebSocket();
-                    }
-                }, 3000);
-            };
-            
-            ws.onerror = function(error) {
-                console.error('WebSocket error:', error);
-                updateStatus('Connection error - Check server', false);
-            };
-        }
-        
+        let isListening = false;
+        let wakeLock = null;
+        let pollInterval = null;
+        let lastAudioUrl = "";
+        let audioQueue = [];
+        let isPlaying = false;
+
+        // Wake Lock
         async function requestWakeLock() {
             try {
                 if ('wakeLock' in navigator) {
                     wakeLock = await navigator.wakeLock.request('screen');
-                    console.log('Screen wake lock acquired');
-                    
-                    wakeLock.addEventListener('release', () => {
-                        console.log('Screen wake lock released');
-                    });
-                } else {
-                    console.log('Wake Lock API not supported');
+                    statusEl.textContent = "Screen Wake Lock Active";
                 }
             } catch (err) {
-                console.error('Failed to acquire wake lock:', err);
+                console.error(`${err.name}, ${err.message}`);
             }
         }
-        
-        function releaseWakeLock() {
-            if (wakeLock) {
-                wakeLock.release();
-                wakeLock = null;
-                console.log('Wake lock manually released');
-            }
-        }
-        
-        function initializeAudio() {
-            // Initialize audio context on user gesture (required for mobile)
-            if (!audioInitialized) {
-                audioPlayer.load();
-                audioInitialized = true;
-                console.log('Audio initialized');
-            }
-        }
-        
-        startBtn.addEventListener('click', function() {
-            if (!isListening) {
-                initializeAudio();
-                requestWakeLock(); // Prevent screen timeout
-                connectWebSocket();
-                isListening = true;
+
+        // Re-request wake lock on visibility change
+        document.addEventListener('visibilitychange', async () => {
+            if (wakeLock !== null && document.visibilityState === 'visible') {
+                await requestWakeLock();
             }
         });
+
+        // Audio Queue Processing
+        audioPlayer.addEventListener('ended', playNextInQueue);
         
-        // Fallback: Poll for updates if WebSocket fails
-        function pollForUpdates() {
-            if (ws && ws.readyState === WebSocket.OPEN) {
-                return; // WebSocket is working
-            }
-            
-            fetch('/latest')
-                .then(response => response.json())
-                .then(data => updateContent(data))
-                .catch(e => console.log('Polling failed:', e));
-        }
-        
-        // Poll every 2 seconds as fallback
-        setInterval(pollForUpdates, 2000);
-        
-        // Handle page visibility changes
-        document.addEventListener('visibilitychange', function() {
-            if (document.hidden) {
-                if (audioPlayer && !audioPlayer.paused) {
-                    audioPlayer.pause();
-                }
+        function playNextInQueue() {
+            if (audioQueue.length > 0) {
+                const nextUrl = audioQueue.shift();
+                audioPlayer.src = nextUrl;
+                audioPlayer.play().catch(e => console.log("Play error:", e));
+                isPlaying = true;
             } else {
-                // Re-acquire wake lock when page becomes visible again
-                if (isListening && !wakeLock) {
-                    requestWakeLock();
-                }
+                isPlaying = false;
             }
-        });
-        
-        // Handle wake lock release (e.g., when battery is low)
-        if ('wakeLock' in navigator) {
-            navigator.wakeLock.addEventListener('release', () => {
-                // Try to re-acquire wake lock if still listening
-                if (isListening) {
-                    setTimeout(() => requestWakeLock(), 1000);
-                }
-            });
         }
-        
-        // Release wake lock when page is unloaded
-        window.addEventListener('beforeunload', function() {
-            releaseWakeLock();
+
+        function queueAudio(url) {
+            if (!url) return;
+            // Avoid re-queuing the same file immediately if polled multiple times
+            // But main.py generates unique filenames, so checking URL equality is enough
+            if (url === lastAudioUrl) return; 
+            
+            lastAudioUrl = url;
+            audioQueue.push(url);
+            
+            if (!isPlaying) {
+                playNextInQueue();
+            }
+        }
+
+        // Polling
+        async function pollStatus() {
+            try {
+                const response = await fetch('/api/listener/status');
+                const data = await response.json();
+                
+                if (data.transcription) transEl.textContent = data.transcription;
+                if (data.translation) translEl.textContent = data.translation;
+                
+                if (data.audio_url) {
+                    queueAudio(data.audio_url);
+                }
+            } catch (e) {
+                console.log("Polling error:", e);
+            }
+        }
+
+        startBtn.addEventListener('click', () => {
+            if (isListening) return;
+            
+            // Init audio context
+            audioPlayer.play().then(() => {
+                audioPlayer.pause();
+            }).catch(() => {});
+
+            isListening = true;
+            startBtn.textContent = "Listening...";
+            startBtn.style.background = "#10b981";
+            
+            requestWakeLock();
+            pollInterval = setInterval(pollStatus, 1000);
         });
     </script>
 </body>
