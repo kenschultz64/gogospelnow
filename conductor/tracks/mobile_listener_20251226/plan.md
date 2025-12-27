@@ -1,6 +1,6 @@
 # Plan: Implement Mobile Listener App
 
-## Phase 1: Backend Integration
+## Phase 1: Backend Integration [checkpoint: dc64c42]
 - [x] Task: Create FastAPI endpoints in main.py to serve listener.html and static assets b0beb16
 - [x] Task: Implement a data polling/stream endpoint (e.g., /api/listener/status) to return current text and audio URL 90d0326
 - [x] Task: Modify translator_core.py to buffer or expose the latest TTS audio for the listener client 913ae4e
