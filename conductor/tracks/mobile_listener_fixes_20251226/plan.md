@@ -6,7 +6,7 @@
 - [x] Task: Ensure cross-origin resource sharing (CORS) or shared state allows Listener to get data dbd0825
 - [ ] Task: Conductor - User Manual Verification 'Security & Separation' (Protocol in workflow.md)
 
-## Phase 2: Screen Awake Fixes
+## Phase 2: Screen Awake Fixes [checkpoint: 6856403]
 - [x] Task: Integrate NoSleep.js library (or equivalent robust implementation) 2683996
 - [x] Task: Ensure video element is properly configured (playsinline, hidden but active) 2683996
 - [ ] Task: Conductor - User Manual Verification 'Screen Awake' (Protocol in workflow.md)
