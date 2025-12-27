@@ -3270,15 +3270,25 @@ def create_ui():
 
 
 # --- Main Function ---
-def create_app():
-    gradio_ui = create_ui()
-    fastapi_app = FastAPI()
+def create_listener_app():
+    """Create the lightweight FastAPI app for mobile listeners."""
+    app = FastAPI()
 
-    @fastapi_app.get("/listener")
+    # CORS middleware to allow requests from anywhere (optional, but good for mobile)
+    from fastapi.middleware.cors import CORSMiddleware
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=["*"],
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
+
+    @app.get("/listener")
     async def get_listener():
         return FileResponse(os.path.abspath("listener.html"))
 
-    @fastapi_app.get("/api/listener/status")
+    @app.get("/api/listener/status")
     async def get_status():
         return latest_listener_data
 
@@ -3286,13 +3296,30 @@ def create_app():
     from fastapi.staticfiles import StaticFiles
     if not os.path.exists("temp_audio"):
         os.makedirs("temp_audio")
-    fastapi_app.mount("/audio", StaticFiles(directory="temp_audio"), name="audio")
+    app.mount("/audio", StaticFiles(directory="temp_audio"), name="audio")
+    
+    return app
 
-    # Mount Gradio at the root
-    return gr.mount_gradio_app(fastapi_app, gradio_ui, path="/")
+def create_gradio_app():
+    """Create the main Gradio application."""
+    gradio_ui = create_ui()
+    # Mount Gradio app - this creates a FastAPI app internally
+    return gr.mount_gradio_app(FastAPI(), gradio_ui, path="/")
+
+def run_listener_server():
+    import uvicorn
+    # Disable logs for listener to reduce noise, or keep them
+    uvicorn.run(create_listener_app(), host="0.0.0.0", port=8000, log_level="warning")
 
 if __name__ == "__main__":
-    app = create_app()
     import uvicorn
-    # Use uvicorn to run the FastAPI app which includes Gradio
+    
+    # Start the Listener Server in a separate thread
+    core.log_message("Starting Mobile Listener Server on port 8000...")
+    listener_thread = threading.Thread(target=run_listener_server, daemon=True)
+    listener_thread.start()
+
+    # Start the Main Gradio App (Blocking)
+    core.log_message("Starting Main Gradio Interface on port 7860...")
+    app = create_gradio_app()
     uvicorn.run(app, host="0.0.0.0", port=7860)
