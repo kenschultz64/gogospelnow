@@ -848,7 +848,7 @@ async def text_to_speech_async(text, selected_voice, current_settings=None, outp
                 log_message(f"Error playing audio through device {output_device_idx}: {play_error}", "ERROR")
                 log_message("Audio playback failed")
         
-        return None
+        return audio_data
     else:
         log_message("No audio data generated.", "WARNING")
         return None

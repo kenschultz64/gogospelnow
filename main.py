@@ -1166,11 +1166,24 @@ def tts_worker():
             if audio_delay > 0:
                 time.sleep(audio_delay)
             
-            # Process TTS request - now returns None since audio is played directly
+            # Process TTS request
             try:
-                loop.run_until_complete(core.text_to_speech_async(
+                audio_data = loop.run_until_complete(core.text_to_speech_async(
                     translation, voice, settings, output_device_idx
                 ))
+                
+                if audio_data:
+                    # Save to file for mobile listeners
+                    filename = f"tts_{int(time.time()*1000)}.mp3"
+                    filepath = os.path.join("temp_audio", filename)
+                    try:
+                        with open(filepath, "wb") as f:
+                            f.write(audio_data)
+                        # Expose via static mount /audio
+                        update_listener_data(audio_url=f"/audio/{filename}")
+                    except Exception as fe:
+                        core.log_message(f"Error saving audio file: {fe}", "ERROR")
+
                 if result_queue is not None:
                     result_queue.put((True, "Audio played successfully"))
             except Exception as e:
