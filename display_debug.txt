@@ -884,3 +884,20 @@
 2025-12-26 19:05:30 - FINAL COORDINATES: X=0, Y=0, Size=1920x1080
 2025-12-26 19:05:30 - Applying Geometry: 1920x1080+0+0
 2025-12-26 19:05:31 - Calling SetWindowPos on HWND 2561486 -> 0, 0
+2025-12-26 20:35:40 - [MAIN] Launch called. display_monitor=1, get_monitors available=True
+2025-12-26 20:35:40 - [MAIN] screeninfo returned 3 monitors
+2025-12-26 20:35:40 - [MAIN]   Monitor 0: X=1920, Y=15, 1920x1080, primary=False
+2025-12-26 20:35:40 - [MAIN]   Monitor 1: X=0, Y=0, 1920x1080, primary=True
+2025-12-26 20:35:40 - [MAIN]   Monitor 2: X=3840, Y=7, 1920x1080, primary=False
+2025-12-26 20:35:40 - [MAIN] Selected index: 1
+2025-12-26 20:35:40 - [MAIN] Set config: monitor_x=0, monitor_y=0, monitor_width=1920, monitor_height=1080
+2025-12-26 20:35:40 - [MAIN] Final config keys: ['display_font_family', 'display_font_size', 'display_font_color', 'display_bg_color', 'display_window_x', 'display_window_y', 'display_window_width', 'display_window_height', 'display_always_on_top', 'display_history_size', 'display_horizontal_align', 'display_vertical_align', 'display_hold_seconds', 'display_monitor', 'display_manual_offset_x', 'display_manual_offset_y', 'all_monitors', 'monitor_x', 'monitor_y', 'monitor_width', 'monitor_height']
+2025-12-26 20:35:47 - --- Display Process Started ---
+2025-12-26 20:35:47 - Subprocess screeninfo available: True
+2025-12-26 20:35:47 - Initial config: {'display_font_family': 'Helvetica', 'display_font_size': 72, 'display_font_color': '#ffffff', 'display_bg_color': '#000000', 'display_window_x': 0, 'display_window_y': 0, 'display_window_width': 1920, 'display_window_height': 1080, 'display_always_on_top': True, 'display_history_size': 1, 'display_horizontal_align': 'Center', 'display_vertical_align': 'Bottom', 'display_hold_seconds': 4.0, 'display_monitor': 1, 'display_manual_offset_x': 0, 'display_manual_offset_y': 0, 'all_monitors': [{'x': 1920, 'y': 15, 'width': 1920, 'height': 1080, 'is_primary': False}, {'x': 0, 'y': 0, 'width': 1920, 'height': 1080, 'is_primary': True}, {'x': 3840, 'y': 7, 'width': 1920, 'height': 1080, 'is_primary': False}], 'monitor_x': 0, 'monitor_y': 0, 'monitor_width': 1920, 'monitor_height': 1080}
+2025-12-26 20:35:47 - Auto-detect (Main Process): X=0, Y=0
+2025-12-26 20:35:47 - Manual Offsets: X=0, Y=0
+2025-12-26 20:35:47 - Using configured dimensions: 1920x1080
+2025-12-26 20:35:47 - FINAL COORDINATES: X=0, Y=0, Size=1920x1080
+2025-12-26 20:35:47 - Applying Geometry: 1920x1080+0+0
+2025-12-26 20:35:47 - Calling SetWindowPos on HWND 3019230 -> 0, 0
