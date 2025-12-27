@@ -3254,7 +3254,7 @@ def create_app():
 
     @fastapi_app.get("/listener")
     async def get_listener():
-        return FileResponse("listener.html")
+        return FileResponse(os.path.abspath("listener.html"))
 
     @fastapi_app.get("/api/listener/status")
     async def get_status():

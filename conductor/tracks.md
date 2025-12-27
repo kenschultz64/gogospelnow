@@ -6,3 +6,8 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ## [x] Track: Enhance codebase stability and documentation
 *Link: [./conductor/tracks/stability_enhancement_20251226/](./conductor/tracks/stability_enhancement_20251226/)*
+
+---
+
+## [~] Track: Implement Mobile Listener App
+*Link: [./conductor/tracks/mobile_listener_20251226/](./conductor/tracks/mobile_listener_20251226/)*
