@@ -9,6 +9,7 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             margin: 0;
             padding: 20px;
+            padding-bottom: 100px; /* Space for footer */
             background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
             color: #f3f4f6;
             min-height: 100vh;
@@ -36,6 +37,18 @@
             margin-bottom: 20px;
             font-size: 0.9em;
             background: rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        /* Make the video part of the status indicator design */
+        #noSleepVideo {
+            width: 20px; 
+            height: 20px; 
+            opacity: 0.5; 
+            border-radius: 50%;
+            vertical-align: middle;
+            margin-right: 8px;
+            border: 2px solid #10b981;
         }
         .start-btn {
             display: block;
@@ -72,15 +85,53 @@
         #transcription { color: #d1d5db; font-style: italic; }
         #translation { color: #ffffff; font-size: 1.2em; font-weight: 500; }
         
-        .hidden-audio { opacity: 0.5; margin-top: 20px; text-align: center; }
-        audio { width: 100%; }
+        /* Sticky Footer Audio Controls */
+        .audio-controls-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(17, 24, 39, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.4);
+        }
+        .playback-info {
+            font-size: 0.9em;
+            color: #d1d5db;
+        }
+        #footerPlayBtn {
+            background: #2563eb;
+            border: none;
+            color: white;
+            font-size: 1.2em;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 10px rgba(37, 99, 235, 0.3);
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>🎧 GoGospel Listener</h1>
         
-        <div id="status" class="status">Tap Start to Connect</div>
+        <div id="status" class="status">
+            <!-- Visible video element acting as a 'Live' indicator -->
+            <video id="noSleepVideo" playsinline muted loop>
+                <source src="data:video/mp4;base64,AAAAIGZ0eXBpc29tAAACAGlzb21pc28yYXZjMW1wNDEAAAAIZnJlZQAAAr9tZGF0AAACoAYF//+///AAAAMmF2Y0MBZAAK/+EAGWdkAAqs2V+WXAWyAAADAAIAAAMAYB4kSywBAAZo6+PLIsAAAAAYc3R0cwAAAAAAAAABAAAAAQAAAgAAAAAcc3RzYwAAAAAAAAABAAAAAQAAAAEAAAABAAAAFHN0c3oAAAAAAAACtwAAAAEAAAAUc3RjbwAAAAAAAAABAAAAMAAAAGJ1ZHRhAAAAWm1ldGEAAAAAAAAAIWhkbHIAAAAAAAAAAG1kaXJhcHBsAAAAAAAAAAAAAAAALWilc3QAAAAlqXRvbwAAAB1kYXRhAAAAAQAAAABMYXZmNTQuNjMuMTA0" type="video/mp4">
+            </video>
+            <span id="statusText">Tap Start to Connect</span>
+        </div>
         
         <button id="startBtn" class="start-btn">Start Listening</button>
         
@@ -94,24 +145,26 @@
             <div id="transcription">...</div>
         </div>
         
-        <div class="hidden-audio">
-            <!-- Hidden video for Wake Lock fallback -->
-            <video id="noSleepVideo" playsinline muted loop style="height:1px;width:1px;opacity:0.01;position:absolute;top:0;left:0;pointer-events:none;">
-                <source src="data:video/mp4;base64,AAAAIGZ0eXBpc29tAAACAGlzb21pc28yYXZjMW1wNDEAAAAIZnJlZQAAAr9tZGF0AAACoAYF//+///AAAAMmF2Y0MBZAAK/+EAGWdkAAqs2V+WXAWyAAADAAIAAAMAYB4kSywBAAZo6+PLIsAAAAAYc3R0cwAAAAAAAAABAAAAAQAAAgAAAAAcc3RzYwAAAAAAAAABAAAAAQAAAAEAAAABAAAAFHN0c3oAAAAAAAACtwAAAAEAAAAUc3RjbwAAAAAAAAABAAAAMAAAAGJ1ZHRhAAAAWm1ldGEAAAAAAAAAIWhkbHIAAAAAAAAAAG1kaXJhcHBsAAAAAAAAAAAAAAAALWilc3QAAAAlqXRvbwAAAB1kYXRhAAAAAQAAAABMYXZmNTQuNjMuMTA0" type="video/mp4">
-            </video>
-            <audio id="audioPlayer" playsinline style="display:none;">
-                Your browser does not support audio playback.
-            </audio>
-        </div>
+        <!-- Hidden audio element for logic -->
+        <audio id="audioPlayer" playsinline style="display:none;"></audio>
+    </div>
+
+    <!-- Sticky Footer -->
+    <div class="audio-controls-footer" id="audioFooter" style="display:none;">
+        <div class="playback-info" id="playbackStatus">Waiting for audio...</div>
+        <button id="footerPlayBtn">▶</button>
     </div>
 
     <script>
         const startBtn = document.getElementById('startBtn');
-        const statusEl = document.getElementById('status');
+        const statusText = document.getElementById('statusText');
         const transEl = document.getElementById('transcription');
         const translEl = document.getElementById('translation');
         const audioPlayer = document.getElementById('audioPlayer');
         const noSleepVideo = document.getElementById('noSleepVideo');
+        const audioFooter = document.getElementById('audioFooter');
+        const footerPlayBtn = document.getElementById('footerPlayBtn');
+        const playbackStatus = document.getElementById('playbackStatus');
         
         let isListening = false;
         let wakeLock = null;
@@ -125,10 +178,11 @@
             try {
                 if ('wakeLock' in navigator) {
                     wakeLock = await navigator.wakeLock.request('screen');
-                    statusEl.textContent = "Screen Wake Lock Active";
+                    statusText.textContent = "Live â€¢ Screen Lock Active";
                 }
             } catch (err) {
                 console.error(`${err.name}, ${err.message}`);
+                statusText.textContent = "Live â€¢ Video Keep-Awake Active";
             }
         }
 
@@ -137,26 +191,40 @@
             if (wakeLock !== null && document.visibilityState === 'visible') {
                 await requestWakeLock();
             }
+            // Ensure video keeps playing
+            if (isListening && noSleepVideo.paused) {
+                noSleepVideo.play().catch(e => console.log("Video resume failed:", e));
+            }
         });
 
         // Audio Queue Processing
         audioPlayer.addEventListener('ended', playNextInQueue);
+        audioPlayer.addEventListener('play', () => {
+            footerPlayBtn.textContent = "⏸";
+            playbackStatus.textContent = "Playing...";
+        });
+        audioPlayer.addEventListener('pause', () => {
+            footerPlayBtn.textContent = "▶";
+            playbackStatus.textContent = "Paused";
+        });
         
         function playNextInQueue() {
             if (audioQueue.length > 0) {
                 const nextUrl = audioQueue.shift();
                 audioPlayer.src = nextUrl;
-                audioPlayer.play().catch(e => console.log("Play error:", e));
+                audioPlayer.play().catch(e => {
+                    console.log("Play error:", e);
+                    playbackStatus.textContent = "Tap play to resume";
+                });
                 isPlaying = true;
             } else {
                 isPlaying = false;
+                playbackStatus.textContent = "Waiting for audio...";
             }
         }
 
         function queueAudio(url) {
             if (!url) return;
-            // Avoid re-queuing the same file immediately if polled multiple times
-            // But main.py generates unique filenames, so checking URL equality is enough
             if (url === lastAudioUrl) return; 
             
             lastAudioUrl = url;
@@ -184,30 +252,48 @@
             }
         }
 
-        startBtn.addEventListener('click', () => {
+        function startSession() {
             if (isListening) return;
             
             // Init audio context
             audioPlayer.play().then(() => {
-                // Keep playing if queue has items, otherwise it pauses naturally
+                audioPlayer.pause();
             }).catch(() => {});
 
-            // Init Wake Lock video
+            // Init Wake Lock video (Must be visible and playing)
             noSleepVideo.play().catch(e => console.log("Video wake lock failed:", e));
 
             isListening = true;
-            startBtn.textContent = "Listening...";
-            startBtn.style.background = "#10b981";
+            startBtn.style.display = 'none';
+            audioFooter.style.display = 'flex';
+            statusText.textContent = "Connecting...";
             
             requestWakeLock();
             pollInterval = setInterval(pollStatus, 1000);
             
-            // Re-request wake lock periodically to ensure it stays active
+            // Periodic Wake Lock refresh
             setInterval(async () => {
                 if (isListening && !wakeLock && document.visibilityState === 'visible') {
                     await requestWakeLock();
                 }
-            }, 10000);
+                if (isListening && noSleepVideo.paused) {
+                    noSleepVideo.play().catch(() => {});
+                }
+            }, 5000);
+        }
+
+        startBtn.addEventListener('click', startSession);
+        
+        footerPlayBtn.addEventListener('click', () => {
+            if (audioPlayer.paused) {
+                if (audioPlayer.src) {
+                    audioPlayer.play();
+                } else if (audioQueue.length > 0) {
+                    playNextInQueue();
+                }
+            } else {
+                audioPlayer.pause();
+            }
         });
     </script>
 </body>
