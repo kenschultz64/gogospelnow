@@ -172,6 +172,12 @@ input_devices = []
 output_devices = []
 selected_output_device_name = None
 latest_translation_text = ""
+latest_listener_data = {
+    "transcription": "",
+    "translation": "",
+    "audio_url": "",
+    "timestamp": 0
+}
 
 # --- User Preferences ---
 USER_PREFERENCES_FILE = "user_preferences.json"
@@ -837,9 +843,24 @@ def broadcast_translation_to_display(text):
     if text == latest_translation_text:
         return
     latest_translation_text = text
+    
+    # Update listener data
+    update_listener_data(translation=text)
+    
     if translation_display_manager and translation_display_manager.is_running():
         # Send full text to preserve accuracy - display will handle truncation if needed
         translation_display_manager.update_text(text)
+
+def update_listener_data(transcription=None, translation=None, audio_url=None):
+    """Update the latest data available for mobile listeners."""
+    global latest_listener_data
+    if transcription:
+        latest_listener_data["transcription"] = transcription
+    if translation:
+        latest_listener_data["translation"] = translation
+    if audio_url:
+        latest_listener_data["audio_url"] = audio_url
+    latest_listener_data["timestamp"] = time.time()
 
 # --- Circular Audio Buffer Class for CPU Optimization ---
 class CircularAudioBuffer:
@@ -2405,6 +2426,7 @@ def create_ui():
                         out_transcription = transcription
                         # Persist new non-empty transcription
                         last_valid_transcription = transcription
+                        update_listener_data(transcription=transcription)
                     else:
                         core.log_message("Sticky UI: transcription missing/empty; preserving previous transcription", "DEBUG")
 
@@ -3220,6 +3242,16 @@ def create_app():
     @fastapi_app.get("/listener")
     async def get_listener():
         return FileResponse("listener.html")
+
+    @fastapi_app.get("/api/listener/status")
+    async def get_status():
+        return latest_listener_data
+
+    # Serve temp audio files
+    from fastapi.staticfiles import StaticFiles
+    if not os.path.exists("temp_audio"):
+        os.makedirs("temp_audio")
+    fastapi_app.mount("/audio", StaticFiles(directory="temp_audio"), name="audio")
 
     # Mount Gradio at the root
     return gr.mount_gradio_app(fastapi_app, gradio_ui, path="/")
