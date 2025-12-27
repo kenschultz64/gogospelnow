@@ -15,7 +15,7 @@
 - **Audio Analysis:** \librosa\ and \soundfile\ for waveform manipulation and processing.
 
 ## User Interface & Experience
-- **Frontend Framework:** \Gradio\ for the main web-based control panel and real-time monitoring.
+- **Mobile Client:** Native HTML/JS web app (`listener.html`) served by FastAPI for low-latency mobile access.
 - **Display Management:** \screeninfo\ for handling multi-monitor setups and the secondary output display.
 
 ## Infrastructure & Utilities

@@ -27,6 +27,7 @@ Real time transcription, translation and tts for live preaching situations on mi
     - **Online Mode:** Optional integration with cloud APIs (OpenAI, Google, Groq, Mistral, Custom Endpoints) for enhanced performance or broader language support.
 - **Hardware Optimization:** Tuned to run on non-gaming laptops while maintaining acceptable performance.
 - **Cross-Platform Support:** Easy installation and operation on Windows, macOS, and Linux.
+- **Mobile Listener App:** A dedicated, lightweight mobile web interface that allows congregation members to view real-time translations and listen to the audio stream on their own devices, with background playback support.
 
 ## 4. Constraints & Requirements
 
