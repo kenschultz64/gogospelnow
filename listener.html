@@ -95,7 +95,11 @@
         </div>
         
         <div class="hidden-audio">
-            <audio id="audioPlayer" controls playsinline>
+            <!-- Hidden video for Wake Lock fallback -->
+            <video id="noSleepVideo" playsinline muted loop style="height:1px;width:1px;opacity:0;">
+                <source src="data:video/mp4;base64,AAAAHGZ0eXBNNBBis21wZDIwAAAAAG1vb3YAAABsbXZoAAAAAMJ+F0PCfhdDAAAAAQAAAAAAAAEAAAEAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAIgZnJlZQAAAAWAbWRhdAAAAAAAAAAzZ2IgbG9vcGluZyB2aWRlbyB0ZXN0IGZpbGUgZm9yIGFuZHJvaWQK" type="video/mp4">
+            </video>
+            <audio id="audioPlayer" playsinline style="display:none;">
                 Your browser does not support audio playback.
             </audio>
         </div>
@@ -107,6 +111,7 @@
         const transEl = document.getElementById('transcription');
         const translEl = document.getElementById('translation');
         const audioPlayer = document.getElementById('audioPlayer');
+        const noSleepVideo = document.getElementById('noSleepVideo');
         
         let isListening = false;
         let wakeLock = null;
@@ -184,8 +189,11 @@
             
             // Init audio context
             audioPlayer.play().then(() => {
-                audioPlayer.pause();
+                // Keep playing if queue has items, otherwise it pauses naturally
             }).catch(() => {});
+
+            // Init Wake Lock video
+            noSleepVideo.play().catch(e => console.log("Video wake lock failed:", e));
 
             isListening = true;
             startBtn.textContent = "Listening...";
