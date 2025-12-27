@@ -9,8 +9,8 @@
 
 ## Phase 2: Frontend Refinement
 - [x] Task: Refactor listener.html to remove auto-pause on visibility change 3f97a4a
-- [ ] Task: Implement robust audio playback logic (e.g., audio queueing, NoSleep.js or Wake Lock)
-- [ ] Task: Style listener.html to match the desired look (already provided)
+- [x] Task: Implement robust audio playback logic (e.g., audio queueing, NoSleep.js or Wake Lock) 3f97a4a
+- [x] Task: Style listener.html to match the desired look (already provided) 3f97a4a
 - [ ] Task: Conductor - User Manual Verification 'Frontend Refinement' (Protocol in workflow.md)
 
 ## Phase 3: Performance & Audio
