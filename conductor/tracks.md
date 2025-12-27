@@ -14,5 +14,5 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-## [~] Track: Fix Mobile Listener Screen Awake and Audio Controls
+## [x] Track: Fix Mobile Listener Screen Awake and Audio Controls
 *Link: [./conductor/tracks/mobile_listener_fixes_20251226/](./conductor/tracks/mobile_listener_fixes_20251226/)*
