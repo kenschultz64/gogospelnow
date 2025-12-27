@@ -12,7 +12,7 @@
 - [ ] Task: Conductor - User Manual Verification 'Screen Awake' (Protocol in workflow.md)
 
 ## Phase 3: Audio Controls
-- [~] Task: Implement visible video loop for robust wake lock
-- [ ] Task: Implement a custom sticky footer audio player (Play/Pause, Status)
-- [ ] Task: Ensure controls connect to the existing audio queue logic
+- [x] Task: Implement visible video loop for robust wake lock 5d2e2fa
+- [x] Task: Implement a custom sticky footer audio player (Play/Pause, Status) 5d2e2fa
+- [x] Task: Ensure controls connect to the existing audio queue logic 5d2e2fa
 - [ ] Task: Conductor - User Manual Verification 'Audio Controls' (Protocol in workflow.md)
