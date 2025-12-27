@@ -13,7 +13,7 @@
 - [x] Task: Style listener.html to match the desired look (already provided) 3f97a4a
 - [ ] Task: Conductor - User Manual Verification 'Frontend Refinement' (Protocol in workflow.md)
 
-## Phase 3: Performance & Audio
+## Phase 3: Performance & Audio [checkpoint: 47536b4]
 - [x] Task: Optimize audio delivery (ensure small, playable chunks) 897535e
 - [ ] Task: Verify background playback on actual mobile devices (simulated or user test)
 - [ ] Task: Conductor - User Manual Verification 'Performance & Audio' (Protocol in workflow.md)
