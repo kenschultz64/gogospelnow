@@ -15,6 +15,8 @@ import json
 import glob
 from concurrent.futures import ThreadPoolExecutor
 import gradio as gr
+from fastapi import FastAPI
+from fastapi.responses import FileResponse
 from faster_whisper import WhisperModel
 from scipy.signal import resample
 import threadpoolctl
@@ -3211,7 +3213,19 @@ def create_ui():
 
 
 # --- Main Function ---
+def create_app():
+    gradio_ui = create_ui()
+    fastapi_app = FastAPI()
+
+    @fastapi_app.get("/listener")
+    async def get_listener():
+        return FileResponse("listener.html")
+
+    # Mount Gradio at the root
+    return gr.mount_gradio_app(fastapi_app, gradio_ui, path="/")
+
 if __name__ == "__main__":
-    # Create and launch the Gradio interface
-    app = create_ui()
-    app.launch(server_name="0.0.0.0", share=False)
+    app = create_app()
+    import uvicorn
+    # Use uvicorn to run the FastAPI app which includes Gradio
+    uvicorn.run(app, host="0.0.0.0", port=7860)
