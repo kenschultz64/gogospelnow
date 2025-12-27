@@ -7,7 +7,7 @@
 - [~] Task: Create unit tests for the new listener endpoints
 - [ ] Task: Conductor - User Manual Verification 'Backend Integration' (Protocol in workflow.md)
 
-## Phase 2: Frontend Refinement
+## Phase 2: Frontend Refinement [checkpoint: 9e5fbb8]
 - [x] Task: Refactor listener.html to remove auto-pause on visibility change 3f97a4a
 - [x] Task: Implement robust audio playback logic (e.g., audio queueing, NoSleep.js or Wake Lock) 3f97a4a
 - [x] Task: Style listener.html to match the desired look (already provided) 3f97a4a
