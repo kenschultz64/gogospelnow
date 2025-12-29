@@ -47,3 +47,11 @@ user_preferences.json
 *.backup_*
 main.py.backup_*
 translator_core.py.backup_*
+GoGospelNow_backup*
+
+# Node/Mobile
+node_modules/
+build/
+.gradle/
+dist/
+

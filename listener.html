@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GoGospel Listener</title>
+    <title>GoGospelNow Listener</title>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             margin: 0;
             padding: 20px;
-            padding-bottom: 100px; /* Space for footer */
+            padding-bottom: 100px;
+            /* Space for footer */
             background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
             color: #f3f4f6;
             min-height: 100vh;
         }
+
         .container {
             max-width: 600px;
             margin: 0 auto;
@@ -24,12 +27,14 @@
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
+
         h1 {
             text-align: center;
             margin-bottom: 30px;
             font-size: 2em;
             color: #60a5fa;
         }
+
         .status {
             text-align: center;
             padding: 10px;
@@ -40,16 +45,18 @@
             position: relative;
             overflow: hidden;
         }
+
         /* Make the video part of the status indicator design */
         #noSleepVideo {
-            width: 20px; 
-            height: 20px; 
-            opacity: 0.5; 
+            width: 20px;
+            height: 20px;
+            opacity: 0.5;
             border-radius: 50%;
             vertical-align: middle;
             margin-right: 8px;
             border: 2px solid #10b981;
         }
+
         .start-btn {
             display: block;
             width: 100%;
@@ -64,9 +71,11 @@
             margin-bottom: 30px;
             transition: transform 0.2s;
         }
+
         .start-btn:active {
             transform: scale(0.98);
         }
+
         .text-box {
             background: rgba(0, 0, 0, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -75,6 +84,7 @@
             margin-bottom: 20px;
             min-height: 60px;
         }
+
         .text-box h3 {
             margin-top: 0;
             font-size: 0.9em;
@@ -82,9 +92,18 @@
             letter-spacing: 1px;
             color: #9ca3af;
         }
-        #transcription { color: #d1d5db; font-style: italic; }
-        #translation { color: #ffffff; font-size: 1.2em; font-weight: 500; }
-        
+
+        #transcription {
+            color: #d1d5db;
+            font-style: italic;
+        }
+
+        #translation {
+            color: #ffffff;
+            font-size: 1.2em;
+            font-weight: 500;
+        }
+
         /* Sticky Footer Audio Controls */
         .audio-controls-footer {
             position: fixed;
@@ -99,12 +118,14 @@
             align-items: center;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             z-index: 1000;
-            box-shadow: 0 -4px 20px rgba(0,0,0,0.4);
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.4);
         }
+
         .playback-info {
             font-size: 0.9em;
             color: #d1d5db;
         }
+
         #footerPlayBtn {
             background: #2563eb;
             border: none;
@@ -119,22 +140,106 @@
             justify-content: center;
             box-shadow: 0 2px 10px rgba(37, 99, 235, 0.3);
         }
+
+        /* Android Wake Canvas - Subtle pulsing animation */
+        #wakeCanvas {
+            position: fixed;
+            bottom: 80px;
+            right: 10px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        /* Fullscreen button for Android */
+        .fullscreen-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            font-size: 1em;
+            font-weight: bold;
+            color: white;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            margin-bottom: 15px;
+            transition: transform 0.2s;
+        }
+
+        .fullscreen-btn:active {
+            transform: scale(0.98);
+        }
+
+        .fullscreen-btn.active {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        }
+
+        /* Android notice */
+        .android-notice {
+            background: rgba(251, 191, 36, 0.2);
+            border: 1px solid rgba(251, 191, 36, 0.5);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 20px;
+            font-size: 0.85em;
+            color: #fbbf24;
+            display: none;
+        }
+
+        .android-notice.show {
+            display: block;
+        }
+
+        .android-notice ol {
+            margin: 10px 0 0 0;
+            padding-left: 20px;
+        }
+
+        .android-notice li {
+            margin-bottom: 5px;
+        }
+
+        .settings-link {
+            color: #60a5fa;
+            text-decoration: underline;
+            cursor: pointer;
+        }
     </style>
 </head>
+
 <body>
     <div class="container">
-        <h1>🎧 GoGospel Listener</h1>
-        
+        <h1>🎧 GoGospelNow Listener</h1>
+
         <div id="status" class="status">
             <!-- Visible video element acting as a 'Live' indicator -->
             <video id="noSleepVideo" playsinline muted loop>
-                <source src="data:video/mp4;base64,AAAAIGZ0eXBpc29tAAACAGlzb21pc28yYXZjMW1wNDEAAAAIZnJlZQAAAr9tZGF0AAACoAYF//+///AAAAMmF2Y0MBZAAK/+EAGWdkAAqs2V+WXAWyAAADAAIAAAMAYB4kSywBAAZo6+PLIsAAAAAYc3R0cwAAAAAAAAABAAAAAQAAAgAAAAAcc3RzYwAAAAAAAAABAAAAAQAAAAEAAAABAAAAFHN0c3oAAAAAAAACtwAAAAEAAAAUc3RjbwAAAAAAAAABAAAAMAAAAGJ1ZHRhAAAAWm1ldGEAAAAAAAAAIWhkbHIAAAAAAAAAAG1kaXJhcHBsAAAAAAAAAAAAAAAALWilc3QAAAAlqXRvbwAAAB1kYXRhAAAAAQAAAABMYXZmNTQuNjMuMTA0" type="video/mp4">
+                <source
+                    src="data:video/mp4;base64,AAAAIGZ0eXBpc29tAAACAGlzb21pc28yYXZjMW1wNDEAAAAIZnJlZQAAAr9tZGF0AAACoAYF//+///AAAAMmF2Y0MBZAAK/+EAGWdkAAqs2V+WXAWyAAADAAIAAAMAYB4kSywBAAZo6+PLIsAAAAAYc3R0cwAAAAAAAAABAAAAAQAAAgAAAAAcc3RzYwAAAAAAAAABAAAAAQAAAAEAAAABAAAAFHN0c3oAAAAAAAACtwAAAAEAAAAUc3RjbwAAAAAAAAABAAAAMAAAAGJ1ZHRhAAAAWm1ldGEAAAAAAAAAIWhkbHIAAAAAAAAAAG1kaXJhcHBsAAAAAAAAAAAAAAAALWilc3QAAAAlqXRvbwAAAB1kYXRhAAAAAQAAAABMYXZmNTQuNjMuMTA0"
+                    type="video/mp4">
             </video>
             <span id="statusText">Tap Start to Connect</span>
         </div>
-        
+
+        <div id="androidNotice" class="android-notice">
+            📱 <strong>Android Screen Timeout Fix:</strong>
+            <ol>
+                <li>Open your phone's <strong>Settings</strong> app</li>
+                <li>Go to <strong>Display</strong> → <strong>Screen timeout</strong></li>
+                <li>Set it to <strong>30 minutes</strong> (or the maximum)</li>
+                <li>After the service, you can change it back</li>
+            </ol>
+            <em>This is the only reliable way to keep Android screens on for long periods.</em>
+        </div>
+
         <button id="startBtn" class="start-btn">Start Listening</button>
-        
+
+        <button id="fullscreenBtn" class="fullscreen-btn" style="display:none;">🔲 Go Fullscreen (Keeps Screen
+            On)</button>
+
         <div class="text-box">
             <h3>Translation</h3>
             <div id="translation">...</div>
@@ -144,7 +249,10 @@
             <h3>Original</h3>
             <div id="transcription">...</div>
         </div>
-        
+
+        <!-- Wake canvas for Android -->
+        <canvas id="wakeCanvas" width="8" height="8"></canvas>
+
         <!-- Hidden audio element for logic -->
         <audio id="audioPlayer" playsinline style="display:none;"></audio>
     </div>
@@ -165,37 +273,254 @@
         const audioFooter = document.getElementById('audioFooter');
         const footerPlayBtn = document.getElementById('footerPlayBtn');
         const playbackStatus = document.getElementById('playbackStatus');
-        
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+        const androidNotice = document.getElementById('androidNotice');
+        const wakeCanvas = document.getElementById('wakeCanvas');
+        const wakeCtx = wakeCanvas.getContext('2d');
+
         let isListening = false;
         let wakeLock = null;
         let pollInterval = null;
         let lastAudioUrl = "";
         let audioQueue = [];
         let isPlaying = false;
+        let noSleepEnabled = false;
+        let isFullscreen = false;
+        let canvasAnimationId = null;
 
-        // Wake Lock
+        // ============================================
+        // ROBUST NO-SLEEP IMPLEMENTATION FOR ANDROID
+        // ============================================
+
+        // Detect if device is Android
+        const isAndroid = /Android/i.test(navigator.userAgent);
+        const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+        // Create a silent audio context for Android fallback
+        let silentAudioCtx = null;
+        let silentOscillator = null;
+
+        function initSilentAudio() {
+            try {
+                silentAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                // Create a gain node set to almost zero (inaudible but keeps audio context active)
+                const gainNode = silentAudioCtx.createGain();
+                gainNode.gain.value = 0.001; // Near-silent
+                gainNode.connect(silentAudioCtx.destination);
+
+                // Create oscillator for continuous "activity"
+                silentOscillator = silentAudioCtx.createOscillator();
+                silentOscillator.frequency.value = 1; // 1Hz - inaudible
+                silentOscillator.connect(gainNode);
+                silentOscillator.start();
+
+                console.log("Silent audio context initialized for Android wake");
+            } catch (e) {
+                console.log("Silent audio init failed:", e);
+            }
+        }
+
+        // Native Wake Lock API (works on iOS Safari, some Android Chrome versions)
         async function requestWakeLock() {
             try {
                 if ('wakeLock' in navigator) {
                     wakeLock = await navigator.wakeLock.request('screen');
-                    statusText.textContent = "Live â€¢ Screen Lock Active";
+                    wakeLock.addEventListener('release', () => {
+                        console.log('Wake Lock was released');
+                        wakeLock = null;
+                        // Attempt to re-acquire if still listening
+                        if (isListening && document.visibilityState === 'visible') {
+                            setTimeout(requestWakeLock, 100);
+                        }
+                    });
+                    console.log('Wake Lock is active');
+                    return true;
                 }
             } catch (err) {
-                console.error(`${err.name}, ${err.message}`);
-                statusText.textContent = "Live â€¢ Video Keep-Awake Active";
+                console.log('Wake Lock error: ' + err.name + ', ' + err.message);
+            }
+            return false;
+        }
+
+        // NoSleep video approach - More robust for Android
+        function enableNoSleepVideo() {
+            if (noSleepEnabled) return;
+
+            // Ensure video loops and plays
+            noSleepVideo.loop = true;
+            noSleepVideo.muted = true;
+            noSleepVideo.playsInline = true;
+
+            const playPromise = noSleepVideo.play();
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    noSleepEnabled = true;
+                    console.log("NoSleep video playing");
+                }).catch(e => {
+                    console.log("NoSleep video play failed:", e);
+                });
             }
         }
 
-        // Re-request wake lock on visibility change
-        document.addEventListener('visibilitychange', async () => {
-            if (wakeLock !== null && document.visibilityState === 'visible') {
-                await requestWakeLock();
+        function disableNoSleepVideo() {
+            noSleepVideo.pause();
+            noSleepEnabled = false;
+        }
+
+        // Combined wake strategy
+        async function enableWakeLock() {
+            // Try native Wake Lock first
+            const hasNativeLock = await requestWakeLock();
+
+            // Always enable video fallback for Android
+            enableNoSleepVideo();
+
+            // For Android, also init silent audio
+            if (isAndroid) {
+                initSilentAudio();
             }
-            // Ensure video keeps playing
-            if (isListening && noSleepVideo.paused) {
-                noSleepVideo.play().catch(e => console.log("Video resume failed:", e));
+
+            // Setup Media Session API - tells Android this is an active media player
+            if ('mediaSession' in navigator) {
+                navigator.mediaSession.metadata = new MediaMetadata({
+                    title: 'GoGospel Live Translation',
+                    artist: 'GoGospel Now',
+                    album: 'Live Service'
+                });
+                navigator.mediaSession.playbackState = 'playing';
+                console.log("Media Session API initialized");
+            }
+
+            if (hasNativeLock) {
+                statusText.textContent = "Live • Screen Lock Active";
+            } else {
+                statusText.textContent = "Live • Adjust Screen Timeout in Settings";
+            }
+        }
+
+        // Re-request wake lock and restart video on visibility change
+        document.addEventListener('visibilitychange', async () => {
+            if (document.visibilityState === 'visible' && isListening) {
+                console.log("Page visible again, re-enabling wake locks");
+
+                // Re-request native wake lock
+                if (!wakeLock) {
+                    await requestWakeLock();
+                }
+
+                // Ensure video is playing
+                if (noSleepVideo.paused) {
+                    noSleepVideo.play().catch(e => console.log("Video resume failed:", e));
+                }
+
+                // Resume audio context if suspended (Android requirement)
+                if (silentAudioCtx && silentAudioCtx.state === 'suspended') {
+                    silentAudioCtx.resume().catch(e => console.log("Audio context resume failed:", e));
+                }
             }
         });
+
+        // Periodic keep-alive for Android (every 10 seconds)
+        function startAndroidKeepAlive() {
+            setInterval(() => {
+                if (!isListening) return;
+
+                // 1. Ensure video is playing
+                if (noSleepVideo.paused) {
+                    noSleepVideo.play().catch(() => { });
+                }
+
+                // 2. Ping audio context to keep it active
+                if (silentAudioCtx && silentAudioCtx.state === 'running') {
+                    // Small touch to keep context alive
+                    silentAudioCtx.resume().catch(() => { });
+                }
+
+                // 3. Re-request wake lock if lost
+                if (!wakeLock && 'wakeLock' in navigator && document.visibilityState === 'visible') {
+                    requestWakeLock();
+                }
+
+                console.log("Keep-alive tick - Video paused:", noSleepVideo.paused, "| Audio ctx:", silentAudioCtx?.state);
+            }, 10000); // Every 10 seconds
+        }
+
+        // ============================================
+        // CANVAS ANIMATION - Simulates continuous activity
+        // This is the most reliable method for Android
+        // ============================================
+        let hue = 0;
+        function startCanvasAnimation() {
+            function animate() {
+                if (!isListening) return;
+
+                // Draw a subtle color-cycling dot
+                hue = (hue + 1) % 360;
+                wakeCtx.fillStyle = `hsl(${hue}, 70%, 50%)`;
+                wakeCtx.clearRect(0, 0, 8, 8);
+                wakeCtx.beginPath();
+                wakeCtx.arc(4, 4, 3, 0, Math.PI * 2);
+                wakeCtx.fill();
+
+                canvasAnimationId = requestAnimationFrame(animate);
+            }
+            animate();
+            console.log("Canvas wake animation started");
+        }
+
+        function stopCanvasAnimation() {
+            if (canvasAnimationId) {
+                cancelAnimationFrame(canvasAnimationId);
+                canvasAnimationId = null;
+            }
+        }
+
+        // ============================================
+        // FULLSCREEN MODE - Best for long sessions
+        // ============================================
+        function toggleFullscreen() {
+            if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+                // Enter fullscreen
+                const elem = document.documentElement;
+                if (elem.requestFullscreen) {
+                    elem.requestFullscreen().catch(e => console.log("Fullscreen error:", e));
+                } else if (elem.webkitRequestFullscreen) {
+                    elem.webkitRequestFullscreen(); // Safari/older Chrome
+                }
+                isFullscreen = true;
+                fullscreenBtn.textContent = "❌ Exit Fullscreen";
+                fullscreenBtn.classList.add('active');
+            } else {
+                // Exit fullscreen
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                }
+                isFullscreen = false;
+                fullscreenBtn.textContent = "🔲 Go Fullscreen (Keeps Screen On)";
+                fullscreenBtn.classList.remove('active');
+            }
+        }
+
+        // Handle fullscreen change events
+        document.addEventListener('fullscreenchange', () => {
+            if (!document.fullscreenElement) {
+                isFullscreen = false;
+                fullscreenBtn.textContent = "🔲 Go Fullscreen (Keeps Screen On)";
+                fullscreenBtn.classList.remove('active');
+            }
+        });
+        document.addEventListener('webkitfullscreenchange', () => {
+            if (!document.webkitFullscreenElement) {
+                isFullscreen = false;
+                fullscreenBtn.textContent = "🔲 Go Fullscreen (Keeps Screen On)";
+                fullscreenBtn.classList.remove('active');
+            }
+        });
+
+        // Fullscreen button click handler
+        fullscreenBtn.addEventListener('click', toggleFullscreen);
 
         // Audio Queue Processing
         audioPlayer.addEventListener('ended', playNextInQueue);
@@ -207,7 +532,7 @@
             footerPlayBtn.textContent = "▶";
             playbackStatus.textContent = "Paused";
         });
-        
+
         function playNextInQueue() {
             if (audioQueue.length > 0) {
                 const nextUrl = audioQueue.shift();
@@ -225,11 +550,11 @@
 
         function queueAudio(url) {
             if (!url) return;
-            if (url === lastAudioUrl) return; 
-            
+            if (url === lastAudioUrl) return;
+
             lastAudioUrl = url;
             audioQueue.push(url);
-            
+
             if (!isPlaying) {
                 playNextInQueue();
             }
@@ -240,10 +565,10 @@
             try {
                 const response = await fetch('/api/listener/status');
                 const data = await response.json();
-                
+
                 if (data.transcription) transEl.textContent = data.transcription;
                 if (data.translation) translEl.textContent = data.translation;
-                
+
                 if (data.audio_url) {
                     queueAudio(data.audio_url);
                 }
@@ -254,36 +579,52 @@
 
         function startSession() {
             if (isListening) return;
-            
-            // Init audio context
+
+            // CRITICAL: Initialize audio on user gesture (required for both iOS and Android)
             audioPlayer.play().then(() => {
                 audioPlayer.pause();
-            }).catch(() => {});
-
-            // Init Wake Lock video (Must be visible and playing)
-            noSleepVideo.play().catch(e => console.log("Video wake lock failed:", e));
+            }).catch(() => { });
 
             isListening = true;
             startBtn.style.display = 'none';
             audioFooter.style.display = 'flex';
             statusText.textContent = "Connecting...";
-            
-            requestWakeLock();
+
+            // Show Android-specific UI
+            if (isAndroid) {
+                androidNotice.classList.add('show');
+                fullscreenBtn.style.display = 'block';
+            }
+
+            // Enable all wake lock mechanisms
+            enableWakeLock();
+
+            // Start canvas animation (most reliable for Android)
+            startCanvasAnimation();
+
+            // Start polling for translations
             pollInterval = setInterval(pollStatus, 1000);
-            
-            // Periodic Wake Lock refresh
+
+            // Start Android-specific keep-alive loop
+            if (isAndroid) {
+                startAndroidKeepAlive();
+            }
+
+            // General periodic refresh (less aggressive, for all platforms)
             setInterval(async () => {
-                if (isListening && !wakeLock && document.visibilityState === 'visible') {
-                    await requestWakeLock();
+                if (isListening && document.visibilityState === 'visible') {
+                    if (!wakeLock) {
+                        await requestWakeLock();
+                    }
+                    if (noSleepVideo.paused) {
+                        noSleepVideo.play().catch(() => { });
+                    }
                 }
-                if (isListening && noSleepVideo.paused) {
-                    noSleepVideo.play().catch(() => {});
-                }
-            }, 5000);
+            }, 30000); // Every 30 seconds
         }
 
         startBtn.addEventListener('click', startSession);
-        
+
         footerPlayBtn.addEventListener('click', () => {
             if (audioPlayer.paused) {
                 if (audioPlayer.src) {
@@ -295,6 +636,11 @@
                 audioPlayer.pause();
             }
         });
+
+        // Log device info on load
+        console.log("Device: Android=" + isAndroid + ", iOS=" + isIOS);
+        console.log("Wake Lock API available:", 'wakeLock' in navigator);
     </script>
 </body>
+
 </html>

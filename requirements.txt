@@ -9,3 +9,5 @@ gradio
 librosa
 PyAudio
 screeninfo
+fastapi
+uvicorn

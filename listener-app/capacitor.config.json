@@ -1,0 +1,15 @@
+{
+    "appId": "com.gogospelnow.listener",
+    "appName": "GoGospelNow Listener",
+    "webDir": "www",
+    "bundledWebRuntime": false,
+    "server": {
+        "androidScheme": "http",
+        "cleartext": true
+    },
+    "plugins": {
+        "KeepAwake": {
+            "enabled": true
+        }
+    }
+}

@@ -1,3 +1,14 @@
+# Updates – 2025-12-27
+
+## Mobile Listener App (listener.html)
+- **Congregation Listener:** A lightweight mobile web page that allows congregation members to view real-time translations and listen to audio on their own devices.
+- **No Microphone Access:** The listener page does NOT access the phone's microphone – it only receives data from the server. No feedback loop is possible.
+- **Performance:** The listener page is completely independent from the main translator. It won't slow down transcription, translation, or TTS.
+- **Android Screen Timeout:** Due to Android's aggressive power management, JavaScript-based screen wake locks don't reliably work for long sessions (40+ minutes). The app now displays clear instructions for Android users to temporarily increase their screen timeout in Settings → Display → Screen timeout.
+- **iOS Compatibility:** Works well on iPhone/iPad with Wake Lock API support.
+
+---
+
 # Updates – 2025-12-19
 
 ## Display Window Enhancements

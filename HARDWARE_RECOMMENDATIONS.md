@@ -13,7 +13,7 @@ The M4 chip is incredibly fast for AI tasks, but with 16GB of shared memory, we 
 *   **Compute Device:** `Metal GPU (Apple)`
 *   **Compute Precision:** `float16`
     *   *Reason:* Apple Silicon is optimized for fp16 operations.
-*   **Performance Preset:** `Balanced`
+
 *   **CPU Threads:** `4`
     *   *Reason:* Leave remaining cores for the OS and background tasks.
 *   **Parallel Translation Workers:** `4`
@@ -29,7 +29,7 @@ With 64GB of RAM, memory is not an issue. However, without a dedicated NVIDIA GP
 *   **Compute Device:** `CPU Only`
 *   **Compute Precision:** `int8`
     *   *Reason:* **Critical.** `int8` quantization significantly speeds up CPU inference.
-*   **Performance Preset:** `Balanced`
+
 *   **CPU Threads:** `10`
     *   *Reason:* Utilizing more of the Ryzen 9's high core count.
 *   **Parallel Translation Workers:** `6`
@@ -45,8 +45,7 @@ A capable machine, but CPU-based transcription requires careful tuning to mainta
 *   **Compute Device:** `CPU Only`
 *   **Compute Precision:** `int8`
     *   *Reason:* Essential for keeping latency low on Intel CPUs.
-*   **Performance Preset:** `CPU Optimized`
-    *   *Reason:* Adjusts buffer and batch sizes to prevent the CPU from getting overwhelmed.
+
 *   **CPU Threads:** `6`
 *   **Parallel Translation Workers:** `2`
 
@@ -61,8 +60,7 @@ The RTX 3090 is a beast for AI. This machine can run the highest quality models 
 *   **Compute Device:** `CUDA GPU`
 *   **Compute Precision:** `float16`
     *   *Reason:* Native precision for NVIDIA GPUs; runs extremely fast.
-*   **Performance Preset:** `Quality Focused`
-    *   *Reason:* tightens the timings for near-instant response since the hardware can handle it.
+
 *   **CPU Threads:** `4`
     *   *Reason:* The GPU is doing the heavy lifting; the CPU just feeds it data.
 *   **Parallel Translation Workers:** `8`
@@ -77,5 +75,4 @@ The RTX 3090 is a beast for AI. This machine can run the highest quality models 
 | **Whisper Model** | `small` | `small` | `small` / `base` | `large-v3` |
 | **Device** | `Metal GPU` | `CPU Only` | `CPU Only` | `CUDA GPU` |
 | **Precision** | `float16` | `int8` | `int8` | `float16` |
-| **Preset** | `Balanced` | `Balanced` | `CPU Optimized` | `Quality Focused` |
 | **CPU Threads** | `4` | `10` | `6` | `4` |

@@ -1,0 +1,26 @@
+{
+  "name": "gogospelnow-listener",
+  "version": "1.0.0",
+  "description": "GoGospelNow Mobile Listener App - Real-time translation for congregations",
+  "main": "index.js",
+  "scripts": {
+    "build": "echo 'No build step needed'",
+    "cap:add:android": "npx cap add android",
+    "cap:sync": "npx cap sync",
+    "cap:open:android": "npx cap open android"
+  },
+  "keywords": [
+    "translation",
+    "church",
+    "gospel",
+    "listener"
+  ],
+  "author": "GoGospelNow",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@capacitor-community/keep-awake": "^8.0.0",
+    "@capacitor/android": "^8.0.0",
+    "@capacitor/cli": "^8.0.0",
+    "@capacitor/core": "^8.0.0"
+  }
+}

@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="GoGospelNow">
+    <link rel="apple-touch-icon" href="icon.svg">
+    <title>GoGospelNow Listener</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 0;
+            padding-top: env(safe-area-inset-top);
+            padding-bottom: calc(env(safe-area-inset-bottom) + 100px);
+            background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+            color: #f3f4f6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .card {
+            background: rgba(31, 41, 55, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 1.8em;
+            color: #60a5fa;
+        }
+
+        .logo {
+            text-align: center;
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+
+        .status {
+            text-align: center;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 16px;
+            font-size: 0.95em;
+            background: rgba(16, 185, 129, 0.2);
+            border: 1px solid rgba(16, 185, 129, 0.4);
+            color: #10b981;
+        }
+
+        .status.disconnected {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: rgba(239, 68, 68, 0.4);
+            color: #ef4444;
+        }
+
+        .status.connecting {
+            background: rgba(251, 191, 36, 0.2);
+            border-color: rgba(251, 191, 36, 0.4);
+            color: #fbbf24;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 0.9em;
+            color: #9ca3af;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 14px 16px;
+            font-size: 1.1em;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            color: #fff;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        input[type="text"]:focus {
+            border-color: #3b82f6;
+        }
+
+        input[type="text"]::placeholder {
+            color: #6b7280;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            font-size: 1.1em;
+            font-weight: 600;
+            color: white;
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.15s;
+            box-shadow: 0 4px 14px rgba(59, 130, 246, 0.4);
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn:disabled {
+            background: #4b5563;
+            box-shadow: none;
+            cursor: not-allowed;
+        }
+
+        .btn-disconnect {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            box-shadow: 0 4px 14px rgba(239, 68, 68, 0.4);
+        }
+
+        .text-box {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            min-height: 50px;
+        }
+
+        .text-box h3 {
+            margin: 0 0 8px 0;
+            font-size: 0.8em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #9ca3af;
+        }
+
+        #transcription {
+            color: #d1d5db;
+            font-style: italic;
+            font-size: 0.95em;
+        }
+
+        #translation {
+            color: #ffffff;
+            font-size: 1.15em;
+            font-weight: 500;
+            line-height: 1.5;
+        }
+
+        /* Audio controls footer */
+        .audio-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(17, 24, 39, 0.98);
+            backdrop-filter: blur(10px);
+            padding: 16px 20px;
+            padding-bottom: calc(env(safe-area-inset-bottom) + 16px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+        }
+
+        .audio-footer.hidden {
+            display: none;
+        }
+
+        .playback-info {
+            font-size: 0.9em;
+            color: #d1d5db;
+        }
+
+        .play-btn {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            border: none;
+            color: white;
+            font-size: 1.3em;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 14px rgba(59, 130, 246, 0.4);
+        }
+
+        .screen-on-indicator {
+            position: fixed;
+            top: env(safe-area-inset-top, 10px);
+            right: 10px;
+            background: rgba(16, 185, 129, 0.9);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.75em;
+            font-weight: 600;
+            z-index: 1001;
+            display: none;
+        }
+
+        .screen-on-indicator.active {
+            display: block;
+        }
+
+        .help-text {
+            font-size: 0.85em;
+            color: #9ca3af;
+            text-align: center;
+            margin-top: 8px;
+        }
+
+        .ios-tip {
+            background: rgba(96, 165, 250, 0.1);
+            border: 1px solid rgba(96, 165, 250, 0.3);
+            border-radius: 10px;
+            padding: 12px;
+            margin-top: 16px;
+            font-size: 0.85em;
+            color: #93c5fd;
+        }
+
+        .ios-tip strong {
+            color: #60a5fa;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="screen-on-indicator" id="screenIndicator">🔒 Screen Active</div>
+
+    <div class="container">
+        <div class="logo">🎧</div>
+        <h1>GoGospelNow</h1>
+
+        <!-- Setup Screen -->
+        <div id="setupScreen">
+            <div class="card">
+                <div id="statusSetup" class="status disconnected">Not Connected</div>
+
+                <div class="form-group">
+                    <label>Server Address</label>
+                    <input type="text" id="serverInput" placeholder="e.g., 192.168.1.22:8000" autocapitalize="off"
+                        autocorrect="off" spellcheck="false">
+                </div>
+
+                <button id="connectBtn" class="btn">Connect & Start Listening</button>
+
+                <p class="help-text">Enter the IP address shown on the translator computer</p>
+
+                <div class="ios-tip">
+                    <strong>📱 iOS Tip:</strong> Add to Home Screen for the best experience!
+                    Tap the Share button → "Add to Home Screen"
+                </div>
+            </div>
+        </div>
+
+        <!-- Listening Screen -->
+        <div id="listeningScreen" style="display: none;">
+            <div class="card">
+                <div id="statusListening" class="status">🟢 Connected</div>
+
+                <div class="text-box">
+                    <h3>Translation</h3>
+                    <div id="translation">Waiting for translation...</div>
+                </div>
+
+                <div class="text-box">
+                    <h3>Original</h3>
+                    <div id="transcription">...</div>
+                </div>
+
+                <button id="disconnectBtn" class="btn btn-disconnect">Disconnect</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Audio Footer -->
+    <div class="audio-footer hidden" id="audioFooter">
+        <div class="playback-info" id="playbackStatus">Waiting for audio...</div>
+        <button class="play-btn" id="playBtn">▶</button>
+    </div>
+
+    <audio id="audioPlayer" playsinline style="display:none;"></audio>
+
+    <!-- Silent video for iOS screen wake (NoSleep fallback) -->
+    <video id="noSleepVideo" playsinline loop muted style="position:absolute;left:-9999px;width:1px;height:1px;">
+        <source
+            src="data:video/mp4;base64,AAAAIGZ0eXBpc29tAAACAGlzb21pc28yYXZjMW1wNDEAAAAIZnJlZQAAA0FtZGF0AAACrwYF//+r3EXpvebZSLeWLNgg2SPu73gyNjQgLSBjb3JlIDE2NCByMzEwOCBhYWFhM2ExIC0gSC4yNjQvTVBFRy00IEFWQyBjb2RlYyAtIENvcHlsZWZ0IDIwMDMtMjAyMyAtIGh0dHA6Ly93d3cudmlkZW9sYW4ub3JnL3gyNjQuaHRtbCAtIG9wdGlvbnM6IGNhYmFjPTEgcmVmPTMgZGVibG9jaz0xOjA6MCBhbmFseXNlPTB4MzoweDExMyBtZT1oZXggc3VibWU9NyBwc3k9MSBwc3lfcmQ9MS4wMDowLjAwIG1peGVkX3JlZj0xIG1lX3JhbmdlPTE2IGNocm9tYV9tZT0xIHRyZWxsaXM9MSA4eDhkY3Q9MSBjcW09MCBkZWFkem9uZT0yMSwxMSBmYXN0X3Bza2lwPTEgY2hyb21hX3FwX29mZnNldD0tMiB0aHJlYWRzPTMgbG9va2FoZWFkX3RocmVhZHM9MSBzbGljZWRfdGhyZWFkcz0wIG5yPTAgZGVjaW1hdGU9MSBpbnRlcmxhY2VkPTAgYmx1cmF5X2NvbXBhdD0wIGNvbnN0cmFpbmVkX2ludHJhPTAgYmZyYW1lcz0zIGJfcHlyYW1pZD0yIGJfYWRhcHQ9MSBiX2JpYXM9MCBkaXJlY3Q9MSB3ZWlnaHRiPTEgb3Blbl9nb3A9MCB3ZWlnaHRwPTIga2V5aW50PTI1MCBrZXlpbnRfbWluPTEgc2NlbmVjdXQ9NDAgaW50cmFfcmVmcmVzaD0wIHJjX2xvb2thaGVhZD00MCByYz1jcmYgbWJ0cmVlPTEgY3JmPTIzLjAgcWNvbXA9MC42MCBxcG1pbj0wIHFwbWF4PTY5IHFwc3RlcD00IGlwX3JhdGlvPTEuNDAgYXE9MToxLjAwAIAAAAAwZYiEAD//8m+P5OXfBeLGOfKE3xkODvFZuBflHv/+VwJIta6cbpIo8yJs3e9MAAADAFBAAAADAAB3AAAAB0GAA5JAoAAAfIAAAAwBmjgHgAAADAABUAAAEnhBmiJsQz/+qpYAAAMAABdwAAABkEGaQjwhkymEL//+nhAAABWphOgAO4gIEAPzAAAAAwAAI9AAAACQQZpiSeEPJlMCG//+p4QAAAYBQ4AAAA4AAAAwAAJMAAAABUEGagiSeEOZkwIT//fEAAAMAAAMAAAMAAEaAAAADUQZqiSeEOZkwIT//fEAAAAwAAAwAAAwAAQoAAAAOBBmuJJ4Q5mTAhP/9RAAAADAAADAAADAAAjQAAABMEGbAknhDyZTAhf//oiAAABtAAZQAAAAwAARoAAAABEEGfIEURPCv/AAADAAADAAA="
+            type="video/mp4">
+    </video>
+
+    <script>
+        // Elements
+        const setupScreen = document.getElementById('setupScreen');
+        const listeningScreen = document.getElementById('listeningScreen');
+        const serverInput = document.getElementById('serverInput');
+        const connectBtn = document.getElementById('connectBtn');
+        const disconnectBtn = document.getElementById('disconnectBtn');
+        const statusSetup = document.getElementById('statusSetup');
+        const statusListening = document.getElementById('statusListening');
+        const transcriptionEl = document.getElementById('transcription');
+        const translationEl = document.getElementById('translation');
+        const audioPlayer = document.getElementById('audioPlayer');
+        const audioFooter = document.getElementById('audioFooter');
+        const playBtn = document.getElementById('playBtn');
+        const playbackStatus = document.getElementById('playbackStatus');
+        const screenIndicator = document.getElementById('screenIndicator');
+
+        // State
+        let serverUrl = '';
+        let pollInterval = null;
+        let lastAudioUrl = '';
+        let audioQueue = [];
+        let isPlaying = false;
+        let isConnected = false;
+        let wakeLock = null;
+        const noSleepVideo = document.getElementById('noSleepVideo');
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+
+        // Storage key
+        const STORAGE_KEY = 'gogospelnow_server';
+
+        // Load saved server address
+        function loadSavedServer() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (saved) {
+                serverInput.value = saved;
+            }
+        }
+
+        // Save server address
+        function saveServer(address) {
+            localStorage.setItem(STORAGE_KEY, address);
+        }
+
+        // Wake Lock for screen (with iOS video fallback)
+        async function requestWakeLock() {
+            let hasNativeLock = false;
+
+            // Try native Wake Lock API first
+            try {
+                if ('wakeLock' in navigator) {
+                    wakeLock = await navigator.wakeLock.request('screen');
+                    hasNativeLock = true;
+                    console.log('Native Wake Lock acquired');
+
+                    wakeLock.addEventListener('release', () => {
+                        console.log('Wake Lock released');
+                        // Try to re-acquire or fall back to video
+                        if (isConnected) {
+                            startNoSleepVideo();
+                        }
+                    });
+                }
+            } catch (e) {
+                console.log('Native Wake Lock failed:', e);
+            }
+
+            // Always start video fallback for iOS (belt and suspenders)
+            if (isIOS || !hasNativeLock) {
+                startNoSleepVideo();
+            }
+
+            if (hasNativeLock || isIOS) {
+                screenIndicator.classList.add('active');
+            }
+
+            return hasNativeLock;
+        }
+
+        // Start silent video loop (iOS NoSleep method)
+        function startNoSleepVideo() {
+            if (noSleepVideo) {
+                noSleepVideo.play().then(() => {
+                    console.log('NoSleep video started');
+                }).catch(e => {
+                    console.log('NoSleep video failed:', e);
+                });
+            }
+        }
+
+        // Stop NoSleep video
+        function stopNoSleepVideo() {
+            if (noSleepVideo) {
+                noSleepVideo.pause();
+                noSleepVideo.currentTime = 0;
+            }
+        }
+
+        // Release wake lock
+        async function releaseWakeLock() {
+            if (wakeLock) {
+                await wakeLock.release();
+                wakeLock = null;
+            }
+            stopNoSleepVideo();
+            screenIndicator.classList.remove('active');
+        }
+
+        // Re-acquire wake lock on visibility change
+        document.addEventListener('visibilitychange', async () => {
+            if (document.visibilityState === 'visible' && isConnected) {
+                await requestWakeLock();
+            }
+        });
+
+        // Connect to server
+        async function connect() {
+            let address = serverInput.value.trim();
+
+            if (!address) {
+                statusSetup.textContent = '⚠️ Please enter a server address';
+                statusSetup.className = 'status disconnected';
+                return;
+            }
+
+            // Add http:// if not present
+            if (!address.startsWith('http://') && !address.startsWith('https://')) {
+                address = 'http://' + address;
+            }
+
+            // Add port if not present
+            if (!address.match(/:\d+$/)) {
+                address += ':8000';
+            }
+
+            serverUrl = address;
+            statusSetup.textContent = '🔄 Connecting...';
+            statusSetup.className = 'status connecting';
+            connectBtn.disabled = true;
+
+            // Test connection
+            try {
+                const testUrl = serverUrl + '/api/listener/status';
+                const response = await fetch(testUrl);
+
+                if (!response.ok) {
+                    throw new Error('Server responded with error');
+                }
+
+                // Connection successful
+                saveServer(serverInput.value.trim());
+
+                // Request wake lock
+                await requestWakeLock();
+
+                // Initialize audio (requires user gesture)
+                audioPlayer.play().then(() => audioPlayer.pause()).catch(() => { });
+
+                // Switch to listening screen
+                setupScreen.style.display = 'none';
+                listeningScreen.style.display = 'block';
+                audioFooter.classList.remove('hidden');
+
+                isConnected = true;
+                startPolling();
+
+            } catch (e) {
+                console.error('Connection failed:', e);
+                statusSetup.textContent = '❌ Cannot connect to server';
+                statusSetup.className = 'status disconnected';
+                connectBtn.disabled = false;
+            }
+        }
+
+        // Disconnect
+        async function disconnect() {
+            isConnected = false;
+
+            if (pollInterval) {
+                clearInterval(pollInterval);
+                pollInterval = null;
+            }
+
+            await releaseWakeLock();
+
+            audioPlayer.pause();
+            audioQueue = [];
+            isPlaying = false;
+
+            // Switch back to setup screen
+            listeningScreen.style.display = 'none';
+            audioFooter.classList.add('hidden');
+            setupScreen.style.display = 'block';
+
+            statusSetup.textContent = 'Disconnected';
+            statusSetup.className = 'status disconnected';
+            connectBtn.disabled = false;
+        }
+
+        // Poll for updates
+        async function pollStatus() {
+            if (!isConnected) return;
+
+            try {
+                const response = await fetch(serverUrl + '/api/listener/status');
+                const data = await response.json();
+
+                if (data.transcription) {
+                    transcriptionEl.textContent = data.transcription;
+                }
+                if (data.translation) {
+                    translationEl.textContent = data.translation;
+                }
+                if (data.audio_url && data.audio_url !== lastAudioUrl) {
+                    lastAudioUrl = data.audio_url;
+                    queueAudio(serverUrl + data.audio_url);
+                }
+
+                statusListening.textContent = '🟢 Connected';
+                statusListening.className = 'status';
+
+            } catch (e) {
+                console.error('Poll error:', e);
+                statusListening.textContent = '⚠️ Connection interrupted...';
+                statusListening.className = 'status connecting';
+            }
+        }
+
+        function startPolling() {
+            pollStatus(); // Initial poll
+            pollInterval = setInterval(pollStatus, 1000);
+        }
+
+        // Audio queue management
+        function queueAudio(url) {
+            if (!url) return;
+            audioQueue.push(url);
+            if (!isPlaying) {
+                playNextInQueue();
+            }
+        }
+
+        function playNextInQueue() {
+            if (audioQueue.length > 0) {
+                const nextUrl = audioQueue.shift();
+                audioPlayer.src = nextUrl;
+                audioPlayer.play().catch(e => {
+                    console.log('Play error:', e);
+                    playbackStatus.textContent = 'Tap ▶ to play';
+                });
+                isPlaying = true;
+            } else {
+                isPlaying = false;
+                playbackStatus.textContent = 'Waiting for audio...';
+            }
+        }
+
+        // Audio event listeners
+        audioPlayer.addEventListener('ended', playNextInQueue);
+        audioPlayer.addEventListener('play', () => {
+            playBtn.textContent = '⏸';
+            playbackStatus.textContent = 'Playing...';
+        });
+        audioPlayer.addEventListener('pause', () => {
+            playBtn.textContent = '▶';
+            if (!isPlaying) {
+                playbackStatus.textContent = 'Paused';
+            }
+        });
+
+        // Button event listeners
+        connectBtn.addEventListener('click', connect);
+        disconnectBtn.addEventListener('click', disconnect);
+
+        playBtn.addEventListener('click', () => {
+            if (audioPlayer.paused) {
+                if (audioPlayer.src) {
+                    audioPlayer.play();
+                } else if (audioQueue.length > 0) {
+                    playNextInQueue();
+                }
+            } else {
+                audioPlayer.pause();
+            }
+        });
+
+        // Enter key to connect
+        serverInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                connect();
+            }
+        });
+
+        // Initialize
+        loadSavedServer();
+        console.log('GoGospelNow Listener (Web) initialized');
+    </script>
+</body>
+
+</html>

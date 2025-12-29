@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e40af"/>
+      <stop offset="100%" style="stop-color:#3b82f6"/>
+    </linearGradient>
+    <linearGradient id="headphones" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff"/>
+      <stop offset="100%" style="stop-color:#e2e8f0"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="512" height="512" rx="100" fill="url(#bg)"/>
+  
+  <!-- Headphones -->
+  <g transform="translate(256, 270)">
+    <!-- Headband -->
+    <path d="M-120,-80 Q-120,-160 0,-160 Q120,-160 120,-80" 
+          stroke="url(#headphones)" stroke-width="24" fill="none" stroke-linecap="round"/>
+    
+    <!-- Left ear cup -->
+    <rect x="-140" y="-60" width="50" height="90" rx="15" fill="url(#headphones)"/>
+    <rect x="-135" y="-50" width="40" height="70" rx="10" fill="#1e40af" opacity="0.3"/>
+    
+    <!-- Right ear cup -->
+    <rect x="90" y="-60" width="50" height="90" rx="15" fill="url(#headphones)"/>
+    <rect x="95" y="-50" width="40" height="70" rx="10" fill="#1e40af" opacity="0.3"/>
+    
+    <!-- Globe/world hint (small) -->
+    <circle cx="0" cy="40" r="50" stroke="url(#headphones)" stroke-width="4" fill="none" opacity="0.6"/>
+    <ellipse cx="0" cy="40" rx="50" ry="20" stroke="url(#headphones)" stroke-width="3" fill="none" opacity="0.4"/>
+    <line x1="0" y1="-10" x2="0" y2="90" stroke="url(#headphones)" stroke-width="3" opacity="0.4"/>
+  </g>
+</svg>

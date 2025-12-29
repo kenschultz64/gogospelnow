@@ -100,6 +100,27 @@ def periodic_cleanup():
 cleanup_thread = threading.Thread(target=periodic_cleanup, daemon=True)
 cleanup_thread.start()
 
+# --- Get Local IP Address for Listener Connection ---
+def get_local_ip():
+    """Get the local IP address of this computer for listener connections."""
+    import socket
+    try:
+        # Create a socket and connect to external address to find local IP
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.settimeout(0.1)
+        # Doesn't actually connect, just used to determine local IP
+        s.connect(("8.8.8.8", 80))
+        ip = s.getsockname()[0]
+        s.close()
+        return ip
+    except Exception:
+        try:
+            # Fallback: get hostname and resolve it
+            hostname = socket.gethostname()
+            return socket.gethostbyname(hostname)
+        except Exception:
+            return "Unable to detect"
+
 # --- Translation Display Defaults ---
 DISPLAY_FONT_CHOICES = [
     "Helvetica",
@@ -1907,12 +1928,40 @@ def create_ui():
             if default_output_name is None:
                  default_output_name = output_device_names[0]
 
-    with gr.Blocks(title="GoGospleNow.com") as app:
-        # Header row with title and dark mode toggle
+    with gr.Blocks(title="GoGospelNow.com") as app:
+        # Get local IP for listener URL display
+        local_ip = get_local_ip()
+        listener_url = f"{local_ip}:8000"
+        
+        # Header row with title, listener URL, and dark mode toggle
         with gr.Row():
-            with gr.Column(scale=6):
-                gr.Markdown("# GoGospleNow.com")
+            with gr.Column(scale=4):
+                gr.Markdown("# GoGospelNow.com")
                 gr.Markdown("Real Time Preaching Translator")
+            with gr.Column(scale=3, min_width=250):
+                # Listener URL info box
+                gr.HTML(
+                    f"""
+                    <div style="background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); 
+                                padding: 12px 16px; 
+                                border-radius: 10px; 
+                                color: white;
+                                font-size: 13px;
+                                box-shadow: 0 2px 8px rgba(0,0,0,0.2);">
+                        <div style="font-weight: 600; margin-bottom: 4px;">📱 Mobile Listener URL:</div>
+                        <div style="font-family: monospace; 
+                                    background: rgba(0,0,0,0.2); 
+                                    padding: 6px 10px; 
+                                    border-radius: 6px;
+                                    word-break: break-all;">
+                            {listener_url}
+                        </div>
+                        <div style="font-size: 11px; margin-top: 6px; opacity: 0.9;">
+                            Share this URL with your congregation
+                        </div>
+                    </div>
+                    """
+                )
             with gr.Column(scale=1, min_width=200):
                 # Theme toggle - pure HTML links, no JavaScript needed
                 gr.HTML(
@@ -2582,8 +2631,16 @@ def create_ui():
                     info="Or set MISTRAL_API_KEY environment variable",
                     placeholder="Leave empty if using environment variable"
                 )
+
+            with gr.Row():
+                system_prompt_input = gr.Textbox(
+                    value=current_settings.get("system_prompt_template", core.DEFAULT_SETTINGS["system_prompt_template"]),
+                    label="System Prompt Template",
+                    info="Template for the translator instruction. Use {source_lang} and {target_lang} as placeholders.",
+                    lines=3
+                )
             
-            def save_settings(translation_url, tts_url, google_key, openai_key, groq_key, grok_key, mistral_key):
+            def save_settings(translation_url, tts_url, google_key, openai_key, groq_key, grok_key, mistral_key, sys_prompt):
                 new_settings = {
                     "translation_server": translation_url,
                     "tts_server_url": tts_url,
@@ -2592,6 +2649,7 @@ def create_ui():
                     "groq_api_key": groq_key,
                     "grok_api_key": grok_key,
                     "mistral_api_key": mistral_key,
+                    "system_prompt_template": sys_prompt,
                     # Include translation_provider from user_preferences if set
                     "translation_provider": user_preferences.get("translation_provider", "Ollama")
                 }
@@ -2625,7 +2683,7 @@ def create_ui():
             
             save_btn.click(
                 fn=save_settings,
-                inputs=[translation_server, tts_server, google_api_key, openai_api_key, groq_api_key, grok_api_key, mistral_api_key],
+                inputs=[translation_server, tts_server, google_api_key, openai_api_key, groq_api_key, grok_api_key, mistral_api_key, system_prompt_input],
                 outputs=[settings_status]
             )
 

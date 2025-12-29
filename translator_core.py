@@ -26,7 +26,8 @@ DEFAULT_SETTINGS = {
     "grok_api_key": "",
     "mistral_api_key": "",
     "custom_openai_url": "",
-    "custom_openai_key": ""
+    "custom_openai_key": "",
+    "system_prompt_template": "You are a professional translator. Translate the following text from {source_lang} to {target_lang}. Provide ONLY the translation, without any explanations, notes, or extra text."
 }
 
 # Provider configurations (Base URLs)
@@ -541,7 +542,16 @@ def translate(
         clean_source if source_language != "Auto-Detect" else "the detected language"
     )
 
-    system_prompt = f"You are a professional translator. Translate the following text from {prompt_source_lang} to {clean_target}. Provide ONLY the translation, without any explanations, notes, or extra text."
+    # Get template from settings or fallback to default
+    prompt_template = current_settings.get("system_prompt_template", DEFAULT_SETTINGS["system_prompt_template"])
+    
+    # Safely format the prompt
+    try:
+        system_prompt = prompt_template.format(source_lang=prompt_source_lang, target_lang=clean_target)
+    except KeyError:
+        # Fallback if user broke the template keys
+        log_message("Invalid prompt template format. Reverting to default.", "WARNING")
+        system_prompt = DEFAULT_SETTINGS["system_prompt_template"].format(source_lang=prompt_source_lang, target_lang=clean_target)
     
     client, _, error = get_translation_client(current_settings)
     if error:

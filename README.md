@@ -848,6 +848,7 @@ After you've completed the installation for your operating system:
 - **Expanded API Support:** Integrate with major cloud AI providers including OpenAI, Groq, xAI (Grok), Mistral, and Custom OpenAI (compatible endpoints), in addition to local Ollama models.
 - **History:** Translation history logging.
 - **Offline Capable:** Works completely locally (Internet required only for setup and Google Cloud TTS).
+- **Universal Translator (Reverse Translation):** Can translate from any of the ~86 supported source languages back into English, allowing English speakers to understand foreign-language sermons.
 
 ---
 
@@ -938,8 +939,215 @@ Once the environment variable is set:
 
 ---
 
+## Customizing the Translation Prompt
+
+You can customize the instructions given to the AI translator to change the tone, style, or specific requirements of the translation. This is useful for:
+- Giving the translation a specific "persona" (e.g., "Translate for a theology student")
+- Using a specific dialect or vocabulary
+- Adding constraints (e.g., "Keep sentences short")
+
+### How to Customize:
+1.  Go to the **Settings** tab.
+2.  Scroll to the **Server Settings** section.
+3.  Find the **System Prompt Template** text box.
+4.  Edit the text to your liking.
+
+### Important:
+- **Caution:** Only modify this if the default translation style isn't meeting your needs.
+- **Backup:** Copy and paste the current prompt into a text file before changing it, so you can easily revert if the new prompt causes issues.
+- You **MUST** use the placeholders `{source_lang}` and `{target_lang}` in your prompt so the system can insert the correct languages.
+- **Default Prompt:**
+  ```text
+  You are a professional translator. Translate the following text from {source_lang} to {target_lang}. Provide ONLY the translation, without any explanations, notes, or extra text.
+  ```
+
+---
+
+
+## Mobile Listener App 📱
+
+GoGospelNow includes a mobile listener feature that allows congregation members to view translations and hear audio on their own phones.
+
+### Connecting to the Listener
+
+1. Start the GoGospelNow translator on your computer
+2. Look for the **Mobile Listener URL** displayed in the header (e.g., `192.168.1.50:8000`)
+3. Share this URL with your congregation
+4. Members open the URL in their phone's browser (Chrome or Safari)
+5. Tap **"Start Listening"** to begin receiving translations
+
+### Setting Up a Static IP Address (Recommended)
+
+For a consistent connection, we recommend setting a static IP on the translator computer so the URL never changes.
+
+#### Windows:
+
+#### 1. Automated Script (Recommended)
+1. Navigate to the `scripts` folder
+2. Double-click `set_static_ip_windows.bat`
+3. Click **Yes** if prompted to run as Administrator
+4. Follow the on-screen prompts
+
+#### 2. Manual Method
+1. Open **Settings** → **Network & Internet** → **Wi-Fi** (or Ethernet)
+2. Click on your connected network
+3. Click **Edit** under "IP assignment"
+4. Change from "Automatic (DHCP)" to **Manual**
+5. Toggle **IPv4** to On
+6. Fill in:
+   - **IP address**: Choose one (e.g., `192.168.1.100`)
+   - **Subnet prefix length**: `24`
+   - **Gateway**: Your router's IP (usually `192.168.1.1`)
+   - **Preferred DNS**: `8.8.8.8`
+7. Click **Save**
+
+#### macOS:
+
+#### 1. Automated Script (Recommended)
+1. Open Terminal
+2. Run: `sudo ./scripts/set_static_ip_mac.sh`
+3. Follow the prompts
+
+#### 2. Manual Method
+1. Open **System Preferences** → **Network**
+2. Select your connection (Wi-Fi or Ethernet)
+3. Click **Advanced** → **TCP/IP** tab
+4. Change "Configure IPv4" to **Manually**
+5. Fill in:
+   - **IPv4 Address**: Choose one (e.g., `192.168.1.100`)
+   - **Subnet Mask**: `255.255.255.0`
+   - **Router**: Your router's IP (usually `192.168.1.1`)
+6. Click **OK** → **Apply**
+
+#### Linux:
+
+**Using Script (Recommended):**
+1. Open Terminal
+2. Run: `sudo ./scripts/set_static_ip_linux.sh`
+
+**Using NetworkManager (GUI):**
+1. Click the network icon → **Settings** (or **Connection Settings**)
+2. Select your connection → click the gear icon
+3. Go to **IPv4** tab
+4. Change Method to **Manual**
+5. Add an address:
+   - **Address**: `192.168.1.100`
+   - **Netmask**: `255.255.255.0`
+   - **Gateway**: `192.168.1.1`
+6. Save and reconnect
+
+**Using command line (nmcli manually):**
+```bash
+# List connections
+nmcli con show
+
+# Set static IP (replace "Wired connection 1" with your connection name)
+sudo nmcli con mod "Wired connection 1" ipv4.addresses 192.168.1.100/24
+sudo nmcli con mod "Wired connection 1" ipv4.gateway 192.168.1.1
+sudo nmcli con mod "Wired connection 1" ipv4.dns "8.8.8.8"
+sudo nmcli con mod "Wired connection 1" ipv4.method manual
+
+# Restart connection
+sudo nmcli con down "Wired connection 1" && sudo nmcli con up "Wired connection 1"
+```
+
+### Android Screen Timeout Issue
+
+Android phones aggressively turn off the screen to save battery. For long services (40+ minutes), the listener page cannot reliably keep the screen on via JavaScript.
+
+**Solution:** Use the native **Android App** (see below) which has guaranteed screen-on functionality.
+
+---
+
+## 📱 Mobile Listener App
+
+The GoGospelNow Mobile Listener allows congregation members to receive real-time translations on their phones. The translation text and audio are streamed directly to their devices.
+
+### How It Works
+
+1. The translator server runs on port **8000**
+2. The IP address is shown in the main app header (e.g., `192.168.1.22:8000`)
+3. Phones connect to this address via WiFi
+4. They receive live translation text and audio
+
+### Android App (Recommended)
+
+The native Android app provides:
+- ✅ **Guaranteed screen-on** - Screen stays active for the entire service
+- ✅ **Saves server address** - No need to re-enter each time
+- ✅ **Audio playback** - Auto-plays translated audio
+- ✅ **Offline capable** - Works on local network only
+
+**Installation:**
+1. Download `GoGospelNow-Listener.apk` from your church website or file share
+2. Enable "Install from unknown sources" when prompted
+3. Install and open the app
+4. Enter the server IP address (shown on the translator computer)
+5. Tap "Connect & Start Listening"
+
+**Building the APK (for developers):**
+- The source code is in `listener-app/` directory
+- Open `listener-app/android/` in Android Studio
+- Build → Assemble app
+- APK is at `listener-app/android/app/build/outputs/apk/debug/app-debug.apk`
+
+### iPhone / iPad (Web App)
+
+iOS users use the web-based listener:
+
+1. Open Safari on the iPhone/iPad
+2. Go to `http://[SERVER-IP]:8000` - use `listener-standalone.html` hosted on your website
+3. Enter the server IP address
+4. Tap "Connect & Start Listening"
+5. **(Optional)** Tap Share → "Add to Home Screen" for app-like experience
+
+**Note:** iOS's Screen Time settings may need adjustment for long services.
+
+### Network Requirements
+
+| Congregation Size | Network Recommendation |
+|-------------------|----------------------|
+| Up to 50 phones | Standard WiFi router |
+| 50-150 phones | Dual-band router or 2 access points |
+| 150-300 phones | Business-grade WiFi (Ubiquiti, etc.) |
+| 300+ phones | Multiple access points + Gigabit backbone |
+
+**Bandwidth per phone:** ~30-50 kbps (very low)
+
+The listener app works alongside NDI video and other network traffic without issues.
+
+---
+
+## 🔌 Offline / Air-Gapped Operation
+
+GoGospelNow can run **completely offline** with no internet connection. This is perfect for:
+- Mission trips without internet
+- Remote locations
+- Maximum privacy (nothing leaves the building)
+
+### Offline Setup
+
+1. **Use local models only:**
+   - Whisper (local) for transcription
+   - Ollama with downloaded models for translation
+   - Kokoro for TTS
+
+2. **Connect all devices to the same router** (no internet required)
+
+3. **Phones connect via WiFi** to the router
+
+```
+[Computer] ←→ [Local Router] ←→ [Phones on WiFi]
+     ↑              ↑
+  (Ethernet)    (No Internet)
+```
+
+All translation happens locally. The phones only need to reach the server on the local network.
+
+---
+
 ## Avoid Audio Loopback
-Note translation audio should be isolated from the microphone or the program will loop back trying to interpret again what has been translated. Suggested use would be using an aux send to the computer’s input for the mic signal. Then use another aux send to output audio to a transmitter to send the translated audio to individual receivers with headphones. Also could be used with Bluetooth headphones depending on the distance and devices needed. Have built a version that broadcasts audio to a phone app but it is not yet ready for release.
+Note translation audio should be isolated from the microphone or the program will loop back trying to interpret again what has been translated. Suggested use would be using an aux send to the computer's input for the mic signal. Then use another aux send to output audio to a transmitter to send the translated audio to individual receivers with headphones. Also could be used with Bluetooth headphones depending on the distance and devices needed.
 
 ![Audio Setup Diagram](docs/audio-setup.png)
 [![Watch the video](https://img.youtube.com/vi/ZdBDW6Pw4qE/0.jpg)](https://www.youtube.com/watch?v=ZdBDW6Pw4qE&t=11s)
@@ -949,10 +1157,14 @@ Note translation audio should be isolated from the microphone or the program wil
 
 For more detailed information, please refer to these additional guides:
 
+- **[FAQ](FAQ.md)** - Frequently asked questions about battery usage, network capacity, and troubleshooting
 - **[TTS Supported Languages](TTS_SUPPORTED_LANGUAGES.md)** - Complete list of Kokoro and Google Cloud Text-to-Speech voices
+- **[Hardware Recommendations](HARDWARE_RECOMMENDATIONS.md)** - Specific settings for Mac M4, Ryzen, and Intel CPUs
 - **[Performance Tuning Guide](PERFORMANCE_TUNING_GUIDE.md)** - Optimize the translator for your computer's hardware
+- **[Application Settings](APPLICATION_SETTINGS.md)** - Detailed guide to every adjustable setting
 - **[Tuning Guide](TUNING.md)** - Advanced configuration and settings
 - **[Security Setup](SECURITY_SETUP.md)** - Best practices for securing your installation
+- **[Roadmap](ROADMAP.md)** - Future plans and upcoming features
 - **[Updates](UPDATES.md)** - Changelog and version history
 - **[Third Party Licenses](THIRD_PARTY.md)** - Open source licenses and attributions
 

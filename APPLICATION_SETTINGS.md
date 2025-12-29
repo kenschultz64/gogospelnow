@@ -127,10 +127,6 @@ These settings control the "brain" of the transcription engine.
     *   *Effect:* Controls the mathematical precision of the AI.
     *   *Recommendation:* **int8** is the fastest and uses the least memory with negligible quality loss. Use **float16** or **float32** only if you need absolute maximum accuracy and have powerful hardware.
 
-*   **Performance Preset**
-    *   *Choices:* Custom, CPU Optimized, Balanced, Quality Focused
-    *   *Effect:* Automatically moves the sliders for Timing, VAD, and CPU controls to recommended values.
-    *   *Usage:* Start with **Balanced**. If it's too slow, try **CPU Optimized**. If it's fast but inaccurate, try **Quality Focused**.
 
 ---
 
