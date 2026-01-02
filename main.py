@@ -478,12 +478,20 @@ class TranslationDisplayManager:
     def update_text(self, text):
         self._latest_text = text or ""
         if self.is_running() and self._queue:
-            self._queue.put(("text", self._latest_text))
+            try:
+                # Use non-blocking put to avoid freezing main process if display is busy/hung
+                self._queue.put_nowait(("text", self._latest_text))
+            except queue.Full:
+                pass  # Drop frame rather than freeze
 
     def apply_config(self, config):
         self._config = config.copy()
         if self.is_running() and self._queue:
-            self._queue.put(("config", self._config))
+            try:
+                # Use timeout to avoid indefinite blocking
+                self._queue.put(("config", self._config), block=True, timeout=0.5)
+            except queue.Full:
+                pass
 
 
 def translation_display_process_main(cmd_queue, initial_config, initial_text):
@@ -3380,4 +3388,28 @@ if __name__ == "__main__":
     # Start the Main Gradio App (Blocking)
     core.log_message("Starting Main Gradio Interface on port 7860...")
     app = create_gradio_app()
-    uvicorn.run(app, host="0.0.0.0", port=7860)
+    
+    try:
+        uvicorn.run(app, host="0.0.0.0", port=7860)
+    finally:
+        print("\n--- Initiating Shutdown ---")
+        try:
+            # 1. Stop recording
+            stop_continuous_recording(clear_intent=True)
+            
+            # 2. Stop TTS worker
+            tts_stop_event.set()
+            
+            # 3. Shutdown translation display
+            if translation_display_manager:
+                print("Closing translation display...")
+                translation_display_manager.close()
+                
+            # 4. Shutdown thread pool executor
+            if translation_executor:
+                print("Shutting down translation workers...")
+                translation_executor.shutdown(wait=False, cancel_futures=True)
+                
+        except Exception as e:
+            print(f"Error during shutdown: {e}")
+        print("Shutdown complete.")
