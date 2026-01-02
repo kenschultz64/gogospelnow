@@ -1195,6 +1195,11 @@ def tts_worker():
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
     
+    # Track last provider to detect changes
+    last_provider = None
+    consecutive_errors = 0
+    max_consecutive_errors = 3
+    
     while not tts_stop_event.is_set():
         try:
             # Get a TTS task from the queue with a timeout
@@ -1212,6 +1217,17 @@ def tts_worker():
                 tts_queue.task_done()
                 continue
 
+            # Reload settings to catch provider changes
+            current_settings = core.load_settings()
+            current_provider = current_settings.get("tts_provider", "Kokoro")
+            
+            # Detect provider change and log it
+            if last_provider is not None and current_provider != last_provider:
+                core.log_message(f"TTS provider changed from {last_provider} to {current_provider}, reinitializing...", "INFO")
+                # Reset error counter on provider change
+                consecutive_errors = 0
+            last_provider = current_provider
+
             # Apply audio output delay if configured
             audio_delay = float(user_preferences.get("audio_output_delay", 0.0))
             if audio_delay > 0:
@@ -1219,8 +1235,9 @@ def tts_worker():
             
             # Process TTS request
             try:
+                core.log_message(f"TTS worker processing: '{translation[:50]}...' with voice '{voice}' using {current_provider}", "DEBUG")
                 audio_data = loop.run_until_complete(core.text_to_speech_async(
-                    translation, voice, settings, output_device_idx
+                    translation, voice, current_settings, output_device_idx
                 ))
                 
                 if audio_data:
@@ -1234,13 +1251,25 @@ def tts_worker():
                         update_listener_data(audio_url=f"/audio/{filename}")
                     except Exception as fe:
                         core.log_message(f"Error saving audio file: {fe}", "ERROR")
+                    
+                    # Reset error counter on success
+                    consecutive_errors = 0
+                    core.log_message(f"TTS successful for: '{translation[:30]}...'", "DEBUG")
+                else:
+                    consecutive_errors += 1
+                    core.log_message(f"TTS returned no audio data ({consecutive_errors}/{max_consecutive_errors})", "WARNING")
 
                 if result_queue is not None:
                     result_queue.put((True, "Audio played successfully"))
             except Exception as e:
-                core.log_message(f"TTS worker error: {e}", "ERROR")
+                consecutive_errors += 1
+                core.log_message(f"TTS worker error ({consecutive_errors}/{max_consecutive_errors}): {e}", "ERROR")
                 if result_queue is not None:
                     result_queue.put((False, str(e)))
+                
+                # If too many consecutive errors, log loud warning
+                if consecutive_errors >= max_consecutive_errors:
+                    core.log_message(f"⚠️ TTS WORKER DEGRADED: {consecutive_errors} consecutive failures with {current_provider}", "ERROR")
             
             tts_queue.task_done()
         except queue.Empty:
@@ -2325,6 +2354,19 @@ def create_ui():
                             if current_settings:
                                 current_settings["tts_provider"] = provider
                             user_preferences["tts_provider"] = provider
+                            
+                            # Auto-save tts_provider to settings.json for persistence
+                            try:
+                                if os.path.exists(core.SETTINGS_FILE):
+                                    with open(core.SETTINGS_FILE, "r") as f:
+                                        settings = json.load(f)
+                                    settings["tts_provider"] = provider
+                                    with open(core.SETTINGS_FILE, "w") as f:
+                                        json.dump(settings, f, indent=4)
+                                    core.log_message(f"Auto-saved TTS provider: {provider}")
+                            except Exception as e:
+                                core.log_message(f"Failed to auto-save TTS provider: {e}", "ERROR")
+                            
                             new_choices = get_voice_choices(provider)
                             new_val = new_choices[1][1] if len(new_choices) > 1 else "none"
                             return gr.update(choices=new_choices, value=new_val)
@@ -2658,8 +2700,9 @@ def create_ui():
                     "grok_api_key": grok_key,
                     "mistral_api_key": mistral_key,
                     "system_prompt_template": sys_prompt,
-                    # Include translation_provider from user_preferences if set
-                    "translation_provider": user_preferences.get("translation_provider", "Ollama")
+                    # Include translation_provider and tts_provider from user_preferences if set
+                    "translation_provider": user_preferences.get("translation_provider", "Ollama"),
+                    "tts_provider": user_preferences.get("tts_provider", "Kokoro")
                 }
                 
                 try:
