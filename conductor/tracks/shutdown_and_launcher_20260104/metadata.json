@@ -1,0 +1,12 @@
+{
+  "id": "shutdown_and_launcher_20260104",
+  "name": "Graceful Shutdown & Universal Launcher",
+  "description": "Implement a UI button to shut down the app and a script to generate desktop shortcuts for Windows, Linux, and macOS.",
+  "status": "in_progress",
+  "created_at": "2026-01-04",
+  "phases": [
+    "Graceful Shutdown",
+    "Universal Launcher",
+    "Verification"
+  ]
+}

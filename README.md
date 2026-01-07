@@ -810,7 +810,53 @@ You should see your downloaded models listed.
 
 After you've completed the installation for your operating system:
 
-## Starting the Program
+## Creating a Desktop Shortcut (Recommended)
+
+For easy one-click launching, you can create a desktop shortcut that starts the app and opens your browser automatically.
+
+### Windows:
+1. Open Command Prompt in the gogospelnow folder
+2. Activate the virtual environment: `venv\Scripts\activate`
+3. Run: `python install_launcher.py`
+
+**What it creates:**
+- Desktop shortcut: `GoGospelNow Translator.lnk`
+- The shortcut has a custom orange icon
+- Double-click to start the app and open Chrome/Edge
+
+### macOS:
+1. Open Terminal in the gogospelnow folder
+2. Activate the virtual environment: `source venv/bin/activate`
+3. Run: `python install_launcher.py`
+
+**What it creates:**
+- Desktop file: `GoGospelNow Translator.command`
+- You can drag this to your Dock for quick access
+- Double-click to start the app and open Chrome/Safari
+
+### Linux:
+1. Open Terminal in the gogospelnow folder
+2. Activate the virtual environment: `source venv/bin/activate`
+3. Run: `python install_launcher.py`
+
+**What it creates:**
+- Desktop file: `gogospelnow.desktop`
+- Also adds to your applications menu
+- Double-click to start the app and open Chrome/Chromium
+
+### Browser Compatibility
+
+The launcher automatically opens in a compatible browser:
+- ✅ **Chrome** (recommended)
+- ✅ **Microsoft Edge** (Chromium-based)
+- ✅ **Safari** (macOS)
+- ✅ **Chromium/Brave**
+- ❌ **Firefox** (not compatible with this app)
+
+The launcher will try Chrome first, then fall back to other compatible browsers.
+
+
+## Starting the Program Manually
 
 **Windows:**
 - Double-click `launch.bat` in the gogospelnow folder
@@ -828,7 +874,8 @@ After you've completed the installation for your operating system:
 3. The translator interface will load
 4. Select your translation model from the dropdown
 5. Choose your source and target languages
-6. Click "Start" to begin translating 
+6. Click "Start" to begin translating
+7. Click "Shutdown App" (orange button in the top-right) to cleanly stop the application
 ---
 
 ## Features

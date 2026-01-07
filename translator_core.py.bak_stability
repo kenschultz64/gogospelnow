@@ -579,30 +579,16 @@ def translate(
         # Sometimes small models repeat the system prompt instead of translating.
         # We detect this by checking for key phrases from the prompt template.
         translation_lower = translation.strip().lower()
-        
-        # Check 1: Key phrases (English and Spanish observed leaks)
         if (
             translation_lower.startswith("you are a professional translator") 
             or "provide only the translation" in translation_lower
             or "translate instantly and continuously" in translation_lower
             or "preserve the speaker" in translation_lower
             or "handle scripture references" in translation_lower
-            or "preservar la integridad del hablante" in translation_lower
             or (len(system_prompt) > 10 and system_prompt[:50] in translation)
         ):
             log_message(f"Discarded translation (Instruction Leakage detected): '{translation[:100]}...'", "WARNING")
             return None
-            
-        # Check 2: Length Ratio (Hallucination Guard)
-        # If output is massively longer than input, it's likely a hallucination or instruction dump.
-        # We only check if input is substantial enough (>2 words) to avoid false positives on short idioms.
-        input_words = len(text.split())
-        output_words = len(translation.split())
-        
-        if input_words > 2 and output_words > 20 and output_words > (input_words * 4):
-             log_message(f"Discarded translation (Length Ratio Mismatch): Input ({input_words} words) vs Output ({output_words} words).", "WARNING")
-             log_message(f" rejected text: {translation[:100]}...", "DEBUG")
-             return None
         # -----------------------------------------
             
         if not translation:
@@ -849,6 +835,7 @@ async def text_to_speech_async(text, selected_voice, current_settings=None, outp
         # If output device is specified, play the audio directly
         if output_device_idx is not None:
             try:
+                import pyaudio
                 import io
                 from pydub import AudioSegment
                 
@@ -861,8 +848,27 @@ async def text_to_speech_async(text, selected_voice, current_settings=None, outp
                 channels = audio_segment.channels
                 sample_width = audio_segment.sample_width
                 
-                # Use persistent player
-                audio_player.play_audio(raw_data, output_device_idx, sample_rate, channels, sample_width)
+                # Initialize PyAudio
+                p = pyaudio.PyAudio()
+                
+                try:
+                    # Open stream
+                    stream = p.open(
+                        format=p.get_format_from_width(sample_width),
+                        channels=channels,
+                        rate=sample_rate,
+                        output=True,
+                        output_device_index=output_device_idx
+                    )
+                    
+                    # Play audio
+                    stream.write(raw_data)
+                    stream.stop_stream()
+                    stream.close()
+                    
+                    log_message(f"Audio played through device {output_device_idx}")
+                finally:
+                    p.terminate()
                     
             except Exception as play_error:
                 log_message(f"Error playing audio through device {output_device_idx}: {play_error}", "ERROR")
@@ -872,99 +878,6 @@ async def text_to_speech_async(text, selected_voice, current_settings=None, outp
     else:
         log_message("No audio data generated.", "WARNING")
         return None
-
-
-# --- Persistent Audio Player ---
-class GlobalAudioPlayer:
-    """Manages a persistent PyAudio session to avoid overhead and handle device changes."""
-    def __init__(self):
-        self.p = None
-        self.stream = None
-        self.last_rate = None
-        self.last_channels = None
-        self.last_device = None
-        self._lock = threading.Lock()
-
-    def _init_pyaudio(self):
-        import pyaudio
-        if self.p is None:
-            self.p = pyaudio.PyAudio()
-
-    def close(self):
-        with self._lock:
-            if self.stream:
-                try:
-                    self.stream.stop_stream()
-                    self.stream.close()
-                except Exception:
-                    pass
-                self.stream = None
-            
-            if self.p:
-                try:
-                    self.p.terminate()
-                except Exception:
-                    pass
-                self.p = None
-
-    def play_audio(self, raw_data, device_index, rate, channels, sample_width):
-        """Plays audio data, automatically handling initialization and device errors."""
-        import pyaudio
-        
-        # Retry loop: Try once, if it fails (device lost), reset and try again
-        for attempt in range(2):
-            try:
-                with self._lock:
-                    self._init_pyaudio()
-                    
-                    # Re-open stream if parameters changed or stream is missing
-                    if (self.stream is None or 
-                        self.last_rate != rate or 
-                        self.last_channels != channels or 
-                        self.last_device != device_index):
-                        
-                        if self.stream:
-                            try:
-                                self.stream.close()
-                            except Exception:
-                                pass
-                        
-                        format_fmt = self.p.get_format_from_width(sample_width)
-                        log_message(f"Opening audio stream: Device={device_index}, Rate={rate}, Ch={channels}")
-                        
-                        self.stream = self.p.open(
-                            format=format_fmt,
-                            channels=channels,
-                            rate=rate,
-                            output=True,
-                            output_device_index=device_index
-                        )
-                        
-                        self.last_rate = rate
-                        self.last_channels = channels
-                        self.last_device = device_index
-                    
-                    # Write to stream
-                    self.stream.write(raw_data)
-                    log_message(f"Audio played through device {device_index}")
-                    return # Success
-                    
-            except OSError as e:
-                log_message(f"Audio device error (attempt {attempt+1}): {e}", "WARNING")
-                # Force full reset of PyAudio
-                self.close()
-                if attempt == 1:
-                    # If it failed twice, propagate error
-                    raise e
-            except Exception as e:
-                log_message(f"Unexpected audio error: {e}", "ERROR")
-                raise e
-
-audio_player = GlobalAudioPlayer()
-
-def shutdown_audio():
-    """Cleanup function to be called on app exit."""
-    audio_player.close()
 
 
 def fetch_available_models(server_url=None, current_settings=None):

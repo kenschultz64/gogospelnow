@@ -4,6 +4,11 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
+## [x] Track: Graceful Shutdown & Universal Launcher
+*Link: [./conductor/tracks/shutdown_and_launcher_20260104/](./conductor/tracks/shutdown_and_launcher_20260104/)*
+
+---
+
 ## [x] Track: Enhance codebase stability and documentation
 *Link: [./conductor/tracks/stability_enhancement_20251226/](./conductor/tracks/stability_enhancement_20251226/)*
 

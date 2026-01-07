@@ -43,10 +43,6 @@ recording_should_run = False
 recording_params = None
 translation_display_manager = None
 
-# Graceful shutdown control
-shutdown_event = threading.Event()
-uvicorn_server = None  # Will hold reference to uvicorn server for graceful shutdown
-
 # CPU optimization: Set thread limits
 os.environ["OMP_NUM_THREADS"] = "2"
 os.environ["MKL_NUM_THREADS"] = "2"
@@ -1229,11 +1225,6 @@ def tts_worker():
                 tts_queue.task_done()
                 continue
 
-            # Safety: Truncate excessively long text to prevent worker blocking
-            if len(translation) > 600:
-                core.log_message(f"TTS text too long ({len(translation)} chars), truncating to preserve real-time sync.", "WARNING")
-                translation = translation[:600]
-
             # Reload settings to catch provider changes
             current_settings = core.load_settings()
             current_provider = current_settings.get("tts_provider", "Kokoro")
@@ -2058,15 +2049,7 @@ def create_ui():
                     </div>
                     """
                 )
-                # Shutdown button - below theme toggle, centered
-                shutdown_btn = gr.Button(
-                    "⏻ Shutdown App", 
-                    variant="secondary",
-                    elem_classes=["shutdown-btn"],
-                    size="sm"
-                )
-                # Shutdown status display (will show fullscreen message when triggered)
-                shutdown_status = gr.HTML(visible=True, elem_id="shutdown-status-display")
+
         gr.HTML(
             """
             <style>
@@ -2123,28 +2106,6 @@ def create_ui():
             /* General UI polish */
             .gradio-container { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
             footer { display: none !important; } /* Hide Gradio footer for cleaner look */
-            
-            /* Shutdown button - orange to match app theme, centered */
-            .shutdown-btn {
-                display: flex !important;
-                justify-content: center !important;
-                margin-top: 4px !important;
-            }
-            .shutdown-btn button {
-                background: linear-gradient(135deg, #f97316 0%, #ea580c 100%) !important;
-                color: #fff !important;
-                border: none !important;
-                border-radius: 8px !important;
-                font-weight: 600 !important;
-                transition: all 0.2s ease !important;
-                box-shadow: 0 2px 4px rgba(234, 88, 12, 0.3) !important;
-                padding: 6px 16px !important;
-            }
-            .shutdown-btn button:hover {
-                background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%) !important;
-                box-shadow: 0 4px 8px rgba(234, 88, 12, 0.4) !important;
-                transform: translateY(-1px) !important;
-            }
             </style>
             """
         )
@@ -3421,71 +3382,6 @@ def create_ui():
             inputs=[],
             outputs=[launch_display_btn, close_display_btn, display_status],
         )
-        
-        # --- Shutdown Button Handler ---
-        def trigger_shutdown():
-            """Trigger a graceful shutdown of the application."""
-            import signal
-            core.log_message("Shutdown requested via UI button...")
-            
-            # Set the shutdown event to signal server to stop
-            shutdown_event.set()
-            
-            # Return a message before termination
-            # The actual shutdown happens in a background thread to allow UI response
-            def delayed_shutdown():
-                time.sleep(1.0)  # Give time for browser close script to run
-                core.log_message("Initiating graceful shutdown...")
-                
-                try:
-                    # Stop recording
-                    stop_continuous_recording(clear_intent=True)
-                    
-                    # Stop TTS worker
-                    tts_stop_event.set()
-                    
-                    # Close translation display
-                    if translation_display_manager:
-                        translation_display_manager.close()
-                    
-                    # Shutdown thread pool executor
-                    if translation_executor:
-                        translation_executor.shutdown(wait=False, cancel_futures=True)
-                    
-                    # Shutdown audio subsystem
-                    core.shutdown_audio()
-                    
-                except Exception as e:
-                    core.log_message(f"Error during shutdown: {e}", "ERROR")
-                
-                core.log_message("Shutdown sequence complete. Exiting...")
-                # Force exit the process
-                os._exit(0)
-            
-            shutdown_thread = threading.Thread(target=delayed_shutdown, daemon=True)
-            shutdown_thread.start()
-            
-            # Return simple HTML message (Gradio blocks JavaScript)
-            return """
-            <div style="text-align: center; padding: 20px; background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); 
-                        border-radius: 12px; color: white; margin-top: 10px;">
-                <div style="font-size: 24px; font-weight: 700; margin-bottom: 8px;">
-                    ✓ Application Shut Down
-                </div>
-                <div style="font-size: 16px; opacity: 0.95; margin-bottom: 12px;">
-                    GoGospelNow has been safely stopped.
-                </div>
-                <div style="font-size: 14px; background: rgba(0,0,0,0.2); padding: 10px 15px; border-radius: 8px; display: inline-block;">
-                    👆 Please close this browser tab
-                </div>
-            </div>
-            """
-        
-        shutdown_btn.click(
-            fn=trigger_shutdown,
-            inputs=[],
-            outputs=[shutdown_status],
-        )
     
     return app
 
@@ -3564,10 +3460,6 @@ if __name__ == "__main__":
             if translation_executor:
                 print("Shutting down translation workers...")
                 translation_executor.shutdown(wait=False, cancel_futures=True)
-            
-            # 5. Shutdown audio subsystem
-            print("Releasing audio resources...")
-            core.shutdown_audio()
                 
         except Exception as e:
             print(f"Error during shutdown: {e}")
