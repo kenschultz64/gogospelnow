@@ -580,16 +580,59 @@ def translate(
         # We detect this by checking for key phrases from the prompt template.
         translation_lower = translation.strip().lower()
         
-        # Check 1: Key phrases (English and Spanish observed leaks)
-        if (
-            translation_lower.startswith("you are a professional translator") 
-            or "provide only the translation" in translation_lower
-            or "translate instantly and continuously" in translation_lower
-            or "preserve the speaker" in translation_lower
-            or "handle scripture references" in translation_lower
-            or "preservar la integridad del hablante" in translation_lower
-            or (len(system_prompt) > 10 and system_prompt[:50] in translation)
-        ):
+        # Check 1: Key phrases (English, Spanish, and other observed leaks)
+        leak_patterns = [
+            # English instruction patterns
+            "you are a professional translator",
+            "you are a translator",
+            "provide only the translation",
+            "translate the following",
+            "translate from",
+            "translate instantly and continuously",
+            "preserve the speaker",
+            "handle scripture references",
+            "without any explanations",
+            "without explanations",
+            "without any notes",
+            "without notes",
+            "without extra text",
+            # Spanish instruction patterns  
+            "eres un traductor profesional",
+            "eres un traductor",
+            "traduce el siguiente",
+            "proporciona solo la traducción",
+            "preservar la integridad del hablante",
+            "sin explicaciones",
+            "sin notas",
+            # French instruction patterns
+            "vous êtes un traducteur",
+            "traduisez le texte",
+            # German instruction patterns
+            "sie sind ein übersetzer",
+            "übersetzen sie",
+            # Common meta-responses
+            "here is the translation",
+            "here's the translation",
+            "the translation is",
+            "translation:",
+            "translated text:",
+            # Gemma-specific patterns
+            "i will translate",
+            "i'll translate",
+            "let me translate",
+            "okay, here",
+            "sure, here",
+            "certainly,",
+        ]
+        
+        # Check if translation starts with or contains leak patterns
+        is_leaked = any(pattern in translation_lower for pattern in leak_patterns)
+        
+        # Also check if the system prompt itself appears in the output
+        if len(system_prompt) > 10 and system_prompt[:50].lower() in translation_lower:
+            is_leaked = True
+            
+        if is_leaked:
             log_message(f"Discarded translation (Instruction Leakage detected): '{translation[:100]}...'", "WARNING")
             return None
             
