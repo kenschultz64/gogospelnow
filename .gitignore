@@ -42,7 +42,6 @@ translation_log.txt
 # Sensitive configuration files (contains API keys)
 settings.json
 settings.json.*
-user_preferences.json
 *.backup
 *.backup_*
 main.py.backup_*
