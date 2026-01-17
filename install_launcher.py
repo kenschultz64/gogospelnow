@@ -166,7 +166,17 @@ def create_linux_desktop_file(project_root: Path, desktop: Path) -> bool:
     """
     shortcut_path = desktop / "gogospelnow.desktop"
     start_script = project_root / "start_translator.sh"
-    icon_path = project_root / "listener-app" / "icon.svg"
+    
+    # Check for icon - prefer SVG, fall back to PNG
+    icon_svg = project_root / "listener-app" / "icon.svg"
+    icon_png = project_root / "icon.png"
+    if icon_svg.exists():
+        icon_path = icon_svg
+    elif icon_png.exists():
+        icon_path = icon_png
+    else:
+        icon_path = icon_png  # Will show warning but won't break
+        print(f"⚠️  Icon file not found. Desktop shortcut will use default icon.")
     
     # Create a wrapper script that also opens the browser
     wrapper_script = project_root / "launch_with_browser.sh"
@@ -251,13 +261,29 @@ StartupNotify=true
 
 def create_macos_command(project_root: Path, desktop: Path) -> bool:
     """
-    Create a macOS .command file or .app bundle.
+    Create a macOS .app bundle with custom icon.
     """
-    # Create a .command file (simpler, works well)
-    command_path = desktop / "GoGospelNow Translator.command"
-    start_script = project_root / "start_translator.sh"
+    app_name = "GoGospelNow Translator"
+    app_path = desktop / f"{app_name}.app"
+    icon_png = project_root / "icon.png"
     
-    command_content = f'''#!/bin/bash
+    # Create .app bundle structure
+    contents_dir = app_path / "Contents"
+    macos_dir = contents_dir / "MacOS"
+    resources_dir = contents_dir / "Resources"
+    
+    try:
+        # Create directories
+        macos_dir.mkdir(parents=True, exist_ok=True)
+        resources_dir.mkdir(parents=True, exist_ok=True)
+        print(f"✓ Created app bundle structure: {app_path}")
+    except Exception as e:
+        print(f"✗ Failed to create app bundle directories: {e}")
+        return False
+    
+    # Create the launcher script inside the app bundle
+    launcher_script = macos_dir / app_name
+    launcher_content = f'''#!/bin/bash
 cd "{project_root}"
 
 # Activate virtual environment and start server in background
@@ -293,16 +319,119 @@ wait $SERVER_PID
 '''
     
     try:
-        with open(command_path, 'w') as f:
-            f.write(command_content)
-        os.chmod(command_path, 0o755)
-        print(f"✓ Created launcher: {command_path}")
-        print("  (You can drag this to your Dock for easy access)")
-        return True
-        
+        with open(launcher_script, 'w') as f:
+            f.write(launcher_content)
+        os.chmod(launcher_script, 0o755)
+        print(f"✓ Created launcher script")
     except Exception as e:
-        print(f"✗ Failed to create macOS launcher: {e}")
+        print(f"✗ Failed to create launcher script: {e}")
         return False
+    
+    # Create .icns icon from PNG if available
+    icon_icns = resources_dir / "AppIcon.icns"
+    if icon_png.exists():
+        try:
+            # Create iconset directory
+            iconset_dir = resources_dir / "AppIcon.iconset"
+            iconset_dir.mkdir(exist_ok=True)
+            
+            # iconutil requires specific sizes and naming convention
+            # Valid sizes: 16, 32, 128, 256, 512 (plus @2x variants)
+            icon_sizes = [
+                (16, "icon_16x16.png"),
+                (32, "icon_16x16@2x.png"),
+                (32, "icon_32x32.png"),
+                (64, "icon_32x32@2x.png"),
+                (128, "icon_128x128.png"),
+                (256, "icon_128x128@2x.png"),
+                (256, "icon_256x256.png"),
+                (512, "icon_256x256@2x.png"),
+                (512, "icon_512x512.png"),
+                (1024, "icon_512x512@2x.png"),
+            ]
+            
+            for size, filename in icon_sizes:
+                # Use sips to resize AND convert to proper PNG format
+                subprocess.run([
+                    "sips", "-z", str(size), str(size),
+                    "-s", "format", "png",
+                    str(icon_png), "--out", str(iconset_dir / filename)
+                ], capture_output=True, check=True)
+            
+            # Convert iconset to icns
+            result = subprocess.run([
+                "iconutil", "-c", "icns", str(iconset_dir), "-o", str(icon_icns)
+            ], capture_output=True, text=True)
+            
+            if result.returncode == 0:
+                print(f"✓ Created app icon from icon.png")
+                # Clean up iconset directory
+                import shutil
+                shutil.rmtree(iconset_dir)
+            else:
+                print(f"⚠️  Could not create .icns icon: {result.stderr}")
+                # Fall back to copying PNG as resource
+                import shutil
+                shutil.copy(icon_png, resources_dir / "AppIcon.png")
+                
+        except Exception as e:
+            print(f"⚠️  Icon conversion failed: {e}")
+            # Fall back to copying PNG
+            try:
+                import shutil
+                shutil.copy(icon_png, resources_dir / "AppIcon.png")
+            except:
+                pass
+    else:
+        print(f"⚠️  Icon file not found at {icon_png}")
+    
+    # Create Info.plist
+    info_plist = contents_dir / "Info.plist"
+    plist_content = f'''<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleExecutable</key>
+    <string>{app_name}</string>
+    <key>CFBundleIconFile</key>
+    <string>AppIcon</string>
+    <key>CFBundleIdentifier</key>
+    <string>com.gogospelnow.translator</string>
+    <key>CFBundleName</key>
+    <string>{app_name}</string>
+    <key>CFBundleDisplayName</key>
+    <string>{app_name}</string>
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+    <key>CFBundleShortVersionString</key>
+    <string>1.0</string>
+    <key>CFBundleVersion</key>
+    <string>1</string>
+    <key>LSMinimumSystemVersion</key>
+    <string>10.13</string>
+    <key>NSHighResolutionCapable</key>
+    <true/>
+</dict>
+</plist>
+'''
+    
+    try:
+        with open(info_plist, 'w') as f:
+            f.write(plist_content)
+        print(f"✓ Created Info.plist")
+    except Exception as e:
+        print(f"✗ Failed to create Info.plist: {e}")
+        return False
+    
+    # Touch the app to update Finder cache
+    try:
+        subprocess.run(["touch", str(app_path)], check=True)
+    except:
+        pass
+    
+    print(f"✓ Created desktop app: {app_path}")
+    print("  (You can drag this to your Dock for easy access)")
+    return True
 
 
 def main():
@@ -363,7 +492,7 @@ def main():
         if system == "Windows":
             print("  • Double-clicking 'GoGospelNow Translator' on your Desktop")
         elif system == "Darwin":
-            print("  • Double-clicking 'GoGospelNow Translator.command' on your Desktop")
+            print("  • Double-clicking 'GoGospelNow Translator' app on your Desktop")
             print("  • Drag it to your Dock for quick access")
         else:
             print("  • Double-clicking 'gogospelnow.desktop' on your Desktop")
