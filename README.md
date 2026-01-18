@@ -220,6 +220,11 @@ You need at least one translation model. For most computers, start with a smalle
 ollama pull gemma3n:e2b
 ```
 
+**Recommended for translation:**
+```powershell
+ollama run translategemma
+```
+
 **Other options (you can install multiple):**
 ```powershell
 ollama pull llama3.2:3b-instruct-q4_K_M
@@ -473,6 +478,11 @@ You need at least one translation model. For most computers, start with a smalle
 **Recommended for most computers (choose ONE):**
 ```bash
 ollama pull gemma3n:e2b
+```
+
+**Recommended for translation:**
+```bash
+ollama run translategemma
 ```
 
 **Other options (you can install multiple):**
@@ -761,6 +771,11 @@ You need at least one translation model. For most computers, start with a smalle
 **Recommended for most computers (choose ONE):**
 ```bash
 ollama pull gemma3n:e2b
+```
+
+**Recommended for translation:**
+```bash
+ollama run translategemma
 ```
 
 **Other options (you can install multiple):**
