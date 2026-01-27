@@ -1,3 +1,35 @@
+# Updates – 2026-01-26
+
+## Audio Level Meters & Volume Controls
+- **Real-time Input Meter:** Visual display showing microphone input levels with color-coded status (🔴 Too Quiet, 🟢 Optimal, 🟡 Too Loud).
+- **Output Level Meter:** Shows TTS playback activity level.
+- **Software Input Gain:** Slider (0.5x to 2.0x) to adjust microphone sensitivity without leaving the app.
+- **TTS Output Volume:** Independent volume control (0-100%) for text-to-speech playback, applied via dB adjustment.
+- **Auto-Save:** Volume preferences persist across sessions in user_preferences.json.
+- **Location:** Found in collapsible "🎚️ Audio Levels & Volume" section on Speech Translator tab.
+
+## Clipboard Copy Functionality
+- **Copy Translation Button:** One-click button (📋 Copy Translation) to copy current translation to clipboard.
+- **Copy Log to Clipboard:** Copy entire translation log files to clipboard from History section.
+- **Cross-Platform:** Uses `pyperclip` library for Windows, Mac, and Linux compatibility.
+
+## Historical Log Viewing
+- **Date Selector:** Dropdown to browse all past translation log files by date.
+- **Sorted by Date:** Logs shown in reverse chronological order (newest first).
+- **Load & Refresh:** Buttons to load selected log and refresh available dates.
+- **Auto-Load Today:** Today's log loads automatically when opening the History section.
+
+## Performance Optimization
+- **Lazy Loading:** Moved heavy imports (faster-whisper) to function scope to prevent subprocess overhead.
+- **Subprocess Optimization:** Translation Display window no longer reloads AI models, fixing TTS stuttering when launching display.
+- **Background Task Guards:** Cleanup tasks and model fetching now only run in main process.
+
+## Dependencies
+- Added `pyperclip` for cross-platform clipboard support.
+- Added `pydub` (already installed via Gradio) explicitly to requirements.txt.
+
+---
+
 # Updates – 2025-12-27
 
 ## Mobile Listener App (listener.html)
