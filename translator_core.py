@@ -11,7 +11,7 @@ import datetime
 import json
 import threading
 from openai import OpenAI
-from faster_whisper import WhisperModel
+# from faster_whisper import WhisperModel  # Moved to function scope for lazy loading
 
 # --- Configuration ---
 LOGS_DIR = "translation_logs"
@@ -27,7 +27,7 @@ DEFAULT_SETTINGS = {
     "mistral_api_key": "",
     "custom_openai_url": "",
     "custom_openai_key": "",
-    "system_prompt_template": "You are a professional translator. Translate the following text from {source_lang} to {target_lang}. Provide ONLY the translation, without any explanations, notes, or extra text."
+    "system_prompt_template": "You are a professional {source_lang} to {target_lang} translator. CRITICAL: Output ONLY the translated text. Do not include introductory phrases, explanations, the original text, or any meta-commentary."
 }
 
 # Provider configurations (Base URLs)
@@ -458,6 +458,18 @@ def load_settings():
     return DEFAULT_SETTINGS.copy()  # Ensure defaults are used if loading fails
 
 
+def save_settings(settings):
+    """Saves settings to SETTINGS_FILE."""
+    try:
+        with open(SETTINGS_FILE, "w") as f:
+            json.dump(settings, f, indent=2)
+        log_message(f"Saved settings to {SETTINGS_FILE}")
+        return True
+    except Exception as e:
+        log_message(f"Error saving settings: {e}", "ERROR")
+        return False
+
+
 def clean_language_name(language_name):
     """Remove flag emojis and extra descriptors from language names for translation prompts."""
     import re
@@ -559,17 +571,29 @@ def translate(
         return None
 
     try:
+        # Wrap user text in XML delimiters to create hard boundary (prevents prompt leakage)
+        user_message = f"Translate the text inside the <source> tags:\n<source>{text}</source>\n\n<translation>"
+        
         response = client.chat.completions.create(
             model=model_name,
             messages=[
                 {"role": "system", "content": system_prompt},
-                {"role": "user", "content": text}
+                {"role": "user", "content": user_message}
             ],
-            temperature=0.3,
+            temperature=0.1,  # Lower temperature for more deterministic output
             stream=False
         )
         
         translation = response.choices[0].message.content.strip()
+        
+        # Strip XML tags if the model included them in output
+        if translation.startswith('<translation>'):
+            translation = translation[len('<translation>'):]
+        if translation.endswith('</translation>'):
+            translation = translation[:-len('</translation>')]
+        # Also handle case where model outputs closing tag on new line
+        translation = re.sub(r'\s*</translation>\s*$', '', translation)
+        translation = translation.strip()
         
         # Cleanup quotes if present
         if translation.startswith('"') and translation.endswith('"'):
@@ -669,15 +693,20 @@ def transcribe_audio(audio, source_language, whisper_model=None):
     except NameError:
         # If events not yet defined, ignore
         pass
-    if whisper_model is None:
-        log_message(f"Loading Whisper model ({WHISPER_MODEL_SIZE}) with CPU optimizations...")
-        whisper_model = WhisperModel(
-            WHISPER_MODEL_SIZE, 
-            device="cpu", 
-            compute_type="int8",
-            num_workers=1  # CPU optimization
-        )
-        log_message("Whisper model loaded.")
+    try:
+        if whisper_model is None:
+            # Lazy import to avoid overhead in subprocesses
+            from faster_whisper import WhisperModel
+            log_message(f"Loading Whisper model ({WHISPER_MODEL_SIZE}) with CPU optimizations...")
+            whisper_model = WhisperModel(
+                WHISPER_MODEL_SIZE, 
+                device="cpu", 
+                compute_type="int8",
+                num_workers=1  # CPU optimization
+            )
+            log_message("Whisper model loaded.")
+    except Exception as e:
+        log_message(f"Error loading Whisper model: {e}", "ERROR")
         
     try:
         if audio.dtype != np.float32:
@@ -837,7 +866,7 @@ def fetch_google_voices(api_key):
         return []
 
 
-async def text_to_speech_async(text, selected_voice, current_settings=None, output_device_idx=None):
+async def text_to_speech_async(text, selected_voice, current_settings=None, output_device_idx=None, output_volume=1.0):
     """Generates speech using configured provider (Kokoro or Google) with direct audio streaming."""
     if current_settings is None:
         current_settings = load_settings()
@@ -897,6 +926,20 @@ async def text_to_speech_async(text, selected_voice, current_settings=None, outp
                 
                 # Convert MP3 data to playable format
                 audio_segment = AudioSegment.from_mp3(io.BytesIO(audio_data))
+                
+                # Apply volume adjustment (convert 0.0-1.0 to dB)
+                # 1.0 = 0 dB (no change), 0.5 = -6 dB, 0.0 = mute
+                try:
+                    vol = float(output_volume) if output_volume else 1.0
+                    vol = max(0.01, min(1.0, vol))  # Clamp to valid range
+                    if vol < 1.0:
+                        # Convert to dB: vol=0.5 -> -6dB, vol=0.25 -> -12dB, etc.
+                        import math
+                        db_change = 20 * math.log10(vol)
+                        audio_segment = audio_segment + db_change
+                        log_message(f"Applied volume adjustment: {vol:.2f} ({db_change:.1f} dB)", "DEBUG")
+                except Exception as vol_error:
+                    log_message(f"Volume adjustment error: {vol_error}", "WARNING")
                 
                 # Convert to raw audio data
                 raw_data = audio_segment.raw_data

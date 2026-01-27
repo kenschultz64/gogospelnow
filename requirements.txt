@@ -11,3 +11,5 @@ PyAudio
 screeninfo
 fastapi
 uvicorn
+pyperclip
+pydub

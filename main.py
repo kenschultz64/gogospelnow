@@ -11,13 +11,14 @@ import threading
 import multiprocessing as mp
 import asyncio
 import time
+import datetime
 import json
 import glob
 from concurrent.futures import ThreadPoolExecutor
 import gradio as gr
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
-from faster_whisper import WhisperModel
+# from faster_whisper import WhisperModel  # Moved to lazy load
 from scipy.signal import resample
 import threadpoolctl
 try:
@@ -32,6 +33,7 @@ except Exception:
 
 # Import core functionality
 import translator_core as core
+import pyperclip  # Cross-platform clipboard support
 
 # --- Global Variables & Queues ---
 audio_queue = queue.Queue()
@@ -93,7 +95,7 @@ def cleanup_temp_files():
                 core.log_message(f"Error removing file {f}: {e}", "ERROR")
 
 # Run cleanup at startup
-cleanup_temp_files()
+# cleanup_temp_files()  # Moved to initialize_background_tasks
 
 # Schedule periodic cleanup
 def periodic_cleanup():
@@ -101,8 +103,8 @@ def periodic_cleanup():
         time.sleep(60)
         cleanup_temp_files()
 
-cleanup_thread = threading.Thread(target=periodic_cleanup, daemon=True)
-cleanup_thread.start()
+# cleanup_thread = threading.Thread(target=periodic_cleanup, daemon=True)
+# cleanup_thread.start()  # Moved to initialize_background_tasks
 
 # --- Get Local IP Address for Listener Connection ---
 def get_local_ip():
@@ -214,7 +216,7 @@ PRESETS = {
         "vad": False,
     },
 }
-available_ollama_models = core.fetch_available_models(current_settings=current_settings)
+available_ollama_models = [] # core.fetch_available_models(current_settings=current_settings) # Moved to UI init
 input_devices = []
 output_devices = []
 selected_output_device_name = None
@@ -1004,6 +1006,8 @@ def get_whisper_model():
     """Get or create the global Whisper model instance with hardware detection."""
     global whisper_model
     if whisper_model is None:
+        # Lazy import to avoid loading heavy libs in subprocesses
+        from faster_whisper import WhisperModel
         # Get hardware preferences
         device_pref = user_preferences.get("compute_device", "CPU Only")
         compute_type = user_preferences.get("compute_type", "int8")
@@ -1253,11 +1257,18 @@ def tts_worker():
             # Process TTS request
             try:
                 core.log_message(f"TTS worker processing: '{translation[:50]}...' with voice '{voice}' using {current_provider}", "DEBUG")
+                # Get output volume from user preferences
+                output_volume = user_preferences.get("output_volume", 0.8) if isinstance(user_preferences, dict) else 0.8
                 audio_data = loop.run_until_complete(core.text_to_speech_async(
-                    translation, voice, current_settings, output_device_idx
+                    translation, voice, current_settings, output_device_idx, output_volume
                 ))
                 
                 if audio_data:
+                    # Track output energy for audio meter
+                    global last_output_energy
+                    # Use audio data size as proxy for output level (normalized to 0-1)
+                    last_output_energy = min(1.0, len(audio_data) / 50000)
+                    
                     # Save to file for mobile listeners
                     filename = f"tts_{int(time.time()*1000)}.mp3"
                     filepath = os.path.join("temp_audio", filename)
@@ -1430,10 +1441,13 @@ def process_audio_chunk(audio_data, source_language, target_language, ollama_mod
     # Generate speech using the shared event loop - audio plays directly, no file returned
     if selected_voice and str(selected_voice).lower() != "none":
         loop = get_event_loop()
+        output_volume = user_preferences.get("output_volume", 0.8) if isinstance(user_preferences, dict) else 0.8
         loop.run_until_complete(core.text_to_speech_async(
             translation, 
             selected_voice,
-            current_settings
+            current_settings,
+            None,  # output_device_idx
+            output_volume
         ))
     else:
         core.log_message("Voice set to text-only; skipping synchronous TTS.", "DEBUG")
@@ -1677,6 +1691,57 @@ silence_counter = 0.0
 is_speaking = False
 last_transcription = ""
 
+# --- Audio Level Monitoring State ---
+last_input_energy = 0.0
+last_output_energy = 0.0
+
+def monitor_audio_levels(input_gain, output_volume):
+    """Called by timer to update audio level meters."""
+    global last_input_energy, last_output_energy
+    
+    # Get current input energy (scaled by user's gain setting)
+    try:
+        gain = float(input_gain) if input_gain else 1.0
+        vol = float(output_volume) if output_volume else 0.8
+    except (ValueError, TypeError):
+        gain = 1.0
+        vol = 0.8
+    
+    # Scale input energy to 0-100% range
+    # Gain is already applied to the audio chunk in check_audio_queue, so last_input_energy reflects the post-gain level
+    # Typical speech energy is around 0.01-0.05, so we use a multiplier of ~2000
+    input_energy = last_input_energy
+    input_percent = min(100, int(input_energy * 2000))
+    
+    # Color coding and status (adjusted thresholds for realistic levels)
+    if input_percent < 15:
+        input_color = "🔴 Too Quiet"
+    elif input_percent > 85:
+        input_color = "🟡 Too Loud"
+    else:
+        input_color = "🟢 Optimal"
+    
+    # Create visual bar (20 blocks)
+    filled = int(input_percent / 5)
+    bar = "▓" * filled + "░" * (20 - filled)
+    input_display = f"🎤 {bar} {input_percent}% {input_color}"
+    
+    # Output meter
+    output_energy = last_output_energy * vol
+    output_percent = min(100, int(output_energy * 100))
+    output_bar = "▓" * int(output_percent / 5) + "░" * (20 - int(output_percent / 5))
+    output_display = f"🔊 {output_bar} {output_percent}%"
+    
+    # Status message (adjusted thresholds)
+    if input_percent < 3:
+        status = "⚠️ No audio detected - check microphone"
+    elif input_percent > 95:
+        status = "⚠️ CLIPPING! Lower input gain"
+    else:
+        status = "✓ Audio levels normal"
+    
+    return input_display, output_display, status
+
 def check_audio_queue(source_language, target_language, ollama_model, voice, output_device=None):
     """Check for new audio in the queue and process it using sophisticated buffer management."""
     core.log_message(f"Checking audio queue with params: {source_language}, {target_language}, {ollama_model}, {voice}, {output_device}")
@@ -1837,6 +1902,13 @@ def check_audio_queue(source_language, target_language, ollama_model, voice, out
         
     # Final combine of all parts (usually just one part)
     audio_chunk = np.concatenate(resampled_parts).flatten().astype(np.float32)
+
+    # Apply input gain (software volume)
+    if isinstance(user_preferences, dict):
+        input_gain = float(user_preferences.get("input_gain", 1.0))
+        if input_gain != 1.0:
+            audio_chunk = audio_chunk * input_gain
+
     actual_duration = len(audio_chunk) / core.TARGET_RATE
     
     # Check if this is speech using configured energy threshold
@@ -1848,6 +1920,10 @@ def check_audio_queue(source_language, target_language, ollama_model, voice, out
         cast_type=float
     )
     if core.is_speech(audio_chunk, min_threshold=min_energy):
+        # Track input energy for audio meter
+        global last_input_energy
+        last_input_energy = float(np.abs(audio_chunk).mean())
+        
         if not is_speaking:
             core.log_message("Speech detected...", "DEBUG")
             is_speaking = True
@@ -2220,7 +2296,7 @@ def create_ui():
             output_device_idx = default_output_idx if default_output_idx != -1 else 0
             
             with gr.Row():
-                with gr.Column(scale=1):
+                with gr.Column(scale=2):
                     
                     with gr.Row():
                         # Ensure saved language preferences are valid; if not, fall back to first choice
@@ -2251,6 +2327,11 @@ def create_ui():
                             label="Translation Provider",
                             interactive=True
                         )
+
+                        # Lazy load models if not yet loaded
+                        global available_ollama_models
+                        if not available_ollama_models:
+                            available_ollama_models = core.fetch_available_models(current_settings=current_settings)
 
                         default_model = user_preferences.get("ollama_model", "")
                         if not default_model and available_ollama_models:
@@ -2437,6 +2518,65 @@ def create_ui():
                             label="Output Device (Speaker)"
                         )
                     
+                    # --- Audio Level Monitoring Section ---
+                    with gr.Accordion("🎚️ Audio Levels & Volume", open=False):
+                        with gr.Row():
+                            with gr.Column():
+                                input_level_display = gr.Textbox(
+                                    value="🎤 ░░░░░░░░░░░░░░░░░░░░ 0%", 
+                                    label="Microphone Level",
+                                    interactive=False
+                                )
+                                input_gain_slider = gr.Slider(
+                                    minimum=0.5, maximum=2.0, step=0.1, 
+                                    value=user_preferences.get("input_gain", 1.0),
+                                    label="Input Gain (Software)",
+                                    info="Adjust if mic is too quiet (increase) or loud (decrease)"
+                                )
+                            
+                            with gr.Column():
+                                output_level_display = gr.Textbox(
+                                    value="🔊 ░░░░░░░░░░░░░░░░░░░░ 0%", 
+                                    label="TTS Playback Level",
+                                    interactive=False
+                                )
+                                output_volume_slider = gr.Slider(
+                                    minimum=0.0, maximum=1.0, step=0.05, 
+                                    value=user_preferences.get("output_volume", 0.8),
+                                    label="TTS Output Volume",
+                                    info="Control TTS loudness independently"
+                                )
+                        
+                        audio_status = gr.Markdown("Status: Waiting for audio...")
+                        
+                        # Timer for meter updates (5x per second)
+                        audio_levels_timer = gr.Timer(0.2, active=True)
+                        
+                        audio_levels_timer.tick(
+                            fn=monitor_audio_levels,
+                            inputs=[input_gain_slider, output_volume_slider],
+                            outputs=[input_level_display, output_level_display, audio_status],
+                            show_progress=False
+                        )
+                        
+                        # Save preferences on slider change
+                        def save_audio_preferences(input_gain, output_volume):
+                            global user_preferences
+                            user_preferences["input_gain"] = float(input_gain)
+                            user_preferences["output_volume"] = float(output_volume)
+                            save_user_preferences(user_preferences)
+                        
+                        input_gain_slider.change(
+                            fn=save_audio_preferences,
+                            inputs=[input_gain_slider, output_volume_slider],
+                            show_progress=False
+                        )
+                        output_volume_slider.change(
+                            fn=save_audio_preferences,
+                            inputs=[input_gain_slider, output_volume_slider],
+                            show_progress=False
+                        )
+                    
                     with gr.Row():
                         start_btn = gr.Button("Start Translation", variant="primary")
                         stop_btn = gr.Button("Stop Translation", interactive=False)
@@ -2444,6 +2584,25 @@ def create_ui():
                 with gr.Column(scale=1):
                     cont_transcription = gr.Textbox(label="Transcription", lines=5)
                     cont_translation = gr.Textbox(label="Translation", lines=5)
+                    
+                    # Copy translation button
+                    def copy_translation_to_clipboard(translation_text):
+                        if translation_text and translation_text.strip():
+                            try:
+                                pyperclip.copy(translation_text)
+                                return "✓ Copied to clipboard!"
+                            except Exception as e:
+                                return f"Error: {e}"
+                        return "No translation to copy"
+                    
+                    copy_translation_btn = gr.Button("📋 Copy Translation", size="sm")
+                    copy_status = gr.Textbox(label="", show_label=False, interactive=False, visible=False)
+                    
+                    copy_translation_btn.click(
+                        fn=copy_translation_to_clipboard,
+                        inputs=[cont_translation],
+                        outputs=[copy_status]
+                    )
 
                     def _toggle_translation_display(launch=True, *args):
                         manager = ensure_translation_display_manager()
@@ -3374,24 +3533,146 @@ def create_ui():
                 outputs=[sync_status]
             )
 
+            # --- Auto-update user_preferences on UI change (for save-on-shutdown) ---
+            def update_pref(key, cast_type=None):
+                """Create a callback that updates user_preferences[key] when UI changes."""
+                def callback(value):
+                    global user_preferences
+                    if cast_type:
+                        try:
+                            value = cast_type(value)
+                        except Exception:
+                            pass
+                    user_preferences[key] = value
+                return callback
+
+            # Display settings auto-update bindings
+            display_font.change(fn=update_pref("display_font_family"), inputs=[display_font], outputs=[])
+            display_font_size.change(fn=update_pref("display_font_size", int), inputs=[display_font_size], outputs=[])
+            display_font_color.change(fn=update_pref("display_font_color"), inputs=[display_font_color], outputs=[])
+            display_bg_color.change(fn=update_pref("display_bg_color"), inputs=[display_bg_color], outputs=[])
+            display_monitor.change(fn=update_pref("display_monitor", int), inputs=[display_monitor], outputs=[])
+            display_manual_x.change(fn=update_pref("display_manual_offset_x", int), inputs=[display_manual_x], outputs=[])
+            display_manual_y.change(fn=update_pref("display_manual_offset_y", int), inputs=[display_manual_y], outputs=[])
+            display_width.change(fn=update_pref("display_window_width", int), inputs=[display_width], outputs=[])
+            display_height.change(fn=update_pref("display_window_height", int), inputs=[display_height], outputs=[])
+            display_pos_x.change(fn=update_pref("display_window_x", int), inputs=[display_pos_x], outputs=[])
+            display_pos_y.change(fn=update_pref("display_window_y", int), inputs=[display_pos_y], outputs=[])
+            display_on_top.change(fn=update_pref("display_always_on_top", bool), inputs=[display_on_top], outputs=[])
+            display_history.change(fn=update_pref("display_history_size", int), inputs=[display_history], outputs=[])
+            display_hold.change(fn=update_pref("display_hold_seconds", float), inputs=[display_hold], outputs=[])
+            display_h_align.change(fn=update_pref("display_horizontal_align"), inputs=[display_h_align], outputs=[])
+            display_v_align.change(fn=update_pref("display_vertical_align"), inputs=[display_v_align], outputs=[])
+
+            # Performance settings auto-update bindings
+            s_block_ms.change(fn=update_pref("block_duration_ms", int), inputs=[s_block_ms], outputs=[])
+            s_overlap_ms.change(fn=update_pref("overlap_ms", int), inputs=[s_overlap_ms], outputs=[])
+            s_min_silence_ms.change(fn=update_pref("min_silence_ms", int), inputs=[s_min_silence_ms], outputs=[])
+            s_min_speech_ms.change(fn=update_pref("min_speech_ms", int), inputs=[s_min_speech_ms], outputs=[])
+            s_max_speech_s.change(fn=update_pref("max_speech_s", float), inputs=[s_max_speech_s], outputs=[])
+            s_no_speech.change(fn=update_pref("no_speech_threshold", float), inputs=[s_no_speech], outputs=[])
+            s_vad_filter.change(fn=update_pref("vad_filter", bool), inputs=[s_vad_filter], outputs=[])
+            s_cpu_threads.change(fn=update_pref("cpu_threads", int), inputs=[s_cpu_threads], outputs=[])
+            s_processing_batch.change(fn=update_pref("processing_batch_size", int), inputs=[s_processing_batch], outputs=[])
+            s_translation_workers.change(fn=update_pref("translation_workers", int), inputs=[s_translation_workers], outputs=[])
+            s_buffer_size.change(fn=update_pref("buffer_duration_s", int), inputs=[s_buffer_size], outputs=[])
+            s_energy_threshold.change(fn=update_pref("speech_energy_threshold", float), inputs=[s_energy_threshold], outputs=[])
+
+            # Sync settings auto-update bindings
+            s_text_delay.change(fn=update_pref("text_display_delay", float), inputs=[s_text_delay], outputs=[])
+            s_audio_delay.change(fn=update_pref("audio_output_delay", float), inputs=[s_audio_delay], outputs=[])
+
             
         gr.Markdown("## Translation History")
         with gr.Accordion("View Translation Logs", open=False):
-            def get_logs():
-                log_file = core.get_log_filename()
+            def get_available_log_dates():
+                """Scan translation_logs directory and return available dates."""
+                log_dir = core.LOGS_DIR
+                if not os.path.exists(log_dir):
+                    return []
+                
+                dates = []
+                for filename in os.listdir(log_dir):
+                    if filename.startswith("translation_log_") and filename.endswith(".txt"):
+                        # Extract date from filename: translation_log_YYYY-MM-DD.txt
+                        date_str = filename.replace("translation_log_", "").replace(".txt", "")
+                        dates.append(date_str)
+                
+                # Sort in reverse chronological order (newest first)
+                dates.sort(reverse=True)
+                return dates
+            
+            def get_logs(selected_date):
+                """Load log file for selected date."""
+                if not selected_date:
+                    return "No date selected."
+                
+                log_file = os.path.join(core.LOGS_DIR, f"translation_log_{selected_date}.txt")
                 if os.path.exists(log_file):
                     with open(log_file, "r", encoding="utf-8") as f:
                         return f.read()
-                return "No logs found for today."
+                return f"No logs found for {selected_date}."
             
-            logs_output = gr.Textbox(label="Today's Logs", lines=20, max_lines=30)
-            refresh_logs = gr.Button("Refresh Logs")
+            def copy_log_to_clipboard(log_content):
+                """Copy log content to clipboard."""
+                if log_content and log_content.strip():
+                    try:
+                        pyperclip.copy(log_content)
+                        return "✓ Log copied to clipboard!"
+                    except Exception as e:
+                        return f"Error copying: {e}"
+                return "No log content to copy"
             
-            refresh_logs.click(
-                fn=get_logs,
+            # Get available dates and set default to today
+            available_dates = get_available_log_dates()
+            today_str = datetime.datetime.now().strftime("%Y-%m-%d")
+            default_date = today_str if today_str in available_dates else (available_dates[0] if available_dates else "")
+            
+            with gr.Row():
+                log_date_selector = gr.Dropdown(
+                    choices=available_dates,
+                    value=default_date,
+                    label="Select Date",
+                    info=f"Found {len(available_dates)} log files"
+                )
+                refresh_dates_btn = gr.Button("🔄 Refresh Dates", size="sm")
+            
+            logs_output = gr.Textbox(label="Translation Logs", lines=20, max_lines=30)
+            
+            with gr.Row():
+                load_log_btn = gr.Button("📂 Load Selected Log", variant="primary")
+                copy_log_btn = gr.Button("📋 Copy Log to Clipboard")
+            
+            copy_log_status = gr.Textbox(label="", show_label=False, interactive=False, visible=False)
+            
+            # Wire up event handlers
+            def refresh_date_list():
+                dates = get_available_log_dates()
+                today_str = datetime.datetime.now().strftime("%Y-%m-%d")
+                new_default = today_str if today_str in dates else (dates[0] if dates else "")
+                return gr.update(choices=dates, value=new_default, info=f"Found {len(dates)} log files")
+            
+            refresh_dates_btn.click(
+                fn=refresh_date_list,
                 inputs=[],
+                outputs=[log_date_selector]
+            )
+            
+            load_log_btn.click(
+                fn=get_logs,
+                inputs=[log_date_selector],
                 outputs=[logs_output]
             )
+            
+            copy_log_btn.click(
+                fn=copy_log_to_clipboard,
+                inputs=[logs_output],
+                outputs=[copy_log_status]
+            )
+            
+            # Auto-load today's log on expand
+            if default_date:
+                logs_output.value = get_logs(default_date)
 
             # --- Event Wiring (Moved here to ensure all inputs are defined) ---
             launch_display_btn.click(
@@ -3438,6 +3719,11 @@ def create_ui():
                 core.log_message("Initiating graceful shutdown...")
                 
                 try:
+                    # Save all settings before shutdown
+                    core.log_message("Saving settings...")
+                    save_user_preferences(user_preferences)
+                    core.save_settings(current_settings)
+                    
                     # Stop recording
                     stop_continuous_recording(clear_intent=True)
                     
@@ -3535,6 +3821,12 @@ def run_listener_server():
 if __name__ == "__main__":
     import uvicorn
     
+    # Start Background Tasks (Cleanup, etc.) - only in main process
+    core.log_message("Initializing background tasks...")
+    cleanup_temp_files()
+    cleanup_thread = threading.Thread(target=periodic_cleanup, daemon=True)
+    cleanup_thread.start()
+
     # Start the Listener Server in a separate thread
     core.log_message("Starting Mobile Listener Server on port 8000...")
     listener_thread = threading.Thread(target=run_listener_server, daemon=True)
@@ -3549,6 +3841,11 @@ if __name__ == "__main__":
     finally:
         print("\n--- Initiating Shutdown ---")
         try:
+            # 0. Save all settings before shutdown
+            print("Saving settings...")
+            save_user_preferences(user_preferences)
+            core.save_settings(current_settings)
+            
             # 1. Stop recording
             stop_continuous_recording(clear_intent=True)
             
