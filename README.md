@@ -1215,6 +1215,26 @@ Note translation audio should be isolated from the microphone or the program wil
 [![Watch the video](https://img.youtube.com/vi/ZdBDW6Pw4qE/0.jpg)](https://www.youtube.com/watch?v=ZdBDW6Pw4qE&t=11s)
 ---
 
+## Wanted Contributions
+
+GoGospelNow is open to practical contributions that help churches, missionaries, and ministry volunteers use real-time sermon translation more easily.
+
+Helpful areas include:
+
+- **Easier Windows installer:** simplify setup for non-technical church volunteers.
+- **Better macOS and Linux setup scripts:** make installation more reliable across common church laptops and desktops.
+- **More language testing:** verify speech recognition, translation, and text-to-speech quality across additional languages.
+- **Improved listener mobile page:** make the phone/tablet experience clearer, faster, and easier for congregations to use.
+- **Setup wizard:** guide first-time users through microphones, speakers, Ollama, Docker, TTS, and network settings.
+- **Documentation translations:** translate setup guides for Spanish-speaking and multilingual church teams.
+- **Installer/release packaging:** create easier downloadable packages for Windows, macOS, and Linux.
+- **Church audio workflows:** document real-world soundboard, aux-send, headphone, and assisted-listening setups.
+- **Testing and bug reports:** report issues with clear steps, hardware details, OS version, and logs when possible.
+
+If you want to help, please open an issue or pull request on GitHub with the problem you are solving and the environment you tested on.
+
+---
+
 ## Additional Documentation
 
 For more detailed information, please refer to these additional guides:
