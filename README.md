@@ -105,6 +105,71 @@ Make sure you are using Chrome, Edge, Safari, or Brave. Firefox is not supported
 
 ---
 
+## Manual Maintenance & Troubleshooting (for Auto-Installer Users) 🛠️
+
+If you used the one-line installer, your setup uses **Miniforge (conda)** instead of a traditional `venv`. Here is where everything lives and how to fix things manually.
+
+### Where things are
+
+| Component | Location |
+|-----------|----------|
+| Python environment | `~/local/opt/miniforge3/envs/ggn/` |
+| Conda executable | `~/local/opt/miniforge3/bin/conda` |
+| FFmpeg | `~/local/opt/miniforge3/bin/ffmpeg` |
+| GoGospelNow app | `~/gogospelnow/` |
+| Kokoro TTS | Docker container `kokoro-tts` on port 8880 |
+| Ollama models | `~/.ollama/models/` |
+
+### How to activate the environment manually
+
+```bash
+export PATH="$HOME/local/opt/miniforge3/bin:$PATH"
+source "$HOME/local/opt/miniforge3/etc/profile.d/conda.sh"
+conda activate ggn
+cd ~/gogospelnow
+```
+
+After activation, your prompt shows `(ggn)`. Now you can run `python3 main.py` or use `pip` to install/update packages.
+
+### Reinstalling a broken package
+
+```bash
+conda activate ggn
+pip install --force-reinstall PyAudio
+pip install --force-reinstall sounddevice
+```
+
+### Updating all packages
+
+```bash
+conda activate ggn
+cd ~/gogospelnow
+pip install --upgrade -r requirements.txt
+```
+
+### Reinstalling system libraries (ffmpeg, portaudio)
+
+```bash
+conda run -n ggn conda install -y -c conda-forge ffmpeg portaudio
+```
+
+### Checking what is installed
+
+```bash
+conda activate ggn
+pip list | grep -iE "pyaudio|sounddevice|faster|gradio|torch"
+```
+
+### Restarting Kokoro TTS
+
+```bash
+docker restart kokoro-tts
+# or if the container is missing:
+docker run -d --name kokoro-tts -p 8880:8880 --restart unless-stopped ghcr.io/remsky/kokoro-fastapi-cpu:latest
+```
+
+---
+
 ## Manual Installation (Advanced)
 
 Prefer to install step by step? Choose your operating system:
