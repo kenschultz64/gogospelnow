@@ -35,7 +35,7 @@ echo -e "${CYAN}║   Complete Installer for macOS                          ║$
 echo -e "${CYAN}╚══════════════════════════════════════════════════════════╝${NC}"
 echo ""
 echo "This will install: Docker Desktop, Ollama, Kokoro TTS, Python,"
-echo "and the GoGospelNow translator. About 8 GB of downloads."
+echo "and the GoGospelNow translator. About 8 GB of downloads. This will take 10–20 minutes depending on your internet speed."
 echo ""
 
 # ── 1. Docker Desktop ─────────────────────────────────────────────────────
