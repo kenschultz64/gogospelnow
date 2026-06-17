@@ -185,8 +185,7 @@ else
     conda create -y -n ggn python=3.12 2>&1 | tail -3
 fi
 
-conda activate ggn
-conda install -y -c conda-forge ffmpeg portaudio 2>&1 | tail -3
+conda run -n ggn conda install -y -c conda-forge ffmpeg portaudio 2>&1 | tail -3
 ok "System libraries ready"
 
 cd "$PROJECT_DIR"
@@ -264,9 +263,7 @@ echo ""
 # Start the app
 export PATH="$MINIFORGE_DIR/bin:$PATH"
 source "$MINIFORGE_DIR/etc/profile.d/conda.sh"
-conda activate ggn
-cd "$PROJECT_DIR"
-python3 main.py > /tmp/gogospelnow.log 2>&1 &
+conda run -n ggn python3 main.py > /tmp/gogospelnow.log 2>&1 &
 
 # Wait up to 90s for first startup (whisper model download)
 for i in $(seq 1 30); do

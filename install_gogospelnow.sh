@@ -216,8 +216,7 @@ else
     conda create -y -n ggn python=3.12 2>&1 | tail -3
 fi
 
-conda activate ggn
-conda install -y -c conda-forge ffmpeg portaudio 2>&1 | tail -3
+conda run -n ggn conda install -y -c conda-forge ffmpeg portaudio 2>&1 | tail -3
 ok "System libraries ready"
 
 cd "$PROJECT_DIR"
@@ -299,9 +298,7 @@ cat > "$APP_DIR/Contents/MacOS/GoGospelNow Translator" << LAUNCHER
 #!/bin/bash
 export PATH="$MINIFORGE_DIR/bin:\$PATH"
 source "$MINIFORGE_DIR/etc/profile.d/conda.sh"
-conda activate ggn
-cd "$PROJECT_DIR"
-python3 main.py &
+conda run -n ggn python3 main.py &
 SERVER_PID=\$!
 sleep 4
 URL="http://localhost:7860?__theme=dark"
