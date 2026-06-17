@@ -3,20 +3,60 @@
 [![Watch the video](https://img.youtube.com/vi/WRzqXt095PQ/0.jpg)](https://www.youtube.com/watch?v=WRzqXt095PQ)
 [![Buy Me A Coffee](https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png)](https://www.buymeacoffee.com/gogospelnow)
 
-## What You Need to Know Before Starting
+## Quick Start (Recommended) ⚡
 
-The GoGospelNow Translator uses three background technologies:
-- **Python** (version 3.11 or higher) - the programming language
-- **Docker** - runs the text-to-speech service
-- **Ollama** - runs the AI translation models
+For most users, a single script installs everything automatically: Docker, Ollama, Kokoro TTS, Python, and the translator app.
 
-This guide will walk you through installing everything step-by-step. **Choose your operating system below and follow ALL the steps in order:**
+### Step 1: Install Docker Desktop
 
-- [Windows Installation Instructions](#windows-installation-)
-- [macOS Installation Instructions](#macos-installation-)
-- [Linux Installation Instructions](#linux-installation-)
+| Platform | Link |
+|----------|------|
+| **macOS** | [Download Docker Desktop](https://www.docker.com/products/docker-desktop/) — open the `.dmg`, drag to Applications, open once |
+| **Windows** | [Download Docker Desktop](https://www.docker.com/products/docker-desktop/) — run the installer, restart if prompted |
+| **Linux** | Skip this — the installer handles Docker automatically |
 
-After installation, see [Running the Translator](#running-the-translator) to start using the program.
+### Step 2: Run the installer
+
+Open a terminal, clone the repo, and run the installer for your OS:
+
+```bash
+git clone https://github.com/kenschultz64/gogospelnow.git
+cd gogospelnow
+```
+
+| Platform | Command |
+|----------|---------|
+| **macOS** | `./install_gogospelnow.sh` |
+| **Linux** | `./install_linux.sh` |
+| **Windows** | Right-click `install_windows.ps1` → Run with PowerShell |
+
+The installer handles everything: Python, FFmpeg, Ollama, the translation model, Kokoro TTS, and creates a desktop launcher.
+
+### Step 3: Run a health check
+
+Verify everything is working correctly:
+
+```bash
+./check_gogospelnow.sh
+```
+
+This checks Docker, Kokoro TTS, Ollama, Python, your audio devices, and gives hardware-specific recommendations.
+
+### Step 4: Start translating
+
+Double-click the **GoGospelNow Translator** icon on your Desktop (or app menu on Linux). The translator opens in your browser at `http://localhost:7860`.
+
+> **Already installed Docker + Ollama?** The installer skips what's already there and takes ~5 minutes. First-time setup with model downloads takes 15–20 minutes on a typical connection.
+
+---
+
+## Manual Installation (Advanced)
+
+Prefer to install step by step? Choose your operating system:
+
+- [Windows Manual Install](#windows-installation-)
+- [macOS Manual Install](#macos-installation-)
+- [Linux Manual Install](#linux-installation-)
 
 ---
 
