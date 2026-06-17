@@ -15,27 +15,25 @@ For most users, a single script installs everything automatically: Docker, Ollam
 | **Windows** | [Download Docker Desktop](https://www.docker.com/products/docker-desktop/) — run the installer, restart if prompted |
 | **Linux** | Skip this — the installer handles Docker automatically |
 
-### Step 2: Download and run the installer
+### Step 2: Run the one-line installer
 
-**If you have git installed** (most Macs and Linux systems do):
+Open a terminal and paste this single command:
 
 ```bash
-git clone https://github.com/kenschultz64/gogospelnow.git
-cd gogospelnow
+curl -fsSL https://raw.githubusercontent.com/kenschultz64/gogospelnow/main/install.sh | bash
 ```
 
-**No git?** Download the ZIP instead:
-1. Go to https://github.com/kenschultz64/gogospelnow
-2. Click the green **Code** button → **Download ZIP**
-3. Extract the ZIP and open the folder
+It auto-detects macOS or Linux, downloads everything, and installs in one shot.
 
-Then run the installer for your OS:
+**Alternative: download manually**
 
 | Platform | Command |
 |----------|---------|
 | **macOS** | `./install_gogospelnow.sh` |
 | **Linux** | `./install_linux.sh` |
 | **Windows** | Right-click `install_windows.ps1` → Run with PowerShell |
+
+To download the files first, [download the ZIP](https://github.com/kenschultz64/gogospelnow/archive/refs/heads/main.zip) or `git clone https://github.com/kenschultz64/gogospelnow.git`.
 
 The installer handles everything: Python, FFmpeg, Ollama, the translation model, Kokoro TTS, and creates a desktop launcher.
 
