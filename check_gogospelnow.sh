@@ -158,7 +158,7 @@ if [ -n "$PYTHON" ]; then
     PASS=$((PASS+1))
     
     # Check key packages
-    for pkg in torch faster_whisper gradio sounddevice; do
+    for pkg in torch faster_whisper gradio sounddevice pyaudio; do
         if "$PYTHON" -c "import $pkg" 2>/dev/null; then
             :
         else
@@ -184,11 +184,35 @@ fi
 echo ""
 echo -e "${CYAN}── FFmpeg (audio processing) ──${NC}"
 
+FFMPEG_FOUND=false
 if command -v ffmpeg >/dev/null 2>&1; then
+    FFMPEG_FOUND=true
+elif [ -x "$HOME/local/opt/miniforge3/bin/ffmpeg" ]; then
+    FFMPEG_FOUND=true
+fi
+if [ "$FFMPEG_FOUND" = true ]; then
     echo -e "  ${GREEN}✓ FFmpeg found${NC}"
     PASS=$((PASS+1))
 else
     echo -e "  ${YELLOW}⚠  FFmpeg not found. conda install -c conda-forge ffmpeg${NC}"
+    WARN=$((WARN+1))
+fi
+
+# ── PortAudio ──────────────────────────────────────────────────────────────
+echo ""
+echo -e "${CYAN}── PortAudio (PyAudio backend) ──${NC}"
+
+if [ -n "$PYTHON" ]; then
+    PYAU_VER=$("$PYTHON" -c "import pyaudio; print(pyaudio.__version__)" 2>/dev/null || echo "")
+    if [ -n "$PYAU_VER" ]; then
+        echo -e "  ${GREEN}✓ PyAudio ${PYAU_VER}${NC}"
+        PASS=$((PASS+1))
+    else
+        echo -e "  ${YELLOW}⚠  PyAudio not installed. Run: pip install PyAudio${NC}"
+        WARN=$((WARN+1))
+    fi
+else
+    echo -e "  ${YELLOW}⚠  Python not available — skipping PyAudio check${NC}"
     WARN=$((WARN+1))
 fi
 

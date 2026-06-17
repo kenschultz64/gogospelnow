@@ -57,6 +57,54 @@ Double-click the **GoGospelNow Translator** icon on your Desktop (or app menu on
 
 ---
 
+## Troubleshooting 🔧
+
+### No audio output?
+
+**1. Check your output device** — The translator saves your speaker selection. If you have plugged in or unplugged headphones, speakers, or Bluetooth devices since last use, the saved device may no longer match. Open Settings in the translator UI and re-select your output device from the dropdown.
+
+**2. Verify PyAudio is installed** — If you used the manual install path, make sure you ran both:
+```bash
+brew install portaudio          # macOS (system library)
+pip install PyAudio             # Python package
+```
+Or on Linux: `sudo apt install portaudio19-dev` then `pip install PyAudio`.
+The auto-installer handles this automatically.
+
+**3. Check Kokoro TTS** — Run the health check to verify all services:
+```bash
+./check_gogospelnow.sh
+```
+If Kokoro is not running, the auto-installer can re-start it. Or manually:
+```bash
+docker run -d --name kokoro-tts -p 8880:8880 --restart unless-stopped ghcr.io/remsky/kokoro-fastapi-cpu:latest
+```
+
+**4. Test audio directly** — In your activated conda environment, run:
+```bash
+conda activate ggn
+python3 -c "import pyaudio; p = pyaudio.PyAudio(); print([p.get_device_info_by_index(i)['name'] for i in range(p.get_device_count()) if p.get_device_info_by_index(i)['maxOutputChannels']>0])"
+```
+You should see your speakers listed. If not, check your system sound settings.
+
+### Transcription/translation works but no TTS audio?
+
+This usually means the Kokoro TTS container is not running. Check:
+```bash
+curl http://localhost:8880/v1/models
+```
+If this returns an error, re-run the auto-installer or start Kokoro manually as shown above.
+
+### "Virtual Speaker (Fallback)" selected?
+
+This is a last-resort option that produces no audio. Select your actual speakers from the dropdown in Settings. If you only see "Virtual Speaker", your system audio drivers may need attention.
+
+### App runs but browser shows nothing?
+
+Make sure you are using Chrome, Edge, Safari, or Brave. Firefox is not supported. Navigate to `http://localhost:7860`.
+
+---
+
 ## Manual Installation (Advanced)
 
 Prefer to install step by step? Choose your operating system:

@@ -1780,8 +1780,12 @@ def check_audio_queue(source_language, target_language, ollama_model, voice, out
     # Get output device index if provided
     output_device_idx = None
     if output_device:
+        # Strip index prefix for robust matching (device indices change
+        # when hardware connects/disconnects between sessions).
+        def _strip_idx(n):
+            return re.sub(r"^\d+:\s*", "", n)
         for name, idx in output_devices:
-            if name == output_device:
+            if _strip_idx(name) == _strip_idx(output_device):
                 output_device_idx = idx
                 break
     
@@ -2047,7 +2051,13 @@ def create_ui():
 
     # Set default output device safely - check saved preferences first
     default_output_name = user_preferences.get("output_device")
-    if not default_output_name or default_output_name not in output_device_names:
+    # Strip index prefix for robust matching across device re-enumeration
+    def _dev_name_strip_idx(n):
+        return re.sub(r"^\d+:\s*", "", n)
+    if not default_output_name or not any(
+        _dev_name_strip_idx(default_output_name) == _dev_name_strip_idx(dn)
+        for dn in output_device_names
+    ):
         if output_device_names: # Check if list is not empty
             if default_output_idx != -1:
                 for name, idx in output_devices:
