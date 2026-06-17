@@ -15,14 +15,21 @@ For most users, a single script installs everything automatically: Docker, Ollam
 | **Windows** | [Download Docker Desktop](https://www.docker.com/products/docker-desktop/) — run the installer, restart if prompted |
 | **Linux** | Skip this — the installer handles Docker automatically |
 
-### Step 2: Run the installer
+### Step 2: Download and run the installer
 
-Open a terminal, clone the repo, and run the installer for your OS:
+**If you have git installed** (most Macs and Linux systems do):
 
 ```bash
 git clone https://github.com/kenschultz64/gogospelnow.git
 cd gogospelnow
 ```
+
+**No git?** Download the ZIP instead:
+1. Go to https://github.com/kenschultz64/gogospelnow
+2. Click the green **Code** button → **Download ZIP**
+3. Extract the ZIP and open the folder
+
+Then run the installer for your OS:
 
 | Platform | Command |
 |----------|---------|
