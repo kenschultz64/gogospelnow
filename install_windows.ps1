@@ -121,6 +121,14 @@ if (-not $dockerOk) {
     }
 }
 
+if ($dockerOk) {
+    Write-Host ""
+    Write-Host "  ⚡ IMPORTANT: Configure Docker to start on login" -ForegroundColor Yellow
+    Write-Host "     Docker Desktop → Settings → General →"
+    Write-Host "     ☑ Start Docker Desktop when you log in"
+    Write-Host "     (Otherwise Kokoro TTS won't work after a reboot)"
+}
+
 # ── 3. Kokoro TTS ──────────────────────────────────────────────────────────
 step "3/8: Kokoro TTS (text-to-speech voices)"
 

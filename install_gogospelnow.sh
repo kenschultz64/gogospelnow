@@ -96,6 +96,14 @@ if [ "$DOCKER_READY" = false ]; then
     exit 0
 fi
 
+if [ "$DOCKER_READY" = true ]; then
+    echo ""
+    echo -e "  ${YELLOW}⚡ IMPORTANT: Configure Docker to start on login${NC}"
+    echo "     Docker Desktop → Settings → General →"
+    echo "     ☑ Start Docker Desktop when you log in"
+    echo "     (Otherwise Kokoro TTS won't work after a reboot)"
+fi
+
 # ── 2. Kokoro TTS container ───────────────────────────────────────────────
 step "2/8: Kokoro TTS (text-to-speech voices)"
 

@@ -15,6 +15,8 @@ For most users, a single script installs everything automatically: Docker, Ollam
 | **Windows** | [Download Docker Desktop](https://www.docker.com/products/docker-desktop/) — run the installer, restart if prompted |
 | **Linux** | Skip this — the installer handles Docker automatically |
 
+> ⚡ After installing Docker Desktop, enable auto-start: **Settings → General → ☑ Start Docker Desktop when you log in**. Otherwise Kokoro TTS won't work after a reboot.
+
 ### Step 2: Run the one-line installer
 
 Open a terminal and paste this single command:

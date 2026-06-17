@@ -75,8 +75,12 @@ if command -v docker >/dev/null 2>&1; then
         PASS=$((PASS+1))
     else
         echo -e "  ${YELLOW}⚠  Docker installed but not running. Start Docker Desktop.${NC}"
+        echo "     Also enable: Settings → General → Start Docker Desktop when you log in"
         WARN=$((WARN+1))
     fi
+elif curl -s http://localhost:8880/v1/models >/dev/null 2>&1; then
+    echo -e "  ${GREEN}✓ Docker Engine is running (Kokoro TTS detected)${NC}"
+    PASS=$((PASS+1))
 else
     echo -e "  ${RED}✗  Docker not found. Install from docker.com/products/docker-desktop/${NC}"
     FAIL=$((FAIL+1))
@@ -257,6 +261,10 @@ elif [ "$OLLAMA_OK" = true ] && [ "$MEM_GB" -ge 32 ]; then
 fi
 
 echo "  Settings page:     http://localhost:7860 → Settings tab"
+
+if [ "$OS" = "Darwin" ] || [ "$OS" = "MINGW" ] || [ "$OS" = "MSYS" ]; then
+    echo "  Docker auto-start: Docker Desktop → Settings → General → Start on login"
+fi
 echo ""
 
 # Missing critical items
