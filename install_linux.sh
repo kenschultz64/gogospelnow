@@ -189,7 +189,7 @@ conda run -n ggn conda install -y -c conda-forge ffmpeg portaudio 2>&1 | tail -3
 ok "System libraries ready"
 
 cd "$PROJECT_DIR"
-pip install -r requirements.txt 2>&1 | tail -5
+conda run -n ggn pip install -r requirements.txt 2>&1 | tail -5
 ok "Python packages installed"
 
 # ── 6. Translation model ──────────────────────────────────────────────────
